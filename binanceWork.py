@@ -1,12 +1,13 @@
 # Init values
 from binance.client import Client
-from binance.websockets import BinanceSocketManager
+# from binance.websockets import BinanceSocketManager
+from binance import *
 import binance.client as bc
 from pprint import pprint
 import tkinter
 import time
 import os
-from twisted.internet import reactor
+# from twisted.internet import reactor
 import json
 import math
 
@@ -14,11 +15,11 @@ with open("key.json") as json_data_file:
     key = json.load(json_data_file)
 
 
-APIKEY = key["aram"]["APIKEY"]
-APISECRET = key["aram"]["APISECRET"]
+APIKEY = key["client"]["APIKEY"]
+APISECRET = key["client"]["APISECRET"]
 
-JOHNAPIKEY = key["john"]["APIKEY"]
-JOHNAPISECRET = key["john"]["APISECRET"]
+JOHNAPIKEY = key["copier"]["APIKEY"]
+JOHNAPISECRET = key["copier"]["APISECRET"]
 
 TRADECHANNEL = key["discord"]["TRADES_CHANNEL"]
 JGTRADE_CHANNEL = key["discord"]["JGTRADE_CHANNEL"]
