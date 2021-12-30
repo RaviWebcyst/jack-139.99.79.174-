@@ -18,18 +18,18 @@ export default async function handler(req, res) {
     // TODO - Add while loop for what happens when status is true
 
     let i = 0;
-    while (startup) {
-      console.log("test");
-      let reqq = await fetch(`${process.env.ROOT_PATH}api/mongo/status`);
-      reqq = await reqq.json();
+    // while (startup) {
+    //   console.log("test");
+    //   let reqq = await fetch(`${process.env.ROOT_PATH}api/mongo/status`);
+    //   reqq = await reqq.json();
 
-      startup = reqq.status;
+    //   startup = reqq.status;
 
-      setTimeout(() => {
-        i++;
-      }, 6000 * i);
-    }
-    console.log("loop ended");
+    //   setTimeout(() => {
+    //     i++;
+    //   }, 6000 * i);
+    // }
+    // console.log("loop ended");
   } else {
     res.status(200).json("Copier already running");
   }
