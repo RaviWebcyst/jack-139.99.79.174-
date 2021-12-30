@@ -5,5 +5,5 @@ import { getTrades } from "../../helpers/binance_helpers";
 export default function handler(req, res) {
   res.status(200).json({ name: "John Doe" });
 
-  getTrades();
+  //   getTrades();
 }

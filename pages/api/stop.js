@@ -3,6 +3,7 @@
 import {
   getFuturesBalance,
   getOpenOrders,
+  terminateBinanceSocket,
 } from "../../helpers/binance_helpers";
 
 export default async function handler(req, res) {
@@ -15,6 +16,7 @@ export default async function handler(req, res) {
 
   if (startup) {
     await fetch(`${process.env.ROOT_PATH}api/mongo/change-status`);
+    terminateBinanceSocket();
     res.status(200).json("Copier stopped");
   } else {
     res.status(200).json("Copier already stopped");

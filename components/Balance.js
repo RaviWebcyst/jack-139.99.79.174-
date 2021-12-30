@@ -4,22 +4,33 @@ export default function Balance(props) {
   let balance_table = [];
   for (let i in props.balance) {
     let row = props.balance[i];
-    balance_table.push(
-      <tr key={row.accountAlias + row.asset}>
-        <td>{row.asset}</td>
-        <td>{row.balance}</td>
-      </tr>
-    );
-  }
-  return (
-    <table>
-      <thead>
-        <tr>
-          <th>Asset</th>
-          <th>Balance</th>
+    if (row.balance > 0) {
+      balance_table.push(
+        <tr key={row.accountAlias + row.asset}>
+          <td>{row.asset}</td>
+          <td>{row.balance}</td>
         </tr>
-      </thead>
-      <tbody>{balance_table}</tbody>
-    </table>
+      );
+    }
+  }
+
+  let table_name = props.id + "_balance_table";
+  return (
+    <div className="w3-container">
+      <h1 className="w3-center">{props.id} table</h1>
+
+      <table
+        className="w3-table w3-hoverable w3-centered w3-border w3-bordered"
+        id={table_name}
+      >
+        <thead>
+          <tr>
+            <th>Asset</th>
+            <th>Balance</th>
+          </tr>
+        </thead>
+        <tbody>{balance_table}</tbody>
+      </table>
+    </div>
   );
 }
