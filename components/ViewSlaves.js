@@ -4,8 +4,6 @@ export default function ViewSlaves(props) {
   for (let i in props.slaves) {
     let slave = props.slaves[i];
 
-    console.log(slave);
-
     balance_table.push(
       <tr key={slave.name}>
         <td>{slave.name}</td>

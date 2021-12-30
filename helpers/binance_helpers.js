@@ -160,6 +160,17 @@ export async function getSlaveUSDBalance(key, secret, ticker) {
   return parseFloat(total).toFixed(2);
 }
 
+export async function getSlaveAssetBalances(key, secret) {
+  let slave_binance = new Binance().options({
+    APIKEY: key,
+    APISECRET: secret,
+  });
+
+  let balance = await slave_binance.futuresBalance();
+
+  return balance;
+}
+
 // Debug helpers
 export async function debugBinance() {
   let data = binance.websockets.terminate();

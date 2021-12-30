@@ -14,10 +14,11 @@ export default function Balance(props) {
     }
   }
 
-  let table_name = props.id + "_balance_table";
+  let table_name = props.name + "_balance_table";
+
   return (
     <div className="w3-container">
-      <h1 className="w3-center">{props.id} table</h1>
+      <h1 className="w3-center">{props.name} table</h1>
 
       <table
         className="w3-table w3-hoverable w3-centered w3-border w3-bordered"
