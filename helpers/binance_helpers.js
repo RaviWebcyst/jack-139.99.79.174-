@@ -122,9 +122,16 @@ export async function getTrades() {
 
         bal = bal.availableBalance;
         let orderPercentage = await binance.getFuturesBalance();
-        orderPercentage = orderPercentage.filter((e) => {
-          return e.asset == asset;
-        });
+
+        if (order.side == "BUY") {
+          orderPercentage = orderPercentage.filter((e) => {
+            return e.asset == "USDT";
+          });
+        } else {
+          orderPercentage = orderPercentage.filter((e) => {
+            return e.asset == asset;
+          });
+        }
 
         orderPercentage = orderPercentage.availableBalance;
 
@@ -138,7 +145,12 @@ export async function getTrades() {
           name: i,
         };
 
-        await makeSlaveTrade(slave.key, slave.secret, data);
+        try {
+          await makeSlaveTrade(slave.key, slave.secret, data); // TODO - Add notifications to telegram and dom via this action
+        } catch (error) {
+          console.log("TRADE FAILED");
+          console.log(error);
+        }
 
         // TODO - Optimize optimize optimize
       }
