@@ -142,6 +142,8 @@ export async function getTrades() {
       // New order to be placed
       let slaves = await getSlaves();
 
+      // console.log(order);
+
       console.log(
         `Master Trade: ${order.side} ${order.originalQuantity} of ${order.symbol} `
       );
@@ -233,6 +235,8 @@ export async function getTrades() {
           quantity: qty * MULTIPLIER, // Asset balance of slave multiplied by order percentage of master
           name: i,
         };
+
+        data.quantity = Math.round(data.quantity); // TODO - Dynamically assign precision
 
         try {
           await makeSlaveTrade(slave.key, slave.secret, data); // TODO - Add notifications to telegram and dom via this action
@@ -350,23 +354,33 @@ export async function makeSlaveTrade(key, secret, data) {
   // console.log(data);
   if (data.side == "BUY") {
     // Buy
-    await slave_binance.futuresMarketBuy(data.symbol, data.quantity);
+    let debug = await slave_binance.futuresMarketBuy(
+      data.symbol,
+      data.quantity
+    );
     console.log(
       `New order made: Buy ${data.quantity} of ${data.symbol} for ${data.name}`
     );
+    console.log(debug);
   } else if (data.side == "SELL") {
     // Sell
-    await slave_binance.futuresMarketSell(data.symbol, data.quantity);
+    let debug = await slave_binance.futuresMarketSell(
+      data.symbol,
+      data.quantity
+    );
     console.log(
       `New order made: Sell ${data.quantity} of ${data.symbol} for ${data.name} `
     );
+    console.log(debug);
   }
 }
 
 // Debug helpers
 export async function debugBinance() {
-  let data = binance.websockets.terminate();
-  console.log(data);
+  // let data = await binance.futuresBalance();
+  let data = await fetch("https://api.binance.com/api/v3/exchangeInfo");
+  data = await data.json();
+  console.log(data[0].filters);
   // userData: [Function: userData],
   // userMarginData: [Function: userMarginData],
   // userFutureData: [Function: userFutureData],
