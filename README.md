@@ -1,35 +1,9 @@
-Python-based program to copy trades from client to multiple copiers.
+Next.js Trade copier
 
-\*\* In Development
+npm install
+npm run dev
 
-WARNING: This copier does not have a paper trade mode, and will copy active trades. This project is in development and is prone to errors, and may break upon untested use cases. If you find an error, please post on the github. This project is meant to be maintained and monitored by a developer who is comfortable altering the code base to
-
-Requirements:
-
-(To work with the US version of Binance, go to \*. and change the domain to '.us')
-
-Installation: Create key.json in root with proper keys install dependencies Configure desired settings run gui.py to start program
-
-{ "client": { "APIKEY": "**\*\*\*\***", "APISECRET": "**\*\*\*\***"
-
-},
-"copier": {
-"APIKEY": "**************\*\*\*\***************",
-"APISECRET": "**************\*\*\*\***************"
-
-},
-
-"discord": {
-"TOKEN": "******\*\*\*\*******",
-"GUILD": "CHANNEL NAME",
-"TRADES_CHANNEL": MAIN CHANNEL,
-"JGTRADE_CHANNEL": PRIVATE CHANNEL
-}
-}
-
-Modularity not expanded upon, to operate this program in its current state user must modify code. Please email aram.devdocs@gmail.com with any questions in regard to this project.
-
-TODO: Optimize balance with websockets Replace redundant code Integrate profiles for multiple copiers to be added. Fix server time delay
+connect mongodb, set root path in .env template
 
 Devlogs:
 
