@@ -16,7 +16,7 @@ export default function Balance(props) {
 
   let table_name = props.name + "_balance_table";
 
-  console.log(props);
+  // console.log(props);
   return (
     <div className="w3-container">
       <h1 className="w3-center">{props.name} table</h1>

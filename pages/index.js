@@ -19,7 +19,7 @@ export async function getServerSideProps({ req, res }) {
   } catch (error) {
     logged = { status: false };
   }
-  console.log(logged);
+  // console.log(logged);
 
   if (logged.status) {
     // Slave Balance Table Start

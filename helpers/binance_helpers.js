@@ -16,6 +16,50 @@ export async function getFuturesBalance() {
   // Balance stop
 }
 
+export async function getMasterUSDBalance(ticker) {
+  let balance = await binance.futuresBalance();
+
+  let total = 0;
+
+  // let ticker = await getTickerPrices();
+  for (let i in balance) {
+    let token = balance[i];
+    let asset = token.asset + "USDT";
+
+    if (
+      token.asset == "USD" ||
+      token.asset == "USDT" ||
+      token.asset == "USDC" ||
+      token.asset == "BUSD"
+    ) {
+      total += token.balance;
+      continue;
+    }
+
+    let ticker_price = ticker[asset];
+    if (ticker_price == undefined) {
+      asset = token.asset + "USDC";
+      ticker_price = ticker[asset];
+    }
+
+    if (ticker_price == undefined) {
+      asset = token.asset + "USD";
+      ticker_price = ticker[asset];
+    }
+
+    if (ticker_price == undefined) {
+      asset = token.asset + "BUSD";
+      ticker_price = ticker[asset];
+    }
+
+    let amt = token.balance * ticker_price;
+    // console.log(amt);
+    // total += token.balance * ticker_price;
+  }
+
+  return parseFloat(total).toFixed(2);
+}
+
 export async function getOpenOrders() {
   binance.openOrders(false, (error, openOrders) => {
     console.info("openOrders()", openOrders);
@@ -37,13 +81,13 @@ export async function getTrades() {
     }
   }
   function execution_update(data) {
-    console.log("ORDER START");
-    console.log(data);
-    console.log("balances");
-    console.log(data.updateData.balances);
-    console.log("positions");
-    console.log(data.updateData.positions);
-    console.log("ORDER END");
+    // console.log("ORDER START");
+    // console.log(data);
+    // console.log("balances");
+    // console.log(data.updateData.balances);
+    // console.log("positions");
+    // console.log(data.updateData.positions);
+    // console.log("ORDER END");
 
     let {
       x: executionType,
@@ -72,7 +116,7 @@ export async function getTrades() {
           ")"
       );
 
-      console.log("..price: " + price + ", quantity: " + quantity);
+      // console.log("..price: " + price + ", quantity: " + quantity);
       return;
     }
     //NEW, CANCELED, REPLACED, REJECTED, TRADE, EXPIRED
@@ -91,22 +135,25 @@ export async function getTrades() {
 
   async function orderUpdateHandler(data) {
     console.log("ORDER UPDATE HANDLER START");
-    console.log(data);
-    console.log("ORDER UPDATE HANDLER STOP");
+    // console.log(data);
+    // console.log("ORDER UPDATE HANDLER STOP");
     let order = data.order;
     if (order.orderStatus == "NEW") {
       // New order to be placed
       let slaves = await getSlaves();
 
+      console.log(
+        `Master Trade: ${order.side} ${order.originalQuantity} of ${order.symbol} `
+      );
       for (let i in slaves) {
         let slave = slaves[i];
         if (i == "_id") continue;
 
         // let bal = await getSlaveUSDBalance(slave.key, slave.secret, ticker);
-        let asset_balance = await getSlaveAssetBalances(
-          slave.key,
-          slave.secret
-        );
+        // let asset_balance = await getSlaveAssetBalances(
+        //   slave.key,
+        //   slave.secret
+        // );
 
         const MULTIPLIER = 1; // TODO - PULL multiplier from database
 
@@ -116,32 +163,74 @@ export async function getTrades() {
 
         // asset_balance
 
-        let bal = asset_balance.filter((e) => {
-          return e.asset == asset;
-        });
+        // let bal = asset_balance.filter((e) => {
+        //   return e.asset == asset;
+        // });
 
-        bal = bal.availableBalance;
-        let orderPercentage = await binance.getFuturesBalance();
+        // let bal;
+        // for (let i in asset_balance) {
+        //   if (asset_balance[i].asset == asset) {
+        //     bal = asset_balance[i];
+        //   }
+        // }
 
-        if (order.side == "BUY") {
-          orderPercentage = orderPercentage.filter((e) => {
-            return e.asset == "USDT";
-          });
-        } else {
-          orderPercentage = orderPercentage.filter((e) => {
-            return e.asset == asset;
-          });
-        }
+        // console.log("DEBUG: bal FIRST");
+        // console.log(bal);
 
-        orderPercentage = orderPercentage.availableBalance;
+        // bal = bal.availableBalance;
+        // let orderPercentage = await binance.futuresBalance();
 
-        orderPercentage = order.originalQuantity / orderPercentage;
-        orderPercentage = orderPercentage * MULTIPLIER; // FINAL Order Percentage
+        // let master_bal;
+        // if (order.side == "BUY") {
+        //   // orderPercentage = orderPercentage.filter((e) => {
+        //   //   return e.asset == "USDT";
+        //   // });
+        //   for (let i in orderPercentage) {
+        //     if (orderPercentage[i].asset == "USDT") {
+        //       master_bal = orderPercentage[i];
+        //     }
+        //   }
+        // } else {
+        //   // orderPercentage = orderPercentage.filter((e) => {
+        //   //   return e.asset == asset;
+        //   // });
+        //   for (let i in orderPercentage) {
+        //     if (orderPercentage[i].asset == asset) {
+        //       master_bal = orderPercentage[i];
+        //     }
+        //   }
+        // }
 
+        // orderPercentage = master_bal;
+
+        // console.log("DEBUG");
+        // console.log(orderPercentage);
+
+        // orderPercentage = orderPercentage.availableBalance;
+
+        // orderPercentage = order.originalQuantity / orderPercentage;
+        // orderPercentage = orderPercentage * MULTIPLIER; // FINAL Order Percentage
+
+        // console.log("DEBUG: bal");
+        // console.log(bal);
+        // console.log("DEBUG: orderPercentage");
+        // console.log(orderPercentage);
+
+        let ticker = await getTickerPrices();
+        let slave_balance = await getSlaveUSDBalance(
+          slave.key,
+          slave.secret,
+          ticker
+        );
+        let master_balance = await getMasterUSDBalance(ticker);
+
+        let rate = slave_balance / master_balance;
+
+        let qty = rate * order.originalQuantity;
         let data = {
           side: order.side,
           symbol: order.symbol,
-          quantity: bal * orderPercentage, // Asset balance of slave multiplied by order percentage of master
+          quantity: qty * MULTIPLIER, // Asset balance of slave multiplied by order percentage of master
           name: i,
         };
 
@@ -257,6 +346,8 @@ export async function makeSlaveTrade(key, secret, data) {
     APISECRET: secret,
   });
 
+  // console.log("DEBUG: data");
+  // console.log(data);
   if (data.side == "BUY") {
     // Buy
     await slave_binance.futuresMarketBuy(data.symbol, data.quantity);
