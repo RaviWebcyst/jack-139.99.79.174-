@@ -24,6 +24,9 @@ export async function getOpenOrders() {
 
 export async function getTrades() {
   function balance_update(data) {
+    console.log("BALANCE UPDATE DEBUG START");
+    console.log(data);
+    console.log("BALANCE UPDATE DEBUG END");
     console.log("Balance Update");
     for (let obj of data.B) {
       let { a: asset, f: available, l: onOrder } = obj;
@@ -34,9 +37,13 @@ export async function getTrades() {
     }
   }
   function execution_update(data) {
+    console.log("ORDER START");
     console.log(data);
+    console.log("balances");
     console.log(data.updateData.balances);
+    console.log("positions");
     console.log(data.updateData.positions);
+    console.log("ORDER END");
 
     let {
       x: executionType,
@@ -81,7 +88,67 @@ export async function getTrades() {
         orderId
     );
   }
-  binance.websockets.userFutureData(balance_update, execution_update);
+
+  async function orderUpdateHandler(data) {
+    console.log("ORDER UPDATE HANDLER START");
+    console.log(data);
+    console.log("ORDER UPDATE HANDLER STOP");
+    let order = data.order;
+    if (order.orderStatus == "NEW") {
+      // New order to be placed
+      let slaves = await getSlaves();
+
+      for (let i in slaves) {
+        let slave = slaves[i];
+        if (i == "_id") continue;
+
+        // let bal = await getSlaveUSDBalance(slave.key, slave.secret, ticker);
+        let asset_balance = await getSlaveAssetBalances(
+          slave.key,
+          slave.secret
+        );
+
+        const MULTIPLIER = 1; // TODO - PULL multiplier from database
+
+        // Calculate order quantity
+        // Asset == symbol - USDT
+        let asset = order.symbol.slice(0, -4);
+
+        // asset_balance
+
+        let bal = asset_balance.filter((e) => {
+          return e.asset == asset;
+        });
+
+        bal = bal.availableBalance;
+        let orderPercentage = await binance.getFuturesBalance();
+        orderPercentage = orderPercentage.filter((e) => {
+          return e.asset == asset;
+        });
+
+        orderPercentage = orderPercentage.availableBalance;
+
+        orderPercentage = order.originalQuantity / orderPercentage;
+        orderPercentage = orderPercentage * MULTIPLIER; // FINAL Order Percentage
+
+        let data = {
+          side: order.side,
+          symbol: order.symbol,
+          quantity: bal * orderPercentage, // Asset balance of slave multiplied by order percentage of master
+          name: i,
+        };
+
+        await makeSlaveTrade(slave.key, slave.secret, data);
+
+        // TODO - Optimize optimize optimize
+      }
+    }
+  }
+  binance.websockets.userFutureData(
+    balance_update,
+    execution_update,
+    orderUpdateHandler
+  );
   // console.info(await binance.futuresAccount());
   // console.log(binance.websockets);
 }
@@ -109,6 +176,7 @@ export async function getSlaves() {
   let res = await fetch(`${process.env.ROOT_PATH}api/mongo/slaves`);
   res = await res.json();
 
+  delete res._id;
   return res;
 }
 
@@ -169,6 +237,27 @@ export async function getSlaveAssetBalances(key, secret) {
   let balance = await slave_binance.futuresBalance();
 
   return balance;
+}
+
+export async function makeSlaveTrade(key, secret, data) {
+  let slave_binance = new Binance().options({
+    APIKEY: key,
+    APISECRET: secret,
+  });
+
+  if (data.side == "BUY") {
+    // Buy
+    await slave_binance.futuresMarketBuy(data.symbol, data.quantity);
+    console.log(
+      `New order made: Buy ${data.quantity} of ${data.symbol} for ${data.name}`
+    );
+  } else if (data.side == "SELL") {
+    // Sell
+    await slave_binance.futuresMarketSell(data.symbol, data.quantity);
+    console.log(
+      `New order made: Sell ${data.quantity} of ${data.symbol} for ${data.name} `
+    );
+  }
 }
 
 // Debug helpers

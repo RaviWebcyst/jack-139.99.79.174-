@@ -1,0 +1,1474 @@
+ORDER UPDATE HANDLER START
+{
+  eventType: 'ORDER_TRADE_UPDATE',
+  eventTime: 1640923755940,
+  transaction: 1640923755934,
+  order: {
+    symbol: 'ICXUSDT',
+    clientOrderId: 'web_ZsZnUQe0Wl0QTp8WQqvq',
+    side: 'SELL',
+    orderType: 'TAKE_PROFIT_MARKET',
+    timeInForce: 'GTE_GTC',
+    originalQuantity: '0',
+    originalPrice: '0',
+    averagePrice: '0',
+    stopPrice: '1.2600',
+    executionType: 'EXPIRED',
+    orderStatus: 'EXPIRED',
+    orderId: 1859036449,
+    orderLastFilledQuantity: '0',
+    orderFilledAccumulatedQuantity: '0',
+    lastFilledPrice: '0',
+    commissionAsset: undefined,
+    commission: undefined,
+    orderTradeTime: 1640923755934,
+    tradeId: 0,
+    bidsNotional: '0',
+    askNotional: '0',
+    isMakerSide: false,
+    isReduceOnly: true,
+    stopPriceWorkingType: 'MARK_PRICE',
+    originalOrderType: 'TAKE_PROFIT_MARKET',
+    positionSide: 'BOTH',
+    closeAll: true,
+    activationPrice: undefined,
+    callbackRate: undefined,
+    realizedProfit: '0'
+  }
+}
+ORDER UPDATE HANDLER STOP
+ORDER UPDATE HANDLER START
+{
+  eventType: 'ORDER_TRADE_UPDATE',
+  eventTime: 1640923755940,
+  transaction: 1640923755934,
+  order: {
+    symbol: 'ICXUSDT',
+    clientOrderId: 'web_y25UFNN2prOjDuE08Vlk',
+    side: 'SELL',
+    orderType: 'MARKET',
+    timeInForce: 'GTC',
+    originalQuantity: '20',
+    originalPrice: '0',
+    averagePrice: '0',
+    stopPrice: '0',
+    executionType: 'NEW',
+    orderStatus: 'NEW',
+    orderId: 1859104504,
+    orderLastFilledQuantity: '0',
+    orderFilledAccumulatedQuantity: '0',
+    lastFilledPrice: '0',
+    commissionAsset: undefined,
+    commission: undefined,
+    orderTradeTime: 1640923755934,
+    tradeId: 0,
+    bidsNotional: '0',
+    askNotional: '0',
+    isMakerSide: false,
+    isReduceOnly: true,
+    stopPriceWorkingType: 'CONTRACT_PRICE',
+    originalOrderType: 'MARKET',
+    positionSide: 'BOTH',
+    closeAll: false,
+    activationPrice: undefined,
+    callbackRate: undefined,
+    realizedProfit: '0'
+  }
+}
+ORDER UPDATE HANDLER STOP
+ORDER START
+{
+  eventType: 'ACCOUNT_UPDATE',
+  eventTime: 1640923755940,
+  transaction: 1640923755934,
+  updateData: {
+    eventReasonType: 'ORDER',
+    balances: [ [Object] ],
+    positions: [ [Object] ]
+  }
+}
+balances
+[
+  {
+    asset: 'USDT',
+    walletBalance: '5000.09414801',
+    crossWalletBalance: '5000.09414801',
+    balanceChange: '0'
+  }
+]
+positions
+[
+  {
+    symbol: 'ICXUSDT',
+    positionAmount: '0',
+    entryPrice: '0.0000',
+    accumulatedRealized: '0.33520000',
+    unrealizedPnL: '0',
+    marginType: 'cross',
+    isolatedWallet: '0',
+    positionSide: 'BOTH'
+  }
+]
+ORDER END
+undefined       undefined undefined undefined ORDER #undefined
+ORDER UPDATE HANDLER START
+{
+  eventType: 'ORDER_TRADE_UPDATE',
+  eventTime: 1640923755940,
+  transaction: 1640923755934,
+  order: {
+    symbol: 'ICXUSDT',
+    clientOrderId: 'web_y25UFNN2prOjDuE08Vlk',
+    side: 'SELL',
+    orderType: 'MARKET',
+    timeInForce: 'GTC',
+    originalQuantity: '20',
+    originalPrice: '0',
+    averagePrice: '1.2436',
+    stopPrice: '0',
+    executionType: 'TRADE',
+    orderStatus: 'FILLED',
+    orderId: 1859104504,
+    orderLastFilledQuantity: '20',
+    orderFilledAccumulatedQuantity: '20',
+    lastFilledPrice: '1.2436',
+    commissionAsset: 'USDT',
+    commission: '0.00994880',
+    orderTradeTime: 1640923755934,
+    tradeId: 62669438,
+    bidsNotional: '0',
+    askNotional: '0',
+    isMakerSide: false,
+    isReduceOnly: true,
+    stopPriceWorkingType: 'CONTRACT_PRICE',
+    originalOrderType: 'MARKET',
+    positionSide: 'BOTH',
+    closeAll: false,
+    activationPrice: undefined,
+    callbackRate: undefined,
+    realizedProfit: '0.11400000'
+  }
+}
+ORDER UPDATE HANDLER STOP
+ORDER UPDATE HANDLER START
+{
+  eventType: 'ORDER_TRADE_UPDATE',
+  eventTime: 1640923798233,
+  transaction: 1640923798228,
+  order: {
+    symbol: 'ICXUSDT',
+    clientOrderId: 'web_ls5qM6oCuu9b1LEDnwku',
+    side: 'BUY',
+    orderType: 'MARKET',
+    timeInForce: 'GTC',
+    originalQuantity: '20',
+    originalPrice: '0',
+    averagePrice: '0',
+    stopPrice: '0',
+    executionType: 'NEW',
+    orderStatus: 'NEW',
+    orderId: 1859106854,
+    orderLastFilledQuantity: '0',
+    orderFilledAccumulatedQuantity: '0',
+    lastFilledPrice: '0',
+    commissionAsset: undefined,
+    commission: undefined,
+    orderTradeTime: 1640923798228,
+    tradeId: 0,
+    bidsNotional: '0',
+    askNotional: '0',
+    isMakerSide: false,
+    isReduceOnly: false,
+    stopPriceWorkingType: 'CONTRACT_PRICE',
+    originalOrderType: 'MARKET',
+    positionSide: 'BOTH',
+    closeAll: false,
+    activationPrice: undefined,
+    callbackRate: undefined,
+    realizedProfit: '0'
+  }
+}
+ORDER UPDATE HANDLER STOP
+ORDER START
+{
+  eventType: 'ACCOUNT_UPDATE',
+  eventTime: 1640923798233,
+  transaction: 1640923798228,
+  updateData: {
+    eventReasonType: 'ORDER',
+    balances: [ [Object] ],
+    positions: [ [Object] ]
+  }
+}
+balances
+[
+  {
+    asset: 'USDT',
+    walletBalance: '5000.08420321',
+    crossWalletBalance: '5000.08420321',
+    balanceChange: '0'
+  }
+]
+positions
+[
+  {
+    symbol: 'ICXUSDT',
+    positionAmount: '20',
+    entryPrice: '1.2431',
+    accumulatedRealized: '0.33520000',
+    unrealizedPnL: '-0.00547620',
+    marginType: 'cross',
+    isolatedWallet: '0',
+    positionSide: 'BOTH'
+  }
+]
+ORDER END
+undefined       undefined undefined undefined ORDER #undefined
+ORDER UPDATE HANDLER START
+{
+  eventType: 'ORDER_TRADE_UPDATE',
+  eventTime: 1640923798233,
+  transaction: 1640923798228,
+  order: {
+    symbol: 'ICXUSDT',
+    clientOrderId: 'web_ls5qM6oCuu9b1LEDnwku',
+    side: 'BUY',
+    orderType: 'MARKET',
+    timeInForce: 'GTC',
+    originalQuantity: '20',
+    originalPrice: '0',
+    averagePrice: '1.2431',
+    stopPrice: '0',
+    executionType: 'TRADE',
+    orderStatus: 'FILLED',
+    orderId: 1859106854,
+    orderLastFilledQuantity: '20',
+    orderFilledAccumulatedQuantity: '20',
+    lastFilledPrice: '1.2431',
+    commissionAsset: 'USDT',
+    commission: '0.00994480',
+    orderTradeTime: 1640923798228,
+    tradeId: 62669523,
+    bidsNotional: '0',
+    askNotional: '0',
+    isMakerSide: false,
+    isReduceOnly: false,
+    stopPriceWorkingType: 'CONTRACT_PRICE',
+    originalOrderType: 'MARKET',
+    positionSide: 'BOTH',
+    closeAll: false,
+    activationPrice: undefined,
+    callbackRate: undefined,
+    realizedProfit: '0'
+  }
+}
+ORDER UPDATE HANDLER STOP
+ORDER UPDATE HANDLER START
+{
+  eventType: 'ORDER_TRADE_UPDATE',
+  eventTime: 1640923810170,
+  transaction: 1640923810164,
+  order: {
+    symbol: 'ICXUSDT',
+    clientOrderId: 'web_zBv1rDH19VOczsgn82n9',
+    side: 'SELL',
+    orderType: 'TAKE_PROFIT_MARKET',
+    timeInForce: 'GTE_GTC',
+    originalQuantity: '0',
+    originalPrice: '0',
+    averagePrice: '0',
+    stopPrice: '1.2600',
+    executionType: 'NEW',
+    orderStatus: 'NEW',
+    orderId: 1859107179,
+    orderLastFilledQuantity: '0',
+    orderFilledAccumulatedQuantity: '0',
+    lastFilledPrice: '0',
+    commissionAsset: undefined,
+    commission: undefined,
+    orderTradeTime: 1640923810164,
+    tradeId: 0,
+    bidsNotional: '0',
+    askNotional: '0',
+    isMakerSide: false,
+    isReduceOnly: true,
+    stopPriceWorkingType: 'MARK_PRICE',
+    originalOrderType: 'TAKE_PROFIT_MARKET',
+    positionSide: 'BOTH',
+    closeAll: true,
+    activationPrice: undefined,
+    callbackRate: undefined,
+    realizedProfit: '0'
+  }
+}
+ORDER UPDATE HANDLER STOP
+ORDER UPDATE HANDLER START
+{
+  eventType: 'ORDER_TRADE_UPDATE',
+  eventTime: 1640923893973,
+  transaction: 1640923893963,
+  order: {
+    symbol: '1000SHIBUSDT',
+    clientOrderId: 'web_JyW8t2JVMYLS3en1aA76',
+    side: 'BUY',
+    orderType: 'LIMIT',
+    timeInForce: 'GTC',
+    originalQuantity: '735',
+    originalPrice: '0.034004',
+    averagePrice: '0',
+    stopPrice: '0',
+    executionType: 'NEW',
+    orderStatus: 'NEW',
+    orderId: 5149515956,
+    orderLastFilledQuantity: '0',
+    orderFilledAccumulatedQuantity: '0',
+    lastFilledPrice: '0',
+    commissionAsset: undefined,
+    commission: undefined,
+    orderTradeTime: 1640923893963,
+    tradeId: 0,
+    bidsNotional: '0',
+    askNotional: '0',
+    isMakerSide: false,
+    isReduceOnly: false,
+    stopPriceWorkingType: 'CONTRACT_PRICE',
+    originalOrderType: 'LIMIT',
+    positionSide: 'BOTH',
+    closeAll: false,
+    activationPrice: undefined,
+    callbackRate: undefined,
+    realizedProfit: '0'
+  }
+}
+ORDER UPDATE HANDLER STOP
+ORDER START
+{
+  eventType: 'ACCOUNT_UPDATE',
+  eventTime: 1640923893973,
+  transaction: 1640923893963,
+  updateData: {
+    eventReasonType: 'ORDER',
+    balances: [ [Object] ],
+    positions: [ [Object] ]
+  }
+}
+balances
+[
+  {
+    asset: 'USDT',
+    walletBalance: '5000.07420721',
+    crossWalletBalance: '5000.07420721',
+    balanceChange: '0'
+  }
+]
+positions
+[
+  {
+    symbol: '1000SHIBUSDT',
+    positionAmount: '735',
+    entryPrice: '0.034000',
+    accumulatedRealized: '-26.84142300',
+    unrealizedPnL: '0.00150675',
+    marginType: 'cross',
+    isolatedWallet: '0',
+    positionSide: 'BOTH'
+  }
+]
+ORDER END
+undefined       undefined undefined undefined ORDER #undefined
+ORDER UPDATE HANDLER START
+{
+  eventType: 'ORDER_TRADE_UPDATE',
+  eventTime: 1640923893973,
+  transaction: 1640923893963,
+  order: {
+    symbol: '1000SHIBUSDT',
+    clientOrderId: 'web_JyW8t2JVMYLS3en1aA76',
+    side: 'BUY',
+    orderType: 'LIMIT',
+    timeInForce: 'GTC',
+    originalQuantity: '735',
+    originalPrice: '0.034004',
+    averagePrice: '0.034000',
+    stopPrice: '0',
+    executionType: 'TRADE',
+    orderStatus: 'FILLED',
+    orderId: 5149515956,
+    orderLastFilledQuantity: '735',
+    orderFilledAccumulatedQuantity: '735',
+    lastFilledPrice: '0.034000',
+    commissionAsset: 'USDT',
+    commission: '0.00999600',
+    orderTradeTime: 1640923893963,
+    tradeId: 428749120,
+    bidsNotional: '0',
+    askNotional: '0',
+    isMakerSide: false,
+    isReduceOnly: false,
+    stopPriceWorkingType: 'CONTRACT_PRICE',
+    originalOrderType: 'LIMIT',
+    positionSide: 'BOTH',
+    closeAll: false,
+    activationPrice: undefined,
+    callbackRate: undefined,
+    realizedProfit: '0'
+  }
+}
+ORDER UPDATE HANDLER STOP
+ORDER UPDATE HANDLER START
+{
+  eventType: 'ORDER_TRADE_UPDATE',
+  eventTime: 1640923951964,
+  transaction: 1640923951959,
+  order: {
+    symbol: '1000SHIBUSDT',
+    clientOrderId: 'web_oIa0Z1vZ1L9cwFuFw0Ld',
+    side: 'SELL',
+    orderType: 'TAKE_PROFIT_MARKET',
+    timeInForce: 'GTE_GTC',
+    originalQuantity: '0',
+    originalPrice: '0',
+    averagePrice: '0',
+    stopPrice: '0.035000',
+    executionType: 'NEW',
+    orderStatus: 'NEW',
+    orderId: 5149526505,
+    orderLastFilledQuantity: '0',
+    orderFilledAccumulatedQuantity: '0',
+    lastFilledPrice: '0',
+    commissionAsset: undefined,
+    commission: undefined,
+    orderTradeTime: 1640923951959,
+    tradeId: 0,
+    bidsNotional: '0',
+    askNotional: '0',
+    isMakerSide: false,
+    isReduceOnly: true,
+    stopPriceWorkingType: 'MARK_PRICE',
+    originalOrderType: 'TAKE_PROFIT_MARKET',
+    positionSide: 'BOTH',
+    closeAll: true,
+    activationPrice: undefined,
+    callbackRate: undefined,
+    realizedProfit: '0'
+  }
+}
+ORDER UPDATE HANDLER STOP
+ORDER UPDATE HANDLER START
+{
+  eventType: 'ORDER_TRADE_UPDATE',
+  eventTime: 1640924020235,
+  transaction: 1640924020227,
+  order: {
+    symbol: '1000SHIBUSDT',
+    clientOrderId: 'web_oIa0Z1vZ1L9cwFuFw0Ld',
+    side: 'SELL',
+    orderType: 'TAKE_PROFIT_MARKET',
+    timeInForce: 'GTE_GTC',
+    originalQuantity: '0',
+    originalPrice: '0',
+    averagePrice: '0',
+    stopPrice: '0.035000',
+    executionType: 'EXPIRED',
+    orderStatus: 'EXPIRED',
+    orderId: 5149526505,
+    orderLastFilledQuantity: '0',
+    orderFilledAccumulatedQuantity: '0',
+    lastFilledPrice: '0',
+    commissionAsset: undefined,
+    commission: undefined,
+    orderTradeTime: 1640924020227,
+    tradeId: 0,
+    bidsNotional: '0',
+    askNotional: '0',
+    isMakerSide: false,
+    isReduceOnly: true,
+    stopPriceWorkingType: 'MARK_PRICE',
+    originalOrderType: 'TAKE_PROFIT_MARKET',
+    positionSide: 'BOTH',
+    closeAll: true,
+    activationPrice: undefined,
+    callbackRate: undefined,
+    realizedProfit: '0'
+  }
+}
+ORDER UPDATE HANDLER STOP
+ORDER UPDATE HANDLER START
+{
+  eventType: 'ORDER_TRADE_UPDATE',
+  eventTime: 1640924020235,
+  transaction: 1640924020227,
+  order: {
+    symbol: '1000SHIBUSDT',
+    clientOrderId: 'web_ubrOZ95uan5Ww3qFwSy8',
+    side: 'SELL',
+    orderType: 'MARKET',
+    timeInForce: 'GTC',
+    originalQuantity: '735',
+    originalPrice: '0',
+    averagePrice: '0',
+    stopPrice: '0',
+    executionType: 'NEW',
+    orderStatus: 'NEW',
+    orderId: 5149537382,
+    orderLastFilledQuantity: '0',
+    orderFilledAccumulatedQuantity: '0',
+    lastFilledPrice: '0',
+    commissionAsset: undefined,
+    commission: undefined,
+    orderTradeTime: 1640924020227,
+    tradeId: 0,
+    bidsNotional: '0',
+    askNotional: '0',
+    isMakerSide: false,
+    isReduceOnly: true,
+    stopPriceWorkingType: 'CONTRACT_PRICE',
+    originalOrderType: 'MARKET',
+    positionSide: 'BOTH',
+    closeAll: false,
+    activationPrice: undefined,
+    callbackRate: undefined,
+    realizedProfit: '0'
+  }
+}
+ORDER UPDATE HANDLER STOP
+ORDER START
+{
+  eventType: 'ACCOUNT_UPDATE',
+  eventTime: 1640924020235,
+  transaction: 1640924020227,
+  updateData: {
+    eventReasonType: 'ORDER',
+    balances: [ [Object] ],
+    positions: [ [Object] ]
+  }
+}
+balances
+[
+  {
+    asset: 'USDT',
+    walletBalance: '5000.05098651',
+    crossWalletBalance: '5000.05098651',
+    balanceChange: '0'
+  }
+]
+positions
+[
+  {
+    symbol: '1000SHIBUSDT',
+    positionAmount: '0',
+    entryPrice: '0.000000',
+    accumulatedRealized: '-26.85465300',
+    unrealizedPnL: '0',
+    marginType: 'cross',
+    isolatedWallet: '0',
+    positionSide: 'BOTH'
+  }
+]
+ORDER END
+undefined       undefined undefined undefined ORDER #undefined
+ORDER UPDATE HANDLER START
+{
+  eventType: 'ORDER_TRADE_UPDATE',
+  eventTime: 1640924020235,
+  transaction: 1640924020227,
+  order: {
+    symbol: '1000SHIBUSDT',
+    clientOrderId: 'web_ubrOZ95uan5Ww3qFwSy8',
+    side: 'SELL',
+    orderType: 'MARKET',
+    timeInForce: 'GTC',
+    originalQuantity: '735',
+    originalPrice: '0',
+    averagePrice: '0.033982',
+    stopPrice: '0',
+    executionType: 'TRADE',
+    orderStatus: 'FILLED',
+    orderId: 5149537382,
+    orderLastFilledQuantity: '735',
+    orderFilledAccumulatedQuantity: '735',
+    lastFilledPrice: '0.033982',
+    commissionAsset: 'USDT',
+    commission: '0.00999070',
+    orderTradeTime: 1640924020227,
+    tradeId: 428749796,
+    bidsNotional: '0',
+    askNotional: '0',
+    isMakerSide: false,
+    isReduceOnly: true,
+    stopPriceWorkingType: 'CONTRACT_PRICE',
+    originalOrderType: 'MARKET',
+    positionSide: 'BOTH',
+    closeAll: false,
+    activationPrice: undefined,
+    callbackRate: undefined,
+    realizedProfit: '-0.01323000'
+  }
+}
+ORDER UPDATE HANDLER STOP
+ORDER UPDATE HANDLER START
+{
+  eventType: 'ORDER_TRADE_UPDATE',
+  eventTime: 1640924042191,
+  transaction: 1640924042184,
+  order: {
+    symbol: '1000SHIBUSDT',
+    clientOrderId: 'web_MEQAPxczwuYL2WkGJ8X4',
+    side: 'SELL',
+    orderType: 'MARKET',
+    timeInForce: 'GTC',
+    originalQuantity: '735',
+    originalPrice: '0',
+    averagePrice: '0',
+    stopPrice: '0',
+    executionType: 'NEW',
+    orderStatus: 'NEW',
+    orderId: 5149539746,
+    orderLastFilledQuantity: '0',
+    orderFilledAccumulatedQuantity: '0',
+    lastFilledPrice: '0',
+    commissionAsset: undefined,
+    commission: undefined,
+    orderTradeTime: 1640924042184,
+    tradeId: 0,
+    bidsNotional: '0',
+    askNotional: '0',
+    isMakerSide: false,
+    isReduceOnly: false,
+    stopPriceWorkingType: 'CONTRACT_PRICE',
+    originalOrderType: 'MARKET',
+    positionSide: 'BOTH',
+    closeAll: false,
+    activationPrice: undefined,
+    callbackRate: undefined,
+    realizedProfit: '0'
+  }
+}
+ORDER UPDATE HANDLER STOP
+ORDER START
+{
+  eventType: 'ACCOUNT_UPDATE',
+  eventTime: 1640924042191,
+  transaction: 1640924042184,
+  updateData: {
+    eventReasonType: 'ORDER',
+    balances: [ [Object] ],
+    positions: [ [Object] ]
+  }
+}
+balances
+[
+  {
+    asset: 'USDT',
+    walletBalance: '5000.04099669',
+    crossWalletBalance: '5000.04099669',
+    balanceChange: '0'
+  }
+]
+positions
+[
+  {
+    symbol: '1000SHIBUSDT',
+    positionAmount: '-735',
+    entryPrice: '0.033979',
+    accumulatedRealized: '-26.85465300',
+    unrealizedPnL: '0.01727985',
+    marginType: 'cross',
+    isolatedWallet: '0',
+    positionSide: 'BOTH'
+  }
+]
+ORDER END
+undefined       undefined undefined undefined ORDER #undefined
+ORDER UPDATE HANDLER START
+{
+  eventType: 'ORDER_TRADE_UPDATE',
+  eventTime: 1640924042191,
+  transaction: 1640924042184,
+  order: {
+    symbol: '1000SHIBUSDT',
+    clientOrderId: 'web_MEQAPxczwuYL2WkGJ8X4',
+    side: 'SELL',
+    orderType: 'MARKET',
+    timeInForce: 'GTC',
+    originalQuantity: '735',
+    originalPrice: '0',
+    averagePrice: '0.033979',
+    stopPrice: '0',
+    executionType: 'TRADE',
+    orderStatus: 'FILLED',
+    orderId: 5149539746,
+    orderLastFilledQuantity: '735',
+    orderFilledAccumulatedQuantity: '735',
+    lastFilledPrice: '0.033979',
+    commissionAsset: 'USDT',
+    commission: '0.00998982',
+    orderTradeTime: 1640924042184,
+    tradeId: 428749890,
+    bidsNotional: '0',
+    askNotional: '0',
+    isMakerSide: false,
+    isReduceOnly: false,
+    stopPriceWorkingType: 'CONTRACT_PRICE',
+    originalOrderType: 'MARKET',
+    positionSide: 'BOTH',
+    closeAll: false,
+    activationPrice: undefined,
+    callbackRate: undefined,
+    realizedProfit: '0'
+  }
+}
+ORDER UPDATE HANDLER STOP
+ORDER UPDATE HANDLER START
+{
+  eventType: 'ORDER_TRADE_UPDATE',
+  eventTime: 1640924073451,
+  transaction: 1640924073444,
+  order: {
+    symbol: '1000SHIBUSDT',
+    clientOrderId: 'web_e2QE9iCuktTkT9GWm5Kq',
+    side: 'BUY',
+    orderType: 'TAKE_PROFIT_MARKET',
+    timeInForce: 'GTE_GTC',
+    originalQuantity: '0',
+    originalPrice: '0',
+    averagePrice: '0',
+    stopPrice: '0.033000',
+    executionType: 'NEW',
+    orderStatus: 'NEW',
+    orderId: 5149544226,
+    orderLastFilledQuantity: '0',
+    orderFilledAccumulatedQuantity: '0',
+    lastFilledPrice: '0',
+    commissionAsset: undefined,
+    commission: undefined,
+    orderTradeTime: 1640924073444,
+    tradeId: 0,
+    bidsNotional: '0',
+    askNotional: '0',
+    isMakerSide: false,
+    isReduceOnly: true,
+    stopPriceWorkingType: 'MARK_PRICE',
+    originalOrderType: 'TAKE_PROFIT_MARKET',
+    positionSide: 'BOTH',
+    closeAll: true,
+    activationPrice: undefined,
+    callbackRate: undefined,
+    realizedProfit: '0'
+  }
+}
+ORDER UPDATE HANDLER STOP
+ORDER UPDATE HANDLER START
+{
+  eventType: 'ORDER_TRADE_UPDATE',
+  eventTime: 1640924144252,
+  transaction: 1640924144247,
+  order: {
+    symbol: '1000SHIBUSDT',
+    clientOrderId: 'web_e2QE9iCuktTkT9GWm5Kq',
+    side: 'BUY',
+    orderType: 'TAKE_PROFIT_MARKET',
+    timeInForce: 'GTE_GTC',
+    originalQuantity: '0',
+    originalPrice: '0',
+    averagePrice: '0',
+    stopPrice: '0.033000',
+    executionType: 'EXPIRED',
+    orderStatus: 'EXPIRED',
+    orderId: 5149544226,
+    orderLastFilledQuantity: '0',
+    orderFilledAccumulatedQuantity: '0',
+    lastFilledPrice: '0',
+    commissionAsset: undefined,
+    commission: undefined,
+    orderTradeTime: 1640924144247,
+    tradeId: 0,
+    bidsNotional: '0',
+    askNotional: '0',
+    isMakerSide: false,
+    isReduceOnly: true,
+    stopPriceWorkingType: 'MARK_PRICE',
+    originalOrderType: 'TAKE_PROFIT_MARKET',
+    positionSide: 'BOTH',
+    closeAll: true,
+    activationPrice: undefined,
+    callbackRate: undefined,
+    realizedProfit: '0'
+  }
+}
+ORDER UPDATE HANDLER STOP
+ORDER UPDATE HANDLER START
+{
+  eventType: 'ORDER_TRADE_UPDATE',
+  eventTime: 1640924144252,
+  transaction: 1640924144247,
+  order: {
+    symbol: '1000SHIBUSDT',
+    clientOrderId: 'web_YsByNGpPouFuFiKfuo7q',
+    side: 'BUY',
+    orderType: 'MARKET',
+    timeInForce: 'GTC',
+    originalQuantity: '735',
+    originalPrice: '0',
+    averagePrice: '0',
+    stopPrice: '0',
+    executionType: 'NEW',
+    orderStatus: 'NEW',
+    orderId: 5149554270,
+    orderLastFilledQuantity: '0',
+    orderFilledAccumulatedQuantity: '0',
+    lastFilledPrice: '0',
+    commissionAsset: undefined,
+    commission: undefined,
+    orderTradeTime: 1640924144247,
+    tradeId: 0,
+    bidsNotional: '0',
+    askNotional: '0',
+    isMakerSide: false,
+    isReduceOnly: true,
+    stopPriceWorkingType: 'CONTRACT_PRICE',
+    originalOrderType: 'MARKET',
+    positionSide: 'BOTH',
+    closeAll: false,
+    activationPrice: undefined,
+    callbackRate: undefined,
+    realizedProfit: '0'
+  }
+}
+ORDER UPDATE HANDLER STOP
+ORDER START
+{
+  eventType: 'ACCOUNT_UPDATE',
+  eventTime: 1640924144252,
+  transaction: 1640924144247,
+  updateData: {
+    eventReasonType: 'ORDER',
+    balances: [ [Object] ],
+    positions: [ [Object] ]
+  }
+}
+balances
+[
+  {
+    asset: 'USDT',
+    walletBalance: '5000.03321275',
+    crossWalletBalance: '5000.03321275',
+    balanceChange: '0'
+  }
+]
+positions
+[
+  {
+    symbol: '1000SHIBUSDT',
+    positionAmount: '0',
+    entryPrice: '0.000000',
+    accumulatedRealized: '-26.85244800',
+    unrealizedPnL: '0',
+    marginType: 'cross',
+    isolatedWallet: '0',
+    positionSide: 'BOTH'
+  }
+]
+ORDER END
+undefined       undefined undefined undefined ORDER #undefined
+ORDER UPDATE HANDLER START
+{
+  eventType: 'ORDER_TRADE_UPDATE',
+  eventTime: 1640924144252,
+  transaction: 1640924144247,
+  order: {
+    symbol: '1000SHIBUSDT',
+    clientOrderId: 'web_YsByNGpPouFuFiKfuo7q',
+    side: 'BUY',
+    orderType: 'MARKET',
+    timeInForce: 'GTC',
+    originalQuantity: '735',
+    originalPrice: '0',
+    averagePrice: '0.033976',
+    stopPrice: '0',
+    executionType: 'TRADE',
+    orderStatus: 'FILLED',
+    orderId: 5149554270,
+    orderLastFilledQuantity: '735',
+    orderFilledAccumulatedQuantity: '735',
+    lastFilledPrice: '0.033976',
+    commissionAsset: 'USDT',
+    commission: '0.00998894',
+    orderTradeTime: 1640924144247,
+    tradeId: 428750378,
+    bidsNotional: '0',
+    askNotional: '0',
+    isMakerSide: false,
+    isReduceOnly: true,
+    stopPriceWorkingType: 'CONTRACT_PRICE',
+    originalOrderType: 'MARKET',
+    positionSide: 'BOTH',
+    closeAll: false,
+    activationPrice: undefined,
+    callbackRate: undefined,
+    realizedProfit: '0.00220500'
+  }
+}
+ORDER UPDATE HANDLER STOP
+ORDER UPDATE HANDLER START
+{
+  eventType: 'ORDER_TRADE_UPDATE',
+  eventTime: 1640924168976,
+  transaction: 1640924168971,
+  order: {
+    symbol: 'ICXUSDT',
+    clientOrderId: 'web_bolaskpd27CkP5t51Qil',
+    side: 'BUY',
+    orderType: 'MARKET',
+    timeInForce: 'GTC',
+    originalQuantity: '20',
+    originalPrice: '0',
+    averagePrice: '0',
+    stopPrice: '0',
+    executionType: 'NEW',
+    orderStatus: 'NEW',
+    orderId: 1859126427,
+    orderLastFilledQuantity: '0',
+    orderFilledAccumulatedQuantity: '0',
+    lastFilledPrice: '0',
+    commissionAsset: undefined,
+    commission: undefined,
+    orderTradeTime: 1640924168971,
+    tradeId: 0,
+    bidsNotional: '0',
+    askNotional: '0',
+    isMakerSide: false,
+    isReduceOnly: false,
+    stopPriceWorkingType: 'CONTRACT_PRICE',
+    originalOrderType: 'MARKET',
+    positionSide: 'BOTH',
+    closeAll: false,
+    activationPrice: undefined,
+    callbackRate: undefined,
+    realizedProfit: '0'
+  }
+}
+ORDER UPDATE HANDLER STOP
+ORDER START
+{
+  eventType: 'ACCOUNT_UPDATE',
+  eventTime: 1640924168976,
+  transaction: 1640924168971,
+  updateData: {
+    eventReasonType: 'ORDER',
+    balances: [ [Object] ],
+    positions: [ [Object] ]
+  }
+}
+balances
+[
+  {
+    asset: 'USDT',
+    walletBalance: '5000.03073156',
+    crossWalletBalance: '5000.03073156',
+    balanceChange: '0'
+  }
+]
+positions
+[
+  {
+    symbol: 'ICXUSDT',
+    positionAmount: '25',
+    entryPrice: '1.2426',
+    accumulatedRealized: '0.33520000',
+    unrealizedPnL: '-0.07153350',
+    marginType: 'cross',
+    isolatedWallet: '0',
+    positionSide: 'BOTH'
+  }
+]
+ORDER END
+undefined       undefined undefined undefined ORDER #undefined
+ORDER UPDATE HANDLER START
+{
+  eventType: 'ORDER_TRADE_UPDATE',
+  eventTime: 1640924168976,
+  transaction: 1640924168971,
+  order: {
+    symbol: 'ICXUSDT',
+    clientOrderId: 'web_bolaskpd27CkP5t51Qil',
+    side: 'BUY',
+    orderType: 'MARKET',
+    timeInForce: 'GTC',
+    originalQuantity: '20',
+    originalPrice: '0',
+    averagePrice: '1.2406',
+    stopPrice: '0',
+    executionType: 'TRADE',
+    orderStatus: 'PARTIALLY_FILLED',
+    orderId: 1859126427,
+    orderLastFilledQuantity: '5',
+    orderFilledAccumulatedQuantity: '5',
+    lastFilledPrice: '1.2406',
+    commissionAsset: 'USDT',
+    commission: '0.00248119',
+    orderTradeTime: 1640924168971,
+    tradeId: 62670439,
+    bidsNotional: '0',
+    askNotional: '0',
+    isMakerSide: false,
+    isReduceOnly: false,
+    stopPriceWorkingType: 'CONTRACT_PRICE',
+    originalOrderType: 'MARKET',
+    positionSide: 'BOTH',
+    closeAll: false,
+    activationPrice: undefined,
+    callbackRate: undefined,
+    realizedProfit: '0'
+  }
+}
+ORDER UPDATE HANDLER STOP
+ORDER START
+{
+  eventType: 'ACCOUNT_UPDATE',
+  eventTime: 1640924168976,
+  transaction: 1640924168971,
+  updateData: {
+    eventReasonType: 'ORDER',
+    balances: [ [Object] ],
+    positions: [ [Object] ]
+  }
+}
+balances
+[
+  {
+    asset: 'USDT',
+    walletBalance: '5000.02825016',
+    crossWalletBalance: '5000.02825016',
+    balanceChange: '0'
+  }
+]
+positions
+[
+  {
+    symbol: 'ICXUSDT',
+    positionAmount: '30',
+    entryPrice: '1.2423',
+    accumulatedRealized: '0.33520000',
+    unrealizedPnL: '-0.07384020',
+    marginType: 'cross',
+    isolatedWallet: '0',
+    positionSide: 'BOTH'
+  }
+]
+ORDER END
+undefined       undefined undefined undefined ORDER #undefined
+ORDER UPDATE HANDLER START
+{
+  eventType: 'ORDER_TRADE_UPDATE',
+  eventTime: 1640924168976,
+  transaction: 1640924168971,
+  order: {
+    symbol: 'ICXUSDT',
+    clientOrderId: 'web_bolaskpd27CkP5t51Qil',
+    side: 'BUY',
+    orderType: 'MARKET',
+    timeInForce: 'GTC',
+    originalQuantity: '20',
+    originalPrice: '0',
+    averagePrice: '1.2407',
+    stopPrice: '0',
+    executionType: 'TRADE',
+    orderStatus: 'PARTIALLY_FILLED',
+    orderId: 1859126427,
+    orderLastFilledQuantity: '5',
+    orderFilledAccumulatedQuantity: '10',
+    lastFilledPrice: '1.2407',
+    commissionAsset: 'USDT',
+    commission: '0.00248140',
+    orderTradeTime: 1640924168971,
+    tradeId: 62670440,
+    bidsNotional: '0',
+    askNotional: '0',
+    isMakerSide: false,
+    isReduceOnly: false,
+    stopPriceWorkingType: 'CONTRACT_PRICE',
+    originalOrderType: 'MARKET',
+    positionSide: 'BOTH',
+    closeAll: false,
+    activationPrice: undefined,
+    callbackRate: undefined,
+    realizedProfit: '0'
+  }
+}
+ORDER UPDATE HANDLER STOP
+ORDER START
+{
+  eventType: 'ACCOUNT_UPDATE',
+  eventTime: 1640924168976,
+  transaction: 1640924168971,
+  updateData: {
+    eventReasonType: 'ORDER',
+    balances: [ [Object] ],
+    positions: [ [Object] ]
+  }
+}
+balances
+[
+  {
+    asset: 'USDT',
+    walletBalance: '5000.02576876',
+    crossWalletBalance: '5000.02576876',
+    balanceChange: '0'
+  }
+]
+positions
+[
+  {
+    symbol: 'ICXUSDT',
+    positionAmount: '35',
+    entryPrice: '1.2421',
+    accumulatedRealized: '0.33520000',
+    unrealizedPnL: '-0.07914690',
+    marginType: 'cross',
+    isolatedWallet: '0',
+    positionSide: 'BOTH'
+  }
+]
+ORDER END
+undefined       undefined undefined undefined ORDER #undefined
+ORDER UPDATE HANDLER START
+{
+  eventType: 'ORDER_TRADE_UPDATE',
+  eventTime: 1640924168976,
+  transaction: 1640924168971,
+  order: {
+    symbol: 'ICXUSDT',
+    clientOrderId: 'web_bolaskpd27CkP5t51Qil',
+    side: 'BUY',
+    orderType: 'MARKET',
+    timeInForce: 'GTC',
+    originalQuantity: '20',
+    originalPrice: '0',
+    averagePrice: '1.2407',
+    stopPrice: '0',
+    executionType: 'TRADE',
+    orderStatus: 'PARTIALLY_FILLED',
+    orderId: 1859126427,
+    orderLastFilledQuantity: '5',
+    orderFilledAccumulatedQuantity: '15',
+    lastFilledPrice: '1.2407',
+    commissionAsset: 'USDT',
+    commission: '0.00248140',
+    orderTradeTime: 1640924168971,
+    tradeId: 62670441,
+    bidsNotional: '0',
+    askNotional: '0',
+    isMakerSide: false,
+    isReduceOnly: false,
+    stopPriceWorkingType: 'CONTRACT_PRICE',
+    originalOrderType: 'MARKET',
+    positionSide: 'BOTH',
+    closeAll: false,
+    activationPrice: undefined,
+    callbackRate: undefined,
+    realizedProfit: '0'
+  }
+}
+ORDER UPDATE HANDLER STOP
+ORDER START
+{
+  eventType: 'ACCOUNT_UPDATE',
+  eventTime: 1640924168976,
+  transaction: 1640924168971,
+  updateData: {
+    eventReasonType: 'ORDER',
+    balances: [ [Object] ],
+    positions: [ [Object] ]
+  }
+}
+balances
+[
+  {
+    asset: 'USDT',
+    walletBalance: '5000.02328736',
+    crossWalletBalance: '5000.02328736',
+    balanceChange: '0'
+  }
+]
+positions
+[
+  {
+    symbol: 'ICXUSDT',
+    positionAmount: '40',
+    entryPrice: '1.2419',
+    accumulatedRealized: '0.33520000',
+    unrealizedPnL: '-0.08245360',
+    marginType: 'cross',
+    isolatedWallet: '0',
+    positionSide: 'BOTH'
+  }
+]
+ORDER END
+undefined       undefined undefined undefined ORDER #undefined
+ORDER UPDATE HANDLER START
+{
+  eventType: 'ORDER_TRADE_UPDATE',
+  eventTime: 1640924168976,
+  transaction: 1640924168971,
+  order: {
+    symbol: 'ICXUSDT',
+    clientOrderId: 'web_bolaskpd27CkP5t51Qil',
+    side: 'BUY',
+    orderType: 'MARKET',
+    timeInForce: 'GTC',
+    originalQuantity: '20',
+    originalPrice: '0',
+    averagePrice: '1.2407',
+    stopPrice: '0',
+    executionType: 'TRADE',
+    orderStatus: 'FILLED',
+    orderId: 1859126427,
+    orderLastFilledQuantity: '5',
+    orderFilledAccumulatedQuantity: '20',
+    lastFilledPrice: '1.2407',
+    commissionAsset: 'USDT',
+    commission: '0.00248140',
+    orderTradeTime: 1640924168971,
+    tradeId: 62670442,
+    bidsNotional: '0',
+    askNotional: '0',
+    isMakerSide: false,
+    isReduceOnly: false,
+    stopPriceWorkingType: 'CONTRACT_PRICE',
+    originalOrderType: 'MARKET',
+    positionSide: 'BOTH',
+    closeAll: false,
+    activationPrice: undefined,
+    callbackRate: undefined,
+    realizedProfit: '0'
+  }
+}
+ORDER UPDATE HANDLER STOP
+ORDER UPDATE HANDLER START
+{
+  eventType: 'ORDER_TRADE_UPDATE',
+  eventTime: 1640924335370,
+  transaction: 1640924335362,
+  order: {
+    symbol: 'ICXUSDT',
+    clientOrderId: 'web_zBv1rDH19VOczsgn82n9',
+    side: 'SELL',
+    orderType: 'TAKE_PROFIT_MARKET',
+    timeInForce: 'GTE_GTC',
+    originalQuantity: '0',
+    originalPrice: '0',
+    averagePrice: '0',
+    stopPrice: '1.2600',
+    executionType: 'EXPIRED',
+    orderStatus: 'EXPIRED',
+    orderId: 1859107179,
+    orderLastFilledQuantity: '0',
+    orderFilledAccumulatedQuantity: '0',
+    lastFilledPrice: '0',
+    commissionAsset: undefined,
+    commission: undefined,
+    orderTradeTime: 1640924335362,
+    tradeId: 0,
+    bidsNotional: '0',
+    askNotional: '0',
+    isMakerSide: false,
+    isReduceOnly: true,
+    stopPriceWorkingType: 'MARK_PRICE',
+    originalOrderType: 'TAKE_PROFIT_MARKET',
+    positionSide: 'BOTH',
+    closeAll: true,
+    activationPrice: undefined,
+    callbackRate: undefined,
+    realizedProfit: '0'
+  }
+}
+ORDER UPDATE HANDLER STOP
+ORDER UPDATE HANDLER START
+{
+  eventType: 'ORDER_TRADE_UPDATE',
+  eventTime: 1640924335370,
+  transaction: 1640924335362,
+  order: {
+    symbol: 'ICXUSDT',
+    clientOrderId: 'web_kjAOTwMeEM5l6K0XbzKv',
+    side: 'SELL',
+    orderType: 'MARKET',
+    timeInForce: 'GTC',
+    originalQuantity: '40',
+    originalPrice: '0',
+    averagePrice: '0',
+    stopPrice: '0',
+    executionType: 'NEW',
+    orderStatus: 'NEW',
+    orderId: 1859133690,
+    orderLastFilledQuantity: '0',
+    orderFilledAccumulatedQuantity: '0',
+    lastFilledPrice: '0',
+    commissionAsset: undefined,
+    commission: undefined,
+    orderTradeTime: 1640924335362,
+    tradeId: 0,
+    bidsNotional: '0',
+    askNotional: '0',
+    isMakerSide: false,
+    isReduceOnly: true,
+    stopPriceWorkingType: 'CONTRACT_PRICE',
+    originalOrderType: 'MARKET',
+    positionSide: 'BOTH',
+    closeAll: false,
+    activationPrice: undefined,
+    callbackRate: undefined,
+    realizedProfit: '0'
+  }
+}
+ORDER UPDATE HANDLER STOP
+ORDER START
+{
+  eventType: 'ACCOUNT_UPDATE',
+  eventTime: 1640924335370,
+  transaction: 1640924335362,
+  updateData: {
+    eventReasonType: 'ORDER',
+    balances: [ [Object] ],
+    positions: [ [Object] ]
+  }
+}
+balances
+[
+  {
+    asset: 'USDT',
+    walletBalance: '4999.99976316',
+    crossWalletBalance: '4999.99976316',
+    balanceChange: '0'
+  }
+]
+positions
+[
+  {
+    symbol: 'ICXUSDT',
+    positionAmount: '10',
+    entryPrice: '1.2419',
+    accumulatedRealized: '0.32657500',
+    unrealizedPnL: '-0.00567480',
+    marginType: 'cross',
+    isolatedWallet: '0',
+    positionSide: 'BOTH'
+  }
+]
+ORDER END
+undefined       undefined undefined undefined ORDER #undefined
+ORDER UPDATE HANDLER START
+{
+  eventType: 'ORDER_TRADE_UPDATE',
+  eventTime: 1640924335370,
+  transaction: 1640924335362,
+  order: {
+    symbol: 'ICXUSDT',
+    clientOrderId: 'web_kjAOTwMeEM5l6K0XbzKv',
+    side: 'SELL',
+    orderType: 'MARKET',
+    timeInForce: 'GTC',
+    originalQuantity: '40',
+    originalPrice: '0',
+    averagePrice: '1.2416',
+    stopPrice: '0',
+    executionType: 'TRADE',
+    orderStatus: 'PARTIALLY_FILLED',
+    orderId: 1859133690,
+    orderLastFilledQuantity: '30',
+    orderFilledAccumulatedQuantity: '30',
+    lastFilledPrice: '1.2416',
+    commissionAsset: 'USDT',
+    commission: '0.01489920',
+    orderTradeTime: 1640924335362,
+    tradeId: 62670821,
+    bidsNotional: '0',
+    askNotional: '0',
+    isMakerSide: false,
+    isReduceOnly: true,
+    stopPriceWorkingType: 'CONTRACT_PRICE',
+    originalOrderType: 'MARKET',
+    positionSide: 'BOTH',
+    closeAll: false,
+    activationPrice: undefined,
+    callbackRate: undefined,
+    realizedProfit: '-0.00862500'
+  }
+}
+ORDER UPDATE HANDLER STOP
+ORDER START
+{
+  eventType: 'ACCOUNT_UPDATE',
+  eventTime: 1640924335370,
+  transaction: 1640924335362,
+  updateData: {
+    eventReasonType: 'ORDER',
+    balances: [ [Object] ],
+    positions: [ [Object] ]
+  }
+}
+balances
+[
+  {
+    asset: 'USDT',
+    walletBalance: '4999.99192176',
+    crossWalletBalance: '4999.99192176',
+    balanceChange: '0'
+  }
+]
+positions
+[
+  {
+    symbol: 'ICXUSDT',
+    positionAmount: '0',
+    entryPrice: '0.0000',
+    accumulatedRealized: '0.32370000',
+    unrealizedPnL: '0',
+    marginType: 'cross',
+    isolatedWallet: '0',
+    positionSide: 'BOTH'
+  }
+]
+ORDER END
+undefined       undefined undefined undefined ORDER #undefined
+ORDER UPDATE HANDLER START
+{
+  eventType: 'ORDER_TRADE_UPDATE',
+  eventTime: 1640924335370,
+  transaction: 1640924335362,
+  order: {
+    symbol: 'ICXUSDT',
+    clientOrderId: 'web_kjAOTwMeEM5l6K0XbzKv',
+    side: 'SELL',
+    orderType: 'MARKET',
+    timeInForce: 'GTC',
+    originalQuantity: '40',
+    originalPrice: '0',
+    averagePrice: '1.2416',
+    stopPrice: '0',
+    executionType: 'TRADE',
+    orderStatus: 'FILLED',
+    orderId: 1859133690,
+    orderLastFilledQuantity: '10',
+    orderFilledAccumulatedQuantity: '40',
+    lastFilledPrice: '1.2416',
+    commissionAsset: 'USDT',
+    commission: '0.00496640',
+    orderTradeTime: 1640924335362,
+    tradeId: 62670822,
+    bidsNotional: '0',
+    askNotional: '0',
+    isMakerSide: false,
+    isReduceOnly: true,
+    stopPriceWorkingType: 'CONTRACT_PRICE',
+    originalOrderType: 'MARKET',
+    positionSide: 'BOTH',
+    closeAll: false,
+    activationPrice: undefined,
+    callbackRate: undefined,
+    realizedProfit: '-0.00287500'
+  }
+}
+ORDER UPDATE HANDLER STOP
+
