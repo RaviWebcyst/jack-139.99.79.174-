@@ -41,7 +41,7 @@ export default function Parent(props) {
 
   function slaveManagerButton(e) {
     e.preventDefault();
-    setApp(<SlaveManager />);
+    setApp(<SlaveManager slaves={props.props.slaves} />);
   }
 
   console.log(DefaultApp);
