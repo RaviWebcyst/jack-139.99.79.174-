@@ -81,13 +81,13 @@ export async function getTrades() {
     }
   }
   function execution_update(data) {
-    // console.log("ORDER START");
-    // console.log(data);
-    // console.log("balances");
-    // console.log(data.updateData.balances);
-    // console.log("positions");
-    // console.log(data.updateData.positions);
-    // console.log("ORDER END");
+    console.log("ORDER START");
+    console.log(data);
+    console.log("balances");
+    console.log(data.updateData.balances);
+    console.log("positions");
+    console.log(data.updateData.positions);
+    console.log("ORDER END");
 
     let {
       x: executionType,
@@ -135,8 +135,8 @@ export async function getTrades() {
 
   async function orderUpdateHandler(data) {
     console.log("ORDER UPDATE HANDLER START");
-    // console.log(data);
-    // console.log("ORDER UPDATE HANDLER STOP");
+    console.log(data);
+    console.log("ORDER UPDATE HANDLER STOP");
     let order = data.order;
     if (order.orderStatus == "NEW") {
       // New order to be placed
@@ -344,6 +344,8 @@ export async function getSlaveAssetBalances(key, secret) {
   return balance;
 }
 
+let orders = 0;
+
 export async function makeSlaveTrade(key, secret, data) {
   let slave_binance = new Binance().options({
     APIKEY: key,
@@ -373,6 +375,8 @@ export async function makeSlaveTrade(key, secret, data) {
     );
     console.log(debug);
   }
+  orders++;
+  console.log(orders);
 }
 
 // Debug helpers
