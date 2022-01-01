@@ -11,9 +11,11 @@ import { getSlaveUSDBalance } from "../helpers/binance_helpers";
 import { getServerSideCookie } from "../helpers/cookieHandler";
 import Login from "../components/Login";
 import CopierStatus from "../components/CopierStatus";
+import Parent from "../components/Parent";
 export async function getServerSideProps({ req, res }) {
   let logged;
 
+  // Check to see if logged in.
   try {
     logged = getServerSideCookie({ req, res }, "log");
   } catch (error) {
@@ -21,6 +23,7 @@ export async function getServerSideProps({ req, res }) {
   }
   // console.log(logged);
 
+  // If logged in, fetch proper data as needed.
   if (logged.status) {
     // Slave Balance Table Start
     let balance_table = [];
@@ -65,28 +68,31 @@ export async function getServerSideProps({ req, res }) {
   }
 }
 
+// Main Deployment
 export default function Home(props) {
   if (!props.status) {
     return <Login />;
   }
-  // Set up a list of assets from each client
-  // TODO - Switch this over to reference from button click to reduce initial load times
-  let slave_assets = [];
-  for (let i in props.slave_assets) {
-    let a = props.slave_assets[i];
-    slave_assets.push(
-      <Balance key={i + "slave"} balance={a} name={props.slaves[i].name} />
-    );
-  }
+  // // Set up a list of assets from each client
+  // // TODO - Switch this over to reference from button click to reduce initial load times
+  // let slave_assets = [];
+  // for (let i in props.slave_assets) {
+  //   let a = props.slave_assets[i];
+  //   slave_assets.push(
+  //     <Balance key={i + "slave"} balance={a} name={props.slaves[i].name} />
+  //   );
+  // }
 
   return (
     <div className="main">
       <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+      <Parent props={props} />
+      {/* />
       <CopierStatus status={props.copier_status} />
       <Balance balance={props.balance} name="master" />
       <ViewSlaves slaves={props.slaves} />
 
-      {slave_assets}
+      {slave_assets} */}
     </div>
   );
 }
