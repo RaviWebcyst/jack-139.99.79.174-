@@ -30,6 +30,23 @@ export default function CopierStatus(props) {
             window.location.reload();
           }}
         />
+        <br />
+
+        <label htmlFor="slave_levergage">Leverage</label>
+        <input type="number" />
+
+        <br />
+        <h2>Trade Logs</h2>
+        <div
+          id="trade_logs"
+          className="w3-container w3-centered w3-border"
+          style={{
+            width: "50%",
+            textAlign: "center",
+            display: "inline-block",
+            height: "100px",
+          }}
+        ></div>
       </div>
     );
   }

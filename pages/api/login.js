@@ -8,7 +8,7 @@ export default async function handler(req, res) {
   // console.log(body);
 
   let user = await fetch(`${process.env.ROOT_PATH}api/mongo/get-user`);
-
+  console.log(user);
   user = await user.json();
 
   let current = false;

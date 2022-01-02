@@ -17,7 +17,9 @@ export default function Parent(props) {
     SlaveManager: SlaveManager,
     Settings: Settings,
   };
-  let DefaultApp = appWrapper[getCookie("DefaultApp")] || [];
+  let DefaultApp = appWrapper[getCookie("DefaultApp")] || (
+    <CopierStatus status={props.props.copier_status} />
+  );
 
   //   DefaultApp = <DefaultApp />;
   let [app, setApp] = useState(DefaultApp);
@@ -31,12 +33,15 @@ export default function Parent(props) {
 
   function masterDashButton(e) {
     e.preventDefault();
-    setApp(<MasterDash balance={props.props.balance} />);
+    setApp([
+      <MasterDash balance={props.props.balance} />,
+      <SlaveBalance props={props} />,
+    ]);
   }
 
   function slaveBalanceButton(e) {
     e.preventDefault();
-    setApp(<SlaveBalance props={props} />);
+    setApp();
   }
 
   function slaveManagerButton(e) {
@@ -48,8 +53,8 @@ export default function Parent(props) {
   return (
     <div>
       <input type="button" value="Copier Status" onClick={copierStatusButton} />
-      <input type="button" value="Master Balance" onClick={masterDashButton} />
-      <input type="button" value="Slave Balance" onClick={slaveBalanceButton} />
+      <input type="button" value="Balance" onClick={masterDashButton} />
+      {/* <input type="button" value="Slave Balance" onClick={slaveBalanceButton} /> */}
       <input type="button" value="Slave Manager" onClick={slaveManagerButton} />
 
       <div className="app_parent">{app}</div>

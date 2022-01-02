@@ -7,6 +7,7 @@ const Binance = require("node-binance-api");
 const binance = new Binance().options({
   APIKEY: process.env.APIKEY,
   APISECRET: process.env.APISECRET,
+  useServerTime: true,
 });
 
 // Master Helpers
@@ -289,6 +290,7 @@ export async function getSlaveUSDBalance(key, secret, ticker) {
   let slave_binance = new Binance().options({
     APIKEY: key,
     APISECRET: secret,
+    useServerTime: true,
   });
 
   let balance = await slave_binance.futuresBalance();
@@ -337,6 +339,7 @@ export async function getSlaveAssetBalances(key, secret) {
   let slave_binance = new Binance().options({
     APIKEY: key,
     APISECRET: secret,
+    useServerTime: true,
   });
 
   let balance = await slave_binance.futuresBalance();
@@ -350,6 +353,7 @@ export async function makeSlaveTrade(key, secret, data) {
   let slave_binance = new Binance().options({
     APIKEY: key,
     APISECRET: secret,
+    useServerTime: true,
   });
 
   // console.log("DEBUG: data");

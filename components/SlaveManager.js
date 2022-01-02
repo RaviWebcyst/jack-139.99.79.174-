@@ -1,6 +1,7 @@
 import clearForm from "../helpers/clearForm";
 export default function SlaveManager(props) {
   let delete_slave_table = [];
+  let edit_slaves = [];
 
   console.log(props.slaves);
   // Populate Delete Slave Table Start
@@ -11,7 +12,7 @@ export default function SlaveManager(props) {
       let res = await fetch("/api/mongo/delete-slave", {
         method: "POST",
         body: JSON.stringify({
-          name: name,
+          name: slave.name,
         }),
       });
 
@@ -24,6 +25,95 @@ export default function SlaveManager(props) {
           <input type="button" value="X" onClick={deleteSlave} />
         </td>
       </tr>
+    );
+  }
+  // End
+
+  // Populate Edit Slaves Start
+  for (let i in props.slaves) {
+    let slave = props.slaves[i];
+    async function submitNewSlaveForm(e) {
+      e.preventDefault();
+
+      let elements = document.getElementById(
+        `${slave.name}_edit_slave_form`
+      ).elements;
+      elements = Array.from(elements);
+
+      let obj = {};
+
+      // remove submit from array
+      elements.pop();
+      for (let i in elements) {
+        let value = elements[i].value;
+        let id = elements[i].id;
+
+        obj[id] = value;
+      }
+      let req = await fetch("/api/mongo/add-slave", {
+        method: "POST",
+        body: JSON.stringify(obj),
+      });
+
+      clearForm(elements);
+      window.location.reload();
+    }
+    edit_slaves.push(
+      <form
+        id={`${slave.name}_edit_slave_form`}
+        className="w3-center w3-border"
+      >
+        <h1>Edit {slave.name}</h1>
+        <label htmlFor="name">Name</label>
+        <br />
+        <input
+          id="name"
+          name="name"
+          className="w3-center w3-input w3-border w3-animate-input "
+          type="text"
+          style={{ width: "50%", textAlign: "center", display: "inline-block" }}
+        />
+        <br />
+        <label htmlFor="binance_key">Binance API Key</label>
+        <br />
+        <input
+          id="binance_key"
+          name="binance_key"
+          className="w3-input w3-border w3-animate-input"
+          type="text"
+          style={{ width: "50%", textAlign: "center", display: "inline-block" }}
+        />
+        <br />
+        <label htmlFor="binance_secret">Binance API Secret</label>
+        <br />
+        <input
+          id="binance_secret"
+          name="binance_secret"
+          className="w3-input w3-border w3-animate-input"
+          type="text"
+          style={{ width: "50%", textAlign: "center", display: "inline-block" }}
+        />
+        <br />
+
+        <label htmlFor="binance_multiplier">Multiplier</label>
+        <br />
+        <input
+          id="binance_multiplier"
+          name="binance_multiplier"
+          className="w3-input w3-border w3-animate-input"
+          type="number"
+          style={{ width: "50%", textAlign: "center", display: "inline-block" }}
+        />
+        <br />
+
+        <input
+          name="submit"
+          className="w3-input w3-border w3-hoverable"
+          type="submit"
+          style={{ width: "20%", textAlign: "center", display: "inline-block" }}
+          onClick={submitNewSlaveForm}
+        />
+      </form>
     );
   }
   // End
@@ -90,8 +180,18 @@ export default function SlaveManager(props) {
         />
         <br />
 
+        <label htmlFor="binance_multiplier">Multiplier</label>
+        <br />
         <input
-          name="binance-secret"
+          id="binance_multiplier"
+          name="binance_multiplier"
+          className="w3-input w3-border w3-animate-input"
+          type="number"
+          style={{ width: "50%", textAlign: "center", display: "inline-block" }}
+        />
+        <br />
+
+        <input
           className="w3-input w3-border w3-hoverable"
           type="submit"
           style={{ width: "20%", textAlign: "center", display: "inline-block" }}
@@ -114,6 +214,7 @@ export default function SlaveManager(props) {
         <tbody>{delete_slave_table}</tbody>
       </table>
 
+      <div id="edit_slaves">{edit_slaves}</div>
       <br />
     </div>
   );
