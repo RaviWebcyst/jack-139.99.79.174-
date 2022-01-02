@@ -3,9 +3,9 @@ import clearForm from "../helpers/clearForm";
 import { useEffect, useState } from "react";
 export default function SlaveManager(props) {
   let [delete_slave_table, setDeleteSlaveTable] = useState(
-    <div class="loader"></div>
+    <div className="loader"></div>
   );
-  let [edit_slaves, setEditSlaves] = useState(<div class="loader"></div>);
+  let [edit_slaves, setEditSlaves] = useState(<div className="loader"></div>);
 
   // Run on window load
   useEffect(async () => {

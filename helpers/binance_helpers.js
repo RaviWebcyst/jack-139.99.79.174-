@@ -243,10 +243,13 @@ export async function terminateBinanceSocket() {
 
   try {
     let subs = await binance.futuresSubscriptions();
+    console.log(subs);
     for (let i in subs) {
       binance.futuresTerminate(subs[i]);
     }
-  } catch (error) {}
+  } catch (error) {
+    console.log("No sockets");
+  }
 }
 
 export async function getTickerPrices() {

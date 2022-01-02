@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 
 export default function SlaveBalance() {
-  let [slave_assets, setSlaveAssets] = useState(<div class="loader"></div>);
+  let [slave_assets, setSlaveAssets] = useState(<div className="loader"></div>);
 
   useEffect(async () => {
     let res = await fetch("/api/slave-balances");

@@ -4,7 +4,7 @@ export default function CopierStatus() {
   // console.log(props);
   // let status = props.status.status;
 
-  let [status, setStatus] = useState(<div class="loader"></div>);
+  let [status, setStatus] = useState(<div className="loader"></div>);
 
   useEffect(async () => {
     //
@@ -19,7 +19,9 @@ export default function CopierStatus() {
     copier_status = await fetch(`/api/mongo/status`);
     copier_status = await copier_status.json();
 
-    if (copier_status) {
+    // console.log(copier_status);
+
+    if (copier_status.status) {
       setStatus([
         <div key="closed" className="w3-center w3-container w3-animate-bottom">
           <h1>Copier Status</h1>
