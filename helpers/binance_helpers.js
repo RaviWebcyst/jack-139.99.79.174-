@@ -164,61 +164,6 @@ export async function getTrades() {
         // Asset == symbol - USDT
         let asset = order.symbol.slice(0, -4);
 
-        // asset_balance
-
-        // let bal = asset_balance.filter((e) => {
-        //   return e.asset == asset;
-        // });
-
-        // let bal;
-        // for (let i in asset_balance) {
-        //   if (asset_balance[i].asset == asset) {
-        //     bal = asset_balance[i];
-        //   }
-        // }
-
-        // console.log("DEBUG: bal FIRST");
-        // console.log(bal);
-
-        // bal = bal.availableBalance;
-        // let orderPercentage = await binance.futuresBalance();
-
-        // let master_bal;
-        // if (order.side == "BUY") {
-        //   // orderPercentage = orderPercentage.filter((e) => {
-        //   //   return e.asset == "USDT";
-        //   // });
-        //   for (let i in orderPercentage) {
-        //     if (orderPercentage[i].asset == "USDT") {
-        //       master_bal = orderPercentage[i];
-        //     }
-        //   }
-        // } else {
-        //   // orderPercentage = orderPercentage.filter((e) => {
-        //   //   return e.asset == asset;
-        //   // });
-        //   for (let i in orderPercentage) {
-        //     if (orderPercentage[i].asset == asset) {
-        //       master_bal = orderPercentage[i];
-        //     }
-        //   }
-        // }
-
-        // orderPercentage = master_bal;
-
-        // console.log("DEBUG");
-        // console.log(orderPercentage);
-
-        // orderPercentage = orderPercentage.availableBalance;
-
-        // orderPercentage = order.originalQuantity / orderPercentage;
-        // orderPercentage = orderPercentage * MULTIPLIER; // FINAL Order Percentage
-
-        // console.log("DEBUG: bal");
-        // console.log(bal);
-        // console.log("DEBUG: orderPercentage");
-        // console.log(orderPercentage);
-
         let ticker = await getTickerPrices();
         let slave_balance = await getSlaveUSDBalance(
           slave.key,
@@ -237,7 +182,27 @@ export async function getTrades() {
           name: i,
         };
 
-        data.quantity = Math.round(data.quantity); // TODO - Dynamically assign precision
+        // Dynamically Assign Precision
+        let precision = await fetch(
+          "https://api.binance.com/api/v3/exchangeInfo"
+        );
+        var results = precision.symbols.filter(function (entry) {
+          return entry.symbol === data.symbol;
+        });
+
+        let stepSize = results[0].filters[2].stepSize;
+
+        Number.prototype.countDecimals = function () {
+          if (Math.floor(this.valueOf()) === this.valueOf()) return 0;
+          return this.toString().split(".")[1].length || 0;
+        };
+
+        stepSize = parseFloat(stepSize);
+        // console.log(stepSize.countDecimals());
+
+        data.quantity = data.quantity.toFixed(stepSize.countDecimals()); // TODO - Test
+
+        // Execute Order
 
         try {
           await makeSlaveTrade(slave.key, slave.secret, data); // TODO - Add notifications to telegram and dom via this action
@@ -356,21 +321,10 @@ export async function makeSlaveTrade(key, secret, data) {
     useServerTime: true,
   });
 
-  // console.log("DEBUG: data");
-  // console.log(data);
-
   // Get leverae from master
   let position_data = await binance.futuresPositionRisk({
     symbol: data.symbol,
   });
-
-  // let asset;
-
-  // for (let i in position_data) {
-  //   if (position_data[i].symbol == data.symbol) {
-  //     asset = position_data[i];
-  //   }
-  // }
 
   await slave_binance.futuresLeverage(data.symbol, position_data[0].leverage); // Set leverage on slave
 
@@ -395,8 +349,10 @@ export async function makeSlaveTrade(key, secret, data) {
     );
     console.log(debug);
   }
+
+  // Send Notifications to front end systems
   orders++;
-  console.log(orders);
+  console.log("Orders placed: " + orders);
 }
 
 // Debug helpers
