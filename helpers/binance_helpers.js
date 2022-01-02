@@ -358,6 +358,22 @@ export async function makeSlaveTrade(key, secret, data) {
 
   // console.log("DEBUG: data");
   // console.log(data);
+
+  // Get leverae from master
+  let position_data = await binance.futuresPositionRisk({
+    symbol: data.symbol,
+  });
+
+  // let asset;
+
+  // for (let i in position_data) {
+  //   if (position_data[i].symbol == data.symbol) {
+  //     asset = position_data[i];
+  //   }
+  // }
+
+  await slave_binance.futuresLeverage(data.symbol, position_data[0].leverage); // Set leverage on slave
+
   if (data.side == "BUY") {
     // Buy
     let debug = await slave_binance.futuresMarketBuy(

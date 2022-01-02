@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "argon2": "^0.28.3",
+    "binance-api-node": "^0.11.28",
     "cookie-cutter": "^0.2.0",
     "cookies": "^0.8.0",
     "mongodb": "^4.2.2",
