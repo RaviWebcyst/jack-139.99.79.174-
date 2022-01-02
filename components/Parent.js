@@ -34,8 +34,8 @@ export default function Parent(props) {
   function masterDashButton(e) {
     e.preventDefault();
     setApp([
-      <MasterDash balance={props.props.balance} />,
-      <SlaveBalance props={props} />,
+      <MasterDash key="master-dash" balance={props.props.balance} />,
+      <SlaveBalance key="slave-balance" props={props} />,
     ]);
   }
 
