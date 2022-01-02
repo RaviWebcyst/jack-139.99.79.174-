@@ -158,7 +158,7 @@ export async function getTrades() {
         //   slave.secret
         // );
 
-        const MULTIPLIER = 1; // TODO - PULL multiplier from database
+        const MULTIPLIER = slave.multiplier; // TODO - PULL multiplier from database
 
         // Calculate order quantity
         // Asset == symbol - USDT

@@ -1,9 +1,32 @@
 import clearForm from "../helpers/clearForm";
+
+import { useEffect } from "react";
 export default function SlaveManager(props) {
   let delete_slave_table = [];
   let edit_slaves = [];
 
-  console.log(props.slaves);
+  // Run on window load
+  useEffect(async () => {
+    // populate forms
+    let slave_names = await fetch("/api/mongo/slaves");
+    slave_names = await slave_names.json();
+    console.log(slave_names);
+
+    for (let i in slave_names) {
+      // i == NAME
+      let slave = slave_names[i];
+      name = i;
+      if (i == "_id") continue;
+
+      // Pop
+      document.getElementById(`${i}_name`).value = i;
+      document.getElementById(`${i}_binance_key`).value = slave.key;
+      document.getElementById(`${i}_binance_secret`).value = slave.secret;
+      document.getElementById(`${i}_binance_multiplier`).value =
+        slave.multiplier;
+    }
+  }, []);
+
   // Populate Delete Slave Table Start
   for (let i in props.slaves) {
     let slave = props.slaves[i];
@@ -48,6 +71,10 @@ export default function SlaveManager(props) {
         let value = elements[i].value;
         let id = elements[i].id;
 
+        // l;
+        let substring = slave.name + "_";
+        id = id.substring(substring.length);
+
         obj[id] = value;
       }
       let req = await fetch("/api/mongo/add-slave", {
@@ -67,9 +94,10 @@ export default function SlaveManager(props) {
         <label htmlFor="name">Name</label>
         <br />
         <input
-          id="name"
+          readOnly={true}
+          id={slave.name + "_name"}
           name="name"
-          className="w3-center w3-input w3-border w3-animate-input "
+          className="w3-center w3-input w3-border "
           type="text"
           style={{ width: "50%", textAlign: "center", display: "inline-block" }}
         />
@@ -77,7 +105,7 @@ export default function SlaveManager(props) {
         <label htmlFor="binance_key">Binance API Key</label>
         <br />
         <input
-          id="binance_key"
+          id={slave.name + "_binance_key"}
           name="binance_key"
           className="w3-input w3-border w3-animate-input"
           type="text"
@@ -87,7 +115,7 @@ export default function SlaveManager(props) {
         <label htmlFor="binance_secret">Binance API Secret</label>
         <br />
         <input
-          id="binance_secret"
+          id={slave.name + "_binance_secret"}
           name="binance_secret"
           className="w3-input w3-border w3-animate-input"
           type="text"
@@ -98,7 +126,7 @@ export default function SlaveManager(props) {
         <label htmlFor="binance_multiplier">Multiplier</label>
         <br />
         <input
-          id="binance_multiplier"
+          id={slave.name + "_binance_multiplier"}
           name="binance_multiplier"
           className="w3-input w3-border w3-animate-input"
           type="number"
