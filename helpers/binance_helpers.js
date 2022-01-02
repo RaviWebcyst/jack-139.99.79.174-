@@ -17,6 +17,10 @@ export async function getFuturesBalance() {
   // Balance stop
 }
 
+export async function getOpenFutureOrders() {
+  return await binance.futuresOpenOrders();
+}
+
 export async function getMasterUSDBalance(ticker) {
   let balance = await binance.futuresBalance();
 

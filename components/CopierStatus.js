@@ -1,6 +1,18 @@
+import { useEffect } from "react";
+
 export default function CopierStatus(props) {
-  console.log(props);
+  // console.log(props);
   let status = props.status.status;
+
+  useEffect(async () => {
+    //
+    // Set Open Orders
+    let res = await fetch("/api/futures-open-orders");
+    res = await res.json();
+
+    console.log("Open Orders:");
+    console.log(res);
+  }, []);
 
   if (status) {
     return (

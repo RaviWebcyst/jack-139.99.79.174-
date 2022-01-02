@@ -110,6 +110,7 @@ export default function SlaveManager(props) {
           className="w3-input w3-border w3-animate-input"
           type="text"
           style={{ width: "50%", textAlign: "center", display: "inline-block" }}
+          required={true}
         />
         <br />
         <label htmlFor="binance_secret">Binance API Secret</label>
@@ -120,6 +121,7 @@ export default function SlaveManager(props) {
           className="w3-input w3-border w3-animate-input"
           type="text"
           style={{ width: "50%", textAlign: "center", display: "inline-block" }}
+          required={true}
         />
         <br />
 
@@ -131,6 +133,7 @@ export default function SlaveManager(props) {
           className="w3-input w3-border w3-animate-input"
           type="number"
           style={{ width: "50%", textAlign: "center", display: "inline-block" }}
+          required={true}
         />
         <br />
 
@@ -180,6 +183,7 @@ export default function SlaveManager(props) {
         <label htmlFor="name">Name</label>
         <br />
         <input
+          required={true}
           id="name"
           name="name"
           className="w3-center w3-input w3-border w3-animate-input "
@@ -190,6 +194,7 @@ export default function SlaveManager(props) {
         <label htmlFor="binance_key">Binance API Key</label>
         <br />
         <input
+          required={true}
           id="binance_key"
           name="binance_key"
           className="w3-input w3-border w3-animate-input"
@@ -200,6 +205,7 @@ export default function SlaveManager(props) {
         <label htmlFor="binance_secret">Binance API Secret</label>
         <br />
         <input
+          required={true}
           id="binance_secret"
           name="binance_secret"
           className="w3-input w3-border w3-animate-input"
@@ -211,6 +217,7 @@ export default function SlaveManager(props) {
         <label htmlFor="binance_multiplier">Multiplier</label>
         <br />
         <input
+          required={true}
           id="binance_multiplier"
           name="binance_multiplier"
           className="w3-input w3-border w3-animate-input"
