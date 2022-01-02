@@ -240,6 +240,13 @@ export async function validateApiKey() {
 
 export async function terminateBinanceSocket() {
   binance.websockets.terminate();
+
+  try {
+    let subs = await binance.futuresSubscriptions();
+    for (let i in subs) {
+      binance.futuresTerminate(subs[i]);
+    }
+  } catch (error) {}
 }
 
 export async function getTickerPrices() {
@@ -319,44 +326,50 @@ export async function getSlaveAssetBalances(key, secret) {
 let orders = 0;
 
 export async function makeSlaveTrade(key, secret, data) {
-  let slave_binance = new Binance().options({
-    APIKEY: key,
-    APISECRET: secret,
-    useServerTime: true,
-  });
+  let copier_status;
+  copier_status = await fetch(`${process.env.ROOT_PATH}api/mongo/status`);
+  copier_status = await copier_status.json();
 
-  // Get leverae from master
-  let position_data = await binance.futuresPositionRisk({
-    symbol: data.symbol,
-  });
+  if (copier_status) {
+    let slave_binance = new Binance().options({
+      APIKEY: key,
+      APISECRET: secret,
+      useServerTime: true,
+    });
 
-  await slave_binance.futuresLeverage(data.symbol, position_data[0].leverage); // Set leverage on slave
+    // Get leverae from master
+    let position_data = await binance.futuresPositionRisk({
+      symbol: data.symbol,
+    });
 
-  if (data.side == "BUY") {
-    // Buy
-    let debug = await slave_binance.futuresMarketBuy(
-      data.symbol,
-      data.quantity
-    );
-    console.log(
-      `New order made: Buy ${data.quantity} of ${data.symbol} for ${data.name}`
-    );
-    console.log(debug);
-  } else if (data.side == "SELL") {
-    // Sell
-    let debug = await slave_binance.futuresMarketSell(
-      data.symbol,
-      data.quantity
-    );
-    console.log(
-      `New order made: Sell ${data.quantity} of ${data.symbol} for ${data.name} `
-    );
-    console.log(debug);
+    await slave_binance.futuresLeverage(data.symbol, position_data[0].leverage); // Set leverage on slave
+
+    if (data.side == "BUY") {
+      // Buy
+      let debug = await slave_binance.futuresMarketBuy(
+        data.symbol,
+        data.quantity
+      );
+      console.log(
+        `New order made: Buy ${data.quantity} of ${data.symbol} for ${data.name}`
+      );
+      console.log(debug);
+    } else if (data.side == "SELL") {
+      // Sell
+      let debug = await slave_binance.futuresMarketSell(
+        data.symbol,
+        data.quantity
+      );
+      console.log(
+        `New order made: Sell ${data.quantity} of ${data.symbol} for ${data.name} `
+      );
+      console.log(debug);
+    }
+
+    // Send Notifications to front end systems
+    orders++;
+    console.log("Orders placed: " + orders);
   }
-
-  // Send Notifications to front end systems
-  orders++;
-  console.log("Orders placed: " + orders);
 }
 
 // Debug helpers

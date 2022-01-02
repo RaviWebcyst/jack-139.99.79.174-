@@ -19,7 +19,7 @@ export function getCookie(id) {
     return JSON.parse(cookie.get(id));
   } catch (error) {
     // console.log(error);
-    console.log(`${id} not found.`);
+    // console.log(`${id} not found.`);
     return undefined;
   }
 }

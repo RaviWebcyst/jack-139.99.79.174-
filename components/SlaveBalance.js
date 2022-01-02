@@ -1,18 +1,25 @@
 import Balance from "./Balance";
+import { useEffect } from "react";
+import { useState } from "react";
 
-export default function SlaveBalance(props) {
-  props = props.props.props;
+export default function SlaveBalance() {
+  let [slave_assets, setSlaveAssets] = useState(<div class="loader"></div>);
 
-  console.log(props);
-  // Set up a list of assets from each client
-  // TODO - Switch this over to reference from button click to reduce initial load times
-  let slave_assets = [];
-  for (let i in props.slave_assets) {
-    let a = props.slave_assets[i];
-    slave_assets.push(
-      <Balance key={i + "slave"} balance={a} name={props.slaves[i].name} />
-    );
-  }
+  useEffect(async () => {
+    let res = await fetch("/api/slave-balances");
+    res = await res.json();
+
+    let arr = [];
+    for (let i in res.slave_assets) {
+      let a = res.slave_assets[i];
+      arr.push(
+        <Balance key={i + "slave"} balance={a} name={res.slaves[i].name} />
+      );
+    }
+
+    setSlaveAssets(arr);
+  }, []);
+
   return (
     <div>
       <h1>Slave Balance</h1>

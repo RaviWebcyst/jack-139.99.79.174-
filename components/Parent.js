@@ -33,15 +33,12 @@ export default function Parent(props) {
 
   function masterDashButton(e) {
     e.preventDefault();
-    setApp([
-      <MasterDash key="master-dash" balance={props.props.balance} />,
-      <SlaveBalance key="slave-balance" props={props} />,
-    ]);
+    setApp(<MasterDash key="master-dash" balance={props.props.balance} />);
   }
 
   function slaveBalanceButton(e) {
     e.preventDefault();
-    setApp();
+    setApp(<SlaveBalance key="slave-balance" props={props} />);
   }
 
   function slaveManagerButton(e) {
@@ -49,12 +46,12 @@ export default function Parent(props) {
     setApp(<SlaveManager slaves={props.props.slaves} />);
   }
 
-  console.log(DefaultApp);
+  // console.log(DefaultApp);
   return (
     <div>
       <input type="button" value="Copier Status" onClick={copierStatusButton} />
       <input type="button" value="Balance" onClick={masterDashButton} />
-      {/* <input type="button" value="Slave Balance" onClick={slaveBalanceButton} /> */}
+      <input type="button" value="Slave Balance" onClick={slaveBalanceButton} />
       <input type="button" value="Slave Manager" onClick={slaveManagerButton} />
 
       <div className="app_parent">{app}</div>

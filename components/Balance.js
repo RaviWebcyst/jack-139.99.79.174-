@@ -18,7 +18,7 @@ export default function Balance(props) {
 
   // console.log(props);
   return (
-    <div className="w3-container">
+    <div className="w3-container w3-animate-bottom">
       <h1 className="w3-center">{props.name} table</h1>
 
       <table
