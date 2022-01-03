@@ -15,5 +15,5 @@ export async function sendTelegramMaster(message) {
 export async function sendTelegramError(message) {
   const bot = new TelegramBot(error_token, { polling: false });
 
-  bot.sendMessage(process.env.TELEGRAM_ERROR_TOKEN, message);
+  bot.sendMessage(process.env.TELEGRAM_ERROR_CHANNEL, message);
 }

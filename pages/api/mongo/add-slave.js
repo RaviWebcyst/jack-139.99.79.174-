@@ -18,12 +18,16 @@ handler.post(async (req, res) => {
   if (req.method === "POST") {
     // Process a POST request
 
-    console.log(body);
+    // console.log("body");
+    // console.log(body);
     parentContent[body.name] = {
       key: body.binance_key,
       secret: body.binance_secret,
+      multiplier: body.binance_multiplier,
     };
 
+    // console.log("parent content");
+    // console.log(parentContent);
     let updateDoc = await req.db
       .collection("slaves")
       .replaceOne({}, parentContent, { upsert: true });

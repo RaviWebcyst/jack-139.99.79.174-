@@ -7,25 +7,47 @@ import {
 // const Binance = require("node-binance-api"); // Main
 
 export default async function handler(req, res) {
-  // const binance = new Binance().options({
-  //   APIKEY: process.env.APIKEY,
-  //   APISECRET: process.env.APISECRET,
-  //   // verbose: true,
-  // });
+  let precision = await fetch("https://api.binance.com/api/v3/exchangeInfo");
+  //
 
-  // // let bod = await fetch("https://api.binance.com/api/v3/exchangeInfo");
-  // // bod = await bod.json();
-  // // let bod = await binance.futuresAccount();
+  precision = await precision.json();
 
-  // // console.log(binance);
+  console.log(precision.symbols);
+  var results = precision.symbols.filter(function (entry) {
+    return entry.symbol === "1000SHIBUSDT";
+  });
 
-  // let subs = await binance.futuresSubscriptions();
+  // if ((results = [])) {
+  //   for (let i in precision.symbols) {
+  //     let symbol = precision.symbols[i];
 
-  // console.log(subs);
+  //     if (symbol.symbol == "ICXUSDT") {
+  //       results = symbol;
+  //     }
+  //   }
+  // }
 
-  sendTelegramMaster("Test");
-  // // console.log(bod);
-  res.status(200).json("subs");
+  // console.log("1000SHIB");
+  console.log(results);
+  console.log(results[0].filters);
+
+  // console.log(order.symbol);
+  // console.log(results);
+  // console.log(results[0].filters);
+  // return;
+  console.log(results[0].filters);
+  let stepSize = results[0].filters[2].stepSize;
+
+  Number.prototype.countDecimals = function () {
+    if (Math.floor(this.valueOf()) === this.valueOf()) return 0;
+    return this.toString().split(".")[1].length || 0;
+  };
+
+  stepSize = parseFloat(stepSize);
+
+  // console.log(stepSize.countDecimals());
+
+  res.status(200).json(stepSize);
 }
 
 // {"symbol":"RAYUSDT","positionAmt":"0.0","entryPrice":"0.0","markPrice":"0.00000000","unRealizedProfit":"0.00000000","liquidationPrice":"0","leverage":"20","maxNotionalValue":"25000","marginType":"cross","isolatedMargin":"0.00000000","isAutoAddMargin":"false","positionSide":"BOTH","notional":"0","isolatedWallet":"0","updateTime":0},

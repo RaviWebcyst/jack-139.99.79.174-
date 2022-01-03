@@ -55,36 +55,8 @@ export default function SlaveManager(props) {
 
       for (let i in slaves) {
         let slave = slaves[i];
-        async function submitNewSlaveForm(e) {
-          e.preventDefault();
-
-          let elements = document.getElementById(
-            `${slave.name}_edit_slave_form`
-          ).elements;
-          elements = Array.from(elements);
-
-          let obj = {};
-
-          // remove submit from array
-          elements.pop();
-          for (let i in elements) {
-            let value = elements[i].value;
-            let id = elements[i].id;
-
-            // l;
-            let substring = slave.name + "_";
-            id = id.substring(substring.length);
-
-            obj[id] = value;
-          }
-          let req = await fetch("/api/mongo/add-slave", {
-            method: "POST",
-            body: JSON.stringify(obj),
-          });
-
-          clearForm(elements);
-          window.location.reload();
-        }
+        // console.log(slave);
+        async function submitEditSlaveForm(e) {}
         arr2.push(
           <form
             key={slave.name + "_key"}
@@ -155,7 +127,7 @@ export default function SlaveManager(props) {
             <br />
 
             <input
-              name="submit"
+              name={slave.name}
               className="w3-input w3-border w3-hoverable"
               type="submit"
               style={{
@@ -163,11 +135,47 @@ export default function SlaveManager(props) {
                 textAlign: "center",
                 display: "inline-block",
               }}
-              onClick={submitNewSlaveForm}
+              onClick={async (e) => {
+                e.preventDefault();
+
+                // console.log(e.target.name);
+                slave.name = e.target.name;
+                // return;
+                let elements = document.getElementById(
+                  `${slave.name}_edit_slave_form`
+                ).elements;
+                elements = Array.from(elements);
+
+                let obj = {};
+
+                // remove submit from array
+                elements.pop();
+                for (let i in elements) {
+                  let value = elements[i].value;
+                  let id = elements[i].id;
+
+                  // l;
+                  let substring = slave.name + "_";
+                  id = id.substring(substring.length);
+
+                  obj[id] = value;
+                }
+
+                // console.log(obj);
+                let req = await fetch("/api/mongo/add-slave", {
+                  method: "POST",
+                  body: JSON.stringify(obj),
+                });
+
+                clearForm(elements);
+                window.location.reload();
+              }}
             />
           </form>
         );
       }
+
+      // console.log(arr2);
       setEditSlaves(arr2);
 
       // End

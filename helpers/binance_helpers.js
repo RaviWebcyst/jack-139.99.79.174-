@@ -191,21 +191,42 @@ export async function getTrades() {
         let precision = await fetch(
           "https://api.binance.com/api/v3/exchangeInfo"
         );
+        //
+
+        precision = await precision.json();
+
+        console.log(precision.symbols);
         var results = precision.symbols.filter(function (entry) {
-          return entry.symbol === data.symbol;
+          return entry.symbol === order.symbol;
         });
 
-        let stepSize = results[0].filters[2].stepSize;
+        // if ((results = [])) {
+        //   for (let i in precision.symbols) {
+        //     let symbol = precision.symbols[i];
 
-        Number.prototype.countDecimals = function () {
-          if (Math.floor(this.valueOf()) === this.valueOf()) return 0;
-          return this.toString().split(".")[1].length || 0;
-        };
+        //     if (symbol.symbol == order.symbol) {
+        //       results = symbol;
+        //     }
+        //   }
+        // }
 
-        stepSize = parseFloat(stepSize);
-        // console.log(stepSize.countDecimals());
+        let stepSize;
 
-        data.quantity = data.quantity.toFixed(stepSize.countDecimals()); // TODO - Test
+        try {
+          stepSize = results.filters[2].stepSize;
+
+          Number.prototype.countDecimals = function () {
+            if (Math.floor(this.valueOf()) === this.valueOf()) return 0;
+            return this.toString().split(".")[1].length || 0;
+          };
+
+          stepSize = parseFloat(stepSize);
+
+          data.quantity = data.quantity.toFixed(stepSize.countDecimals()); // TODO - Test
+        } catch (error) {
+          data.quantity = Math.round(data.quantity);
+          sendTelegramError(`${data.symbol} precision data not found`);
+        }
 
         // Execute Order
 
@@ -391,7 +412,7 @@ export async function makeSlaveTrade(key, secret, data) {
     // Send Notifications to front end systems
     orders++;
     console.log("Orders placed this copy: " + orders);
-    sendTelegramMaster("Orders placed this instance: " + orders);
+    // sendTelegramMaster("Orders placed this instance: " + orders);
   }
 }
 
