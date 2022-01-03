@@ -8,13 +8,15 @@ export default function MasterDash(props) {
     setBalance(<Balance balance={res} name="master" />);
   }
 
-  useEffect(async () => {
-    let res = await fetch("/api/master-balance");
-    res = await res.json();
+  useEffect(() => {
+    (async () => {
+      let res = await fetch("/api/master-balance");
+      res = await res.json();
 
-    // console.log(res);
+      // console.log(res);
 
-    set(res);
+      set(res);
+    })();
   }, []);
   return (
     <div>

@@ -5,6 +5,7 @@ import {
   getOpenOrders,
   getTrades,
 } from "../../helpers/binance_helpers";
+import { sendTelegramMaster } from "../../helpers/telegram_helper";
 
 export default async function handler(req, res) {
   let reqq = await fetch(`${process.env.ROOT_PATH}api/mongo/status`);
@@ -14,6 +15,7 @@ export default async function handler(req, res) {
 
   if (!startup) {
     await fetch(`${process.env.ROOT_PATH}api/mongo/change-status`);
+    sendTelegramMaster("Copier started");
     res.status(200).json("Copier started");
     startup = true;
     // TODO - Add while loop for what happens when status is true

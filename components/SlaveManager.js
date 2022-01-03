@@ -8,187 +8,189 @@ export default function SlaveManager(props) {
   let [edit_slaves, setEditSlaves] = useState(<div className="loader"></div>);
 
   // Run on window load
-  useEffect(async () => {
-    // let slaves = await fetch("/api/mongo/slaves");
-    // slaves = await slaves.json();
+  useEffect(() => {
+    (async () => {
+      // let slaves = await fetch("/api/mongo/slaves");
+      // slaves = await slaves.json();
 
-    let slave_names = await fetch("/api/mongo/slaves");
-    slave_names = await slave_names.json();
+      let slave_names = await fetch("/api/mongo/slaves");
+      slave_names = await slave_names.json();
 
-    let slaves = [];
-    for (let i in slave_names) {
-      if (i !== "_id") slaves.push({ name: i });
-    }
-
-    // Populate Delete Slave Table Start
-    let arr = [];
-
-    for (let i in slaves) {
-      let slave = slaves[i];
-      async function deleteSlave(e) {
-        e.preventDefault();
-        let res = await fetch("/api/mongo/delete-slave", {
-          method: "POST",
-          body: JSON.stringify({
-            name: slave.name,
-          }),
-        });
-
-        window.location.reload();
+      let slaves = [];
+      for (let i in slave_names) {
+        if (i !== "_id") slaves.push({ name: i });
       }
-      arr.push(
-        <tr className="w3-animate-bottom" key={slave.name}>
-          <td>{slave.name}</td>
-          <td>
-            <input type="button" value="X" onClick={deleteSlave} />
-          </td>
-        </tr>
-      );
-    }
-    setDeleteSlaveTable(arr);
 
-    // End
+      // Populate Delete Slave Table Start
+      let arr = [];
 
-    // Populate Edit Slaves Start
-    let arr2 = [];
+      for (let i in slaves) {
+        let slave = slaves[i];
+        async function deleteSlave(e) {
+          e.preventDefault();
+          let res = await fetch("/api/mongo/delete-slave", {
+            method: "POST",
+            body: JSON.stringify({
+              name: slave.name,
+            }),
+          });
 
-    for (let i in slaves) {
-      let slave = slaves[i];
-      async function submitNewSlaveForm(e) {
-        e.preventDefault();
-
-        let elements = document.getElementById(
-          `${slave.name}_edit_slave_form`
-        ).elements;
-        elements = Array.from(elements);
-
-        let obj = {};
-
-        // remove submit from array
-        elements.pop();
-        for (let i in elements) {
-          let value = elements[i].value;
-          let id = elements[i].id;
-
-          // l;
-          let substring = slave.name + "_";
-          id = id.substring(substring.length);
-
-          obj[id] = value;
+          window.location.reload();
         }
-        let req = await fetch("/api/mongo/add-slave", {
-          method: "POST",
-          body: JSON.stringify(obj),
-        });
-
-        clearForm(elements);
-        window.location.reload();
+        arr.push(
+          <tr className="w3-animate-bottom" key={slave.name}>
+            <td>{slave.name}</td>
+            <td>
+              <input type="button" value="X" onClick={deleteSlave} />
+            </td>
+          </tr>
+        );
       }
-      arr2.push(
-        <form
-          key={slave.name + "_key"}
-          id={`${slave.name}_edit_slave_form`}
-          className="w3-center w3-border w3-animate-bottom"
-        >
-          <h1>Edit {slave.name}</h1>
-          <label htmlFor="name">Name</label>
-          <br />
-          <input
-            readOnly={true}
-            id={slave.name + "_name"}
-            name="name"
-            className="w3-center w3-input w3-border "
-            type="text"
-            style={{
-              width: "50%",
-              textAlign: "center",
-              display: "inline-block",
-            }}
-          />
-          <br />
-          <label htmlFor="binance_key">Binance API Key</label>
-          <br />
-          <input
-            id={slave.name + "_binance_key"}
-            name="binance_key"
-            className="w3-input w3-border w3-animate-input"
-            type="text"
-            style={{
-              width: "50%",
-              textAlign: "center",
-              display: "inline-block",
-            }}
-            required={true}
-          />
-          <br />
-          <label htmlFor="binance_secret">Binance API Secret</label>
-          <br />
-          <input
-            id={slave.name + "_binance_secret"}
-            name="binance_secret"
-            className="w3-input w3-border w3-animate-input"
-            type="text"
-            style={{
-              width: "50%",
-              textAlign: "center",
-              display: "inline-block",
-            }}
-            required={true}
-          />
-          <br />
+      setDeleteSlaveTable(arr);
 
-          <label htmlFor="binance_multiplier">Multiplier</label>
-          <br />
-          <input
-            id={slave.name + "_binance_multiplier"}
-            name="binance_multiplier"
-            className="w3-input w3-border w3-animate-input"
-            type="number"
-            style={{
-              width: "50%",
-              textAlign: "center",
-              display: "inline-block",
-            }}
-            required={true}
-          />
-          <br />
+      // End
 
-          <input
-            name="submit"
-            className="w3-input w3-border w3-hoverable"
-            type="submit"
-            style={{
-              width: "20%",
-              textAlign: "center",
-              display: "inline-block",
-            }}
-            onClick={submitNewSlaveForm}
-          />
-        </form>
-      );
-    }
-    setEditSlaves(arr2);
+      // Populate Edit Slaves Start
+      let arr2 = [];
 
-    // End
+      for (let i in slaves) {
+        let slave = slaves[i];
+        async function submitNewSlaveForm(e) {
+          e.preventDefault();
 
-    // populate forms
-    // let slave_names = await fetch("/api/mongo/slaves");
-    // slave_names = await slave_names.json();
-    // console.log(slave_names);
+          let elements = document.getElementById(
+            `${slave.name}_edit_slave_form`
+          ).elements;
+          elements = Array.from(elements);
 
-    for (let i in slave_names) {
-      // i == NAME
-      let slave = slave_names[i];
-      // name = i;
-      if (i == "_id") continue;
+          let obj = {};
 
-      // Pop
-      document.getElementById(`${i}_name`).value = i;
-      document.getElementById(`${i}_binance_key`).value = slave.key;
-      document.getElementById(`${i}_binance_secret`).value = slave.secret;
-      document.getElementById(`${i}_binance_multiplier`).value =
-        slave.multiplier;
-    }
+          // remove submit from array
+          elements.pop();
+          for (let i in elements) {
+            let value = elements[i].value;
+            let id = elements[i].id;
+
+            // l;
+            let substring = slave.name + "_";
+            id = id.substring(substring.length);
+
+            obj[id] = value;
+          }
+          let req = await fetch("/api/mongo/add-slave", {
+            method: "POST",
+            body: JSON.stringify(obj),
+          });
+
+          clearForm(elements);
+          window.location.reload();
+        }
+        arr2.push(
+          <form
+            key={slave.name + "_key"}
+            id={`${slave.name}_edit_slave_form`}
+            className="w3-center w3-border w3-animate-bottom"
+          >
+            <h1>Edit {slave.name}</h1>
+            <label htmlFor="name">Name</label>
+            <br />
+            <input
+              readOnly={true}
+              id={slave.name + "_name"}
+              name="name"
+              className="w3-center w3-input w3-border "
+              type="text"
+              style={{
+                width: "50%",
+                textAlign: "center",
+                display: "inline-block",
+              }}
+            />
+            <br />
+            <label htmlFor="binance_key">Binance API Key</label>
+            <br />
+            <input
+              id={slave.name + "_binance_key"}
+              name="binance_key"
+              className="w3-input w3-border w3-animate-input"
+              type="text"
+              style={{
+                width: "50%",
+                textAlign: "center",
+                display: "inline-block",
+              }}
+              required={true}
+            />
+            <br />
+            <label htmlFor="binance_secret">Binance API Secret</label>
+            <br />
+            <input
+              id={slave.name + "_binance_secret"}
+              name="binance_secret"
+              className="w3-input w3-border w3-animate-input"
+              type="text"
+              style={{
+                width: "50%",
+                textAlign: "center",
+                display: "inline-block",
+              }}
+              required={true}
+            />
+            <br />
+
+            <label htmlFor="binance_multiplier">Multiplier</label>
+            <br />
+            <input
+              id={slave.name + "_binance_multiplier"}
+              name="binance_multiplier"
+              className="w3-input w3-border w3-animate-input"
+              type="number"
+              style={{
+                width: "50%",
+                textAlign: "center",
+                display: "inline-block",
+              }}
+              required={true}
+            />
+            <br />
+
+            <input
+              name="submit"
+              className="w3-input w3-border w3-hoverable"
+              type="submit"
+              style={{
+                width: "20%",
+                textAlign: "center",
+                display: "inline-block",
+              }}
+              onClick={submitNewSlaveForm}
+            />
+          </form>
+        );
+      }
+      setEditSlaves(arr2);
+
+      // End
+
+      // populate forms
+      // let slave_names = await fetch("/api/mongo/slaves");
+      // slave_names = await slave_names.json();
+      // console.log(slave_names);
+
+      for (let i in slave_names) {
+        // i == NAME
+        let slave = slave_names[i];
+        // name = i;
+        if (i == "_id") continue;
+
+        // Pop
+        document.getElementById(`${i}_name`).value = i;
+        document.getElementById(`${i}_binance_key`).value = slave.key;
+        document.getElementById(`${i}_binance_secret`).value = slave.secret;
+        document.getElementById(`${i}_binance_multiplier`).value =
+          slave.multiplier;
+      }
+    })();
   }, []);
 
   // Helpers

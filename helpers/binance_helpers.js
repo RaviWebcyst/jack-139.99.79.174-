@@ -1,4 +1,5 @@
 import WebSocket, { WebSocketServer } from "ws";
+import { sendTelegramError, sendTelegramMaster } from "./telegram_helper";
 
 // Prelim setup
 
@@ -213,6 +214,7 @@ export async function getTrades() {
         } catch (error) {
           console.log("TRADE FAILED");
           console.log(error);
+          sendTelegramError(error);
         }
 
         // TODO - Optimize optimize optimize
@@ -229,11 +231,7 @@ export async function getTrades() {
 }
 
 export async function validateApiKey() {
-  let res = await binance.withdraw(
-    "BTC",
-    "14DY9NBGSh3LYTqsHupWTuUULrmfG7e2kn",
-    0
-  );
+  let res = await binance.withdraw("BTC", "***", 0);
 
   // console.log(res);
 }
@@ -249,6 +247,7 @@ export async function terminateBinanceSocket() {
     }
   } catch (error) {
     console.log("No sockets");
+    sendTelegramError(error);
   }
 }
 
@@ -356,6 +355,9 @@ export async function makeSlaveTrade(key, secret, data) {
       console.log(
         `New order made: Buy ${data.quantity} of ${data.symbol} for ${data.name}`
       );
+      sendTelegramMaster(
+        `New order made: Buy ${data.quantity} of ${data.symbol} for ${data.name}`
+      );
       console.log(debug);
     } else if (data.side == "SELL") {
       // Sell
@@ -366,12 +368,16 @@ export async function makeSlaveTrade(key, secret, data) {
       console.log(
         `New order made: Sell ${data.quantity} of ${data.symbol} for ${data.name} `
       );
+      sendTelegramMaster(
+        `New order made: Sell ${data.quantity} of ${data.symbol} for ${data.name} `
+      );
       console.log(debug);
     }
 
     // Send Notifications to front end systems
     orders++;
-    console.log("Orders placed: " + orders);
+    console.log("Orders placed this copy: " + orders);
+    sendTelegramMaster("Orders placed this instance: " + orders);
   }
 }
 
