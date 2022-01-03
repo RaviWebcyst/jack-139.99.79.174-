@@ -359,6 +359,13 @@ export async function makeSlaveTrade(key, secret, data) {
         `New order made: Buy ${data.quantity} of ${data.symbol} for ${data.name}`
       );
       console.log(debug);
+
+      if (debug.msg) {
+        sendTelegramError(
+          `Error on purchase for ${data.name} on ${data.symbol} for ${data.quantity}`
+        );
+        sendTelegramError(JSON.stringify(debug.msg));
+      }
     } else if (data.side == "SELL") {
       // Sell
       let debug = await slave_binance.futuresMarketSell(
@@ -372,6 +379,13 @@ export async function makeSlaveTrade(key, secret, data) {
         `New order made: Sell ${data.quantity} of ${data.symbol} for ${data.name} `
       );
       console.log(debug);
+
+      if (debug.msg) {
+        sendTelegramError(
+          `Error on purchase for ${data.name} on ${data.symbol} for ${data.quantity}`
+        );
+        sendTelegramError(JSON.stringify(debug.msg));
+      }
     }
 
     // Send Notifications to front end systems
