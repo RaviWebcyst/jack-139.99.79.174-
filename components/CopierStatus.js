@@ -9,13 +9,6 @@ export default function CopierStatus() {
   useEffect(() => {
     //
     (async () => {
-      // Set Open Orders
-      let res = await fetch("/api/futures-open-orders");
-      res = await res.json();
-
-      console.log("Open Orders:");
-      console.log(res);
-
       let copier_status;
       copier_status = await fetch(`/api/mongo/status`);
       copier_status = await copier_status.json();

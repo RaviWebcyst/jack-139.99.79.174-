@@ -19,7 +19,31 @@ export async function getFuturesBalance() {
 }
 
 export async function getOpenFutureOrders() {
-  return await binance.futuresOpenOrders();
+  let obj = {};
+
+  // console.log(await binance.futuresOpenOrders());
+  obj.master = await binance.futuresOpenOrders();
+  obj.slaves = [];
+
+  let s = await getSlaves();
+
+  // console.log(s);
+  let x = 0;
+  for (let i in s) {
+    // console.log(s[i]);
+    const s_b = new Binance().options({
+      APIKEY: s[i].key,
+      APISECRET: s[i].secret,
+      useServerTime: true,
+    });
+    obj.slaves.push(await s_b.futuresOpenOrders());
+    obj.slaves[x].name = i;
+    x++;
+  }
+
+  // console.log(obj);
+
+  return obj;
 }
 
 export async function getMasterUSDBalance(ticker) {

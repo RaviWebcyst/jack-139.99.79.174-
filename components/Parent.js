@@ -7,6 +7,7 @@ import MasterDash from "./MasterDash";
 import SlaveBalance from "./SlaveBalance";
 import SlaveManager from "./SlaveManager";
 import Settings from "./Settings";
+import OpenOrders from "./OpenOrders";
 // Component Import Stop
 
 export default function Parent(props) {
@@ -46,6 +47,11 @@ export default function Parent(props) {
     setApp(<SlaveManager slaves={props.props.slaves} />);
   }
 
+  function openOrdersButton(e) {
+    e.preventDefault();
+    setApp(<OpenOrders />);
+  }
+
   // console.log(DefaultApp);
   return (
     <div>
@@ -53,6 +59,7 @@ export default function Parent(props) {
       <input type="button" value="Balance" onClick={masterDashButton} />
       <input type="button" value="Slave Balance" onClick={slaveBalanceButton} />
       <input type="button" value="Slave Manager" onClick={slaveManagerButton} />
+      <input type="button" value="Open Orders" onClick={openOrdersButton} />
 
       <div className="app_parent">{app}</div>
 
