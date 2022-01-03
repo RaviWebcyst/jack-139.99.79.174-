@@ -1,9 +1,39 @@
 Next.js Trade copier
 
-npm install
-npm run dev
+- Deployment on server instructions
 
-connect mongodb, set root path in .env template
+# Prep
+
+Make copy of .env.template with proper API keys passed through.
+Ensure mongoDB is live and working with proper schema
+
+```shell
+cd Binance-API-Trade-Copier
+npm install // (If new package is required)
+npm run build
+```
+
+# Pre-Deployment Check
+
+```shell
+pm2 ps // (Check to see if server is online )
+pm2 delete 0 // (Should be instance 0, if other index sub 0)
+
+```
+
+# Deployment
+
+```shell
+pm2 --name Copier start npm -- start
+```
+
+# Post Deployment Checks
+
+Navigate to website and check copier status.
+If copier status is on, turn off and then back on for proper init.
+Copier will be confirmed running when telegram message is sent.
+
+Once running, leave on. If you need to stop the copier, for the time being restart the entire node server and start again from the #prep instruction block.
 
 Devlogs:
 
