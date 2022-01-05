@@ -54,7 +54,7 @@ export default function CopierStatus() {
             key="closed"
             className="w3-center w3-container w3-animate-bottom"
           >
-            <h1>Copier Status</h1>
+            <h1>Copier Status Copy One</h1>
             <p>Off</p>
             <input
               type="button"
