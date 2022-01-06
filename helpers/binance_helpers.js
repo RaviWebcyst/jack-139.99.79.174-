@@ -249,10 +249,23 @@ export async function getTrades() {
           data.quantity = data.quantity.toFixed(stepSize.countDecimals()); // TODO - Test
         } catch (error) {
           data.quantity = Math.round(data.quantity);
-          sendTelegramError(`${data.symbol} precision data not found`);
+          // sendTelegramError(`${data.symbol} precision data not found`);
         }
 
+        // if
+
         // Execute Order
+
+        // Check to make sure balance is valid
+        let slave_assets = await getSlaveAssetBalance(slave.key, slave.secret);
+        for (let i in slave_assets) {
+          let asset = slave_assets[i];
+          if (asset.asset == asset) {
+            if (asset.availableBalance > data.quantity) {
+              data.quantity = Math.round(asset.availableBalance);
+            }
+          }
+        }
 
         try {
           await makeSlaveTrade(slave.key, slave.secret, data); // TODO - Add notifications to telegram and dom via this action
@@ -372,6 +385,8 @@ export async function getSlaveAssetBalances(key, secret) {
 
 let orders = 0;
 
+let trades = {};
+
 export async function makeSlaveTrade(key, secret, data) {
   let copier_status;
   copier_status = await fetch(`${process.env.ROOT_PATH}api/mongo/status`);
@@ -412,6 +427,8 @@ export async function makeSlaveTrade(key, secret, data) {
         sendTelegramError(JSON.stringify(debug.msg));
       }
     } else if (data.side == "SELL") {
+      // If sell check to see if amount selling is more than amount that you have
+
       // Sell
       let debug = await slave_binance.futuresMarketSell(
         data.symbol,

@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     APISECRET: process.env.APISECRET,
   });
 
-  res.status(200).json(await b.futuresOpenOrders());
+  res.status(200).json(await b.futuresBalance());
 }
 
 // {"symbol":"RAYUSDT","positionAmt":"0.0","entryPrice":"0.0","markPrice":"0.00000000","unRealizedProfit":"0.00000000","liquidationPrice":"0","leverage":"20","maxNotionalValue":"25000","marginType":"cross","isolatedMargin":"0.00000000","isAutoAddMargin":"false","positionSide":"BOTH","notional":"0","isolatedWallet":"0","updateTime":0},
