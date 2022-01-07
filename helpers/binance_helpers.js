@@ -36,8 +36,17 @@ export async function getOpenFutureOrders() {
       APISECRET: s[i].secret,
       useServerTime: true,
     });
-    obj.slaves.push(await s_b.futuresOpenOrders());
-    obj.slaves[x].name = i;
+
+    let order = await s_b.futuresOpenOrders();
+    // order.name = i;
+    // console.log(order);
+    for (let x in order) {
+      order[x].name = i;
+    }
+    // console.log(i);
+    obj.slaves.push(order);
+    // console.log(typeof order);
+    // obj.slaves[x].name = i;
     x++;
   }
 
