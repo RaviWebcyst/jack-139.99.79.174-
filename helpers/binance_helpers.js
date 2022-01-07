@@ -268,10 +268,10 @@ export async function getTrades() {
         // Check to make sure balance is valid
         let slave_assets = await getSlaveAssetBalance(slave.key, slave.secret);
         for (let i in slave_assets) {
-          let asset = slave_assets[i];
-          if (asset.asset == asset) {
-            if (asset.availableBalance > data.quantity) {
-              data.quantity = Math.round(asset.availableBalance);
+          let asset_local = slave_assets[i];
+          if (asset_local.asset == asset) {
+            if (asset_local.availableBalance > data.quantity) {
+              data.quantity = Math.round(asset_local.availableBalance);
             }
           }
         }
