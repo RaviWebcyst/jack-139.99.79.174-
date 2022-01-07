@@ -266,7 +266,7 @@ export async function getTrades() {
         // Execute Order
 
         // Check to make sure balance is valid
-        let slave_assets = await getSlaveAssetBalance(slave.key, slave.secret);
+        let slave_assets = await getSlaveAssetBalances(slave.key, slave.secret);
         for (let i in slave_assets) {
           let asset_local = slave_assets[i];
           if (asset_local.asset == asset) {
