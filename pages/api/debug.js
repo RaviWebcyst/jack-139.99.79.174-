@@ -3,9 +3,11 @@
 //   sendTelegramMaster,
 //   sendTelegramError,
 // } from "../../helpers/telegram_helper";
+import { getSlaveAssetBalances } from "../../helpers/binance_helpers";
 import { debugWorker } from "../../helpers/worker_helper";
 // // import Binance from "binance-api-node"; // Alt
-// const Binance = require("node-binance-api"); // Main
+// getSlaveAssetBalances
+const Binance = require("node-binance-api"); // Main
 
 export default async function handler(req, res) {
   // let b = new Binance().options({
@@ -13,9 +15,30 @@ export default async function handler(req, res) {
   //   APISECRET: process.env.APISECRET,
   // });
 
-  debugWorker();
+  let qty = 10;
+  let asset = "USDT";
+  let response;
+  let slave_assets = await getSlaveAssetBalances(
+    process.env.APIKEY,
+    process.env.APISECRET
+  );
+  for (let i in slave_assets) {
+    let asset_local = slave_assets[i];
+    if (asset_local.asset == asset) {
+      response = asset_local.availableBalance;
+      // if (asset_local.availableBalance > qty) {
+      //   // qty = Math.round(asset_local.availableBalance);
 
-  res.status(200).json("worker");
+      // }
+    }
+  }
+
+  // console.log("Balance");
+  // console.log(slave_assets);
+
+  // debugWorker();
+
+  res.status(200).json(response);
 }
 
 // {"symbol":"RAYUSDT","positionAmt":"0.0","entryPrice":"0.0","markPrice":"0.00000000","unRealizedProfit":"0.00000000","liquidationPrice":"0","leverage":"20","maxNotionalValue":"25000","marginType":"cross","isolatedMargin":"0.00000000","isAutoAddMargin":"false","positionSide":"BOTH","notional":"0","isolatedWallet":"0","updateTime":0},

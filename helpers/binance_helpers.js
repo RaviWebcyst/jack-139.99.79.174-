@@ -270,7 +270,7 @@ export async function getTrades() {
         for (let i in slave_assets) {
           let asset_local = slave_assets[i];
           if (asset_local.asset == asset) {
-            if (asset_local.availableBalance > data.quantity) {
+            if (asset_local.availableBalance < data.quantity) {
               data.quantity = Math.round(asset_local.availableBalance);
             }
           }
