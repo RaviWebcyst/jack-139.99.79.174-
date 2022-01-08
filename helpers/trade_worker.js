@@ -1,93 +1,146 @@
-import {
-  getMasterUSDBalance,
-  getTickerPrices,
-  getSlaveUSDBalance,
-  getMasterUSDBalance,
-  sendTelegramError,
-  makeSlaveTrade,
-} from "./binance_helpers";
+// import {
+//   getMasterUSDBalance,
+//   getTickerPrices,
+//   getSlaveUSDBalance,
+//   getMasterUSDBalance,
+//   sendTelegramError,
+//   sendTelegramMaster,
+//   makeSlaveTrade,
+//   balances,
+// } from "./binance_helpers";
 
-addEventListener("message", (e) => {
-  // postMessage(e.data); // Echo Response
-  const MULTIPLIER = slave.multiplier; // TODO - PULL multiplier from database
+// addEventListener("message", (e) => {
+//   let slave = e.data.slave;
+//   let order = e.data.order;
+//   // if (i == "_id") continue;
 
-  // Calculate order quantity
-  // Asset == symbol - USDT
-  let asset = order.symbol.slice(0, -4);
+//   // if (i !== "Iengka") continue; // ANCHOR - DEBUG SELECT IENGKA
 
-  let ticker = await getTickerPrices();
-  let slave_balance = await getSlaveUSDBalance(slave.key, slave.secret, ticker);
-  let master_balance = await getMasterUSDBalance(ticker);
+//   // let bal = await getSlaveUSDBalance(slave.key, slave.secret, ticker);
+//   // let asset_balance = await getSlaveAssetBalances(
+//   //   slave.key,
+//   //   slave.secret
+//   // );
 
-  let rate = slave_balance / master_balance;
+//   const MULTIPLIER = slave.multiplier; // TODO - PULL multiplier from database
 
-  let qty = rate * order.originalQuantity;
-  let data = {
-    side: order.side,
-    symbol: order.symbol,
-    quantity: qty * MULTIPLIER, // Asset balance of slave multiplied by order percentage of master
-    name: i,
-  };
+//   // Calculate order quantity
+//   // Asset == symbol - USDT
+//   let asset = order.symbol.slice(0, -4);
 
-  // Dynamically Assign Precision
-  let precision = await fetch("https://api.binance.com/api/v3/exchangeInfo");
-  //
+//   let ticker = await getTickerPrices();
+//   let slave_balance = await getSlaveUSDBalance(slave.key, slave.secret, ticker);
+//   let master_balance = await getMasterUSDBalance(ticker);
 
-  precision = await precision.json();
+//   let rate = slave_balance / master_balance;
 
-  console.log(precision.symbols);
-  var results = precision.symbols.filter(function (entry) {
-    return entry.symbol === order.symbol;
-  });
+//   let qty = rate * order.originalQuantity;
+//   let data = {
+//     side: order.side,
+//     symbol: order.symbol,
+//     quantity: qty * MULTIPLIER, // Asset balance of slave multiplied by order percentage of master
+//     name: i,
+//   };
 
-  // if ((results = [])) {
-  //   for (let i in precision.symbols) {
-  //     let symbol = precision.symbols[i];
+//   // Dynamically Assign Precision
+//   let precision = await fetch("https://api.binance.com/api/v3/exchangeInfo");
+//   //
 
-  //     if (symbol.symbol == order.symbol) {
-  //       results = symbol;
-  //     }
-  //   }
-  // }
+//   precision = await precision.json();
 
-  let stepSize;
+//   // console.log(precision.symbols);
+//   var results = precision.symbols.filter(function (entry) {
+//     return entry.symbol === order.symbol;
+//   });
 
-  try {
-    stepSize = results.filters[2].stepSize;
+//   // if ((results = [])) {
+//   //   for (let i in precision.symbols) {
+//   //     let symbol = precision.symbols[i];
 
-    Number.prototype.countDecimals = function () {
-      if (Math.floor(this.valueOf()) === this.valueOf()) return 0;
-      return this.toString().split(".")[1].length || 0;
-    };
+//   //     if (symbol.symbol == order.symbol) {
+//   //       results = symbol;
+//   //     }
+//   //   }
+//   // }
 
-    stepSize = parseFloat(stepSize);
+//   let stepSize;
 
-    data.quantity = data.quantity.toFixed(stepSize.countDecimals()); // TODO - Test
-  } catch (error) {
-    data.quantity = Math.round(data.quantity);
-    // sendTelegramError(`${data.symbol} precision data not found`);
-  }
+//   try {
+//     stepSize = results.filters[2].stepSize;
 
-  // if
+//     Number.prototype.countDecimals = function () {
+//       if (Math.floor(this.valueOf()) === this.valueOf()) return 0;
+//       return this.toString().split(".")[1].length || 0;
+//     };
 
-  // Execute Order
+//     stepSize = parseFloat(stepSize);
 
-  // Check to make sure balance is valid
-  let slave_assets = await getSlaveAssetBalance(slave.key, slave.secret);
-  for (let i in slave_assets) {
-    let asset_local = slave_assets[i];
-    if (asset_local.asset == asset) {
-      if (asset_local.availableBalance > data.quantity) {
-        data.quantity = Math.round(asset_local.availableBalance);
-      }
-    }
-  }
+//     data.quantity = data.quantity.toFixed(stepSize.countDecimals()); // TODO - Test
+//   } catch (error) {
+//     data.quantity = Math.round(data.quantity);
+//     // sendTelegramError(`${data.symbol} precision data not found`);
+//   }
 
-  try {
-    await makeSlaveTrade(slave.key, slave.secret, data); // TODO - Add notifications to telegram and dom via this action
-  } catch (error) {
-    console.log("TRADE FAILED");
-    console.log(error);
-    sendTelegramError(error);
-  }
-});
+//   // if
+
+//   // Execute Order
+
+//   // Check to make sure balance is valid
+
+//   console.log(`Master qty ${data.side} for ${data.name}: ${data.quantity}`);
+//   console.log(`Master asset: ${asset}`);
+//   let slave_assets = await getSlaveAssetBalances(slave.key, slave.secret);
+//   for (let y in slave_assets) {
+//     let asset_local = slave_assets[y];
+//     // console.log(`DEBUG: ${asset_local.asset}`);
+//     if (asset_local.asset == asset) {
+//       console.log(
+//         `Available quanity for ${data.name}: ${asset_local.availableBalance}`
+//       );
+//       if (asset_local.availableBalance < data.quantity) {
+//         data.quantity = Math.round(asset_local.availableBalance);
+//       }
+//     }
+//   }
+
+//   // Check again
+//   if (data.side == "BUY") {
+//     if (balances[i].hasOwnProperty(data.symbol)) {
+//       balances[i][data.symbol] += data.quantity;
+//     } else {
+//       balances[i][data.symbol] = data.quantity;
+//     }
+//   } else if (data.side == "SELL") {
+//     if (balances[i].hasOwnProperty(data.symbol)) {
+//       // balances[i][data.symbol] += data.quantity;
+
+//       if (data.quantity !== balances[i][data.symbol]) {
+//         let dif = balances[i][data.symbol] - data.quantity;
+
+//         console.log(`The difference between order amount and dict is ${dif}`);
+//       }
+//       data.quantity = balances[i][data.symbol];
+//       balances[i][data.symbol] -= data.quantity;
+
+//       // if ()
+//     } else {
+//       // if (dif < 0) {
+//       //   data.quantity = data.quantity + dif;
+//       //   // data.quantity
+//       //   console.log("Dif changed");
+//       // }
+//     }
+//   }
+//   console.log(balances);
+
+//   try {
+//     await makeSlaveTrade(slave.key, slave.secret, data); // TODO - Add notifications to telegram and dom via this action
+//     // if ()
+//   } catch (error) {
+//     console.log("TRADE FAILED");
+//     console.log(error);
+//     sendTelegramError(error);
+//   }
+
+//   // TODO - Optimize optimize optimize
+// });

@@ -12,7 +12,7 @@ export function debugWorker() {
 }
 
 export function placeWorkerTradeOrder(data) {
-  const url = new URL("./worker.js", import.meta.url);
+  const url = new URL("./trade_worker.js", import.meta.url);
   const worker = new Worker(url);
 
   worker.addEventListener("message", (e) => {

@@ -1,5 +1,6 @@
 import WebSocket, { WebSocketServer } from "ws";
 import { sendTelegramError, sendTelegramMaster } from "./telegram_helper";
+import { placeWorkerTradeOrder } from "./worker_helper";
 
 // Prelim setup
 
@@ -105,7 +106,7 @@ export async function getOpenOrders() {
   });
 }
 
-let balances = [];
+export let balances = [];
 
 export async function getTrades() {
   // populate balances with objects
@@ -198,6 +199,7 @@ export async function getTrades() {
         let slave = slaves[i];
         if (i == "_id") continue;
 
+        // placeWorkerTradeOrder({slave: slave, order: order}) // TODO - Activate worker
         // if (i !== "Iengka") continue; // ANCHOR - DEBUG SELECT IENGKA
 
         // let bal = await getSlaveUSDBalance(slave.key, slave.secret, ticker);
@@ -256,7 +258,7 @@ export async function getTrades() {
         let stepSize;
 
         try {
-          stepSize = results.filters[2].stepSize;
+          stepSize = results[0].filters[2].stepSize;
 
           Number.prototype.countDecimals = function () {
             if (Math.floor(this.valueOf()) === this.valueOf()) return 0;
