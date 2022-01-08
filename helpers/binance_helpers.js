@@ -105,7 +105,15 @@ export async function getOpenOrders() {
   });
 }
 
+let balances = [];
+
 export async function getTrades() {
+  // populate balances with objects
+  let slave_length = await getSlaves();
+  for (let i in slave_length) {
+    balances[i] = {};
+  }
+
   function balance_update(data) {
     console.log("BALANCE UPDATE DEBUG START");
     console.log(data);
@@ -120,13 +128,13 @@ export async function getTrades() {
     }
   }
   function execution_update(data) {
-    console.log("ORDER START");
-    console.log(data);
-    console.log("balances");
-    console.log(data.updateData.balances);
-    console.log("positions");
-    console.log(data.updateData.positions);
-    console.log("ORDER END");
+    // console.log("ORDER START");
+    // console.log(data);
+    // console.log("balances");
+    // console.log(data.updateData.balances);
+    // console.log("positions");
+    // console.log(data.updateData.positions);
+    // console.log("ORDER END");
 
     let {
       x: executionType,
@@ -173,9 +181,9 @@ export async function getTrades() {
   }
 
   async function orderUpdateHandler(data) {
-    console.log("ORDER UPDATE HANDLER START");
-    console.log(data);
-    console.log("ORDER UPDATE HANDLER STOP");
+    // console.log("ORDER UPDATE HANDLER START");
+    // console.log(data);
+    // console.log("ORDER UPDATE HANDLER STOP");
     let order = data.order;
     if (order.orderStatus == "NEW") {
       // New order to be placed
@@ -189,6 +197,8 @@ export async function getTrades() {
       for (let i in slaves) {
         let slave = slaves[i];
         if (i == "_id") continue;
+
+        // if (i !== "Iengka") continue; // ANCHOR - DEBUG SELECT IENGKA
 
         // let bal = await getSlaveUSDBalance(slave.key, slave.secret, ticker);
         // let asset_balance = await getSlaveAssetBalances(
@@ -228,7 +238,7 @@ export async function getTrades() {
 
         precision = await precision.json();
 
-        console.log(precision.symbols);
+        // console.log(precision.symbols);
         var results = precision.symbols.filter(function (entry) {
           return entry.symbol === order.symbol;
         });
@@ -266,18 +276,60 @@ export async function getTrades() {
         // Execute Order
 
         // Check to make sure balance is valid
+
+        console.log(
+          `Master qty ${data.side} for ${data.name}: ${data.quantity}`
+        );
+        console.log(`Master asset: ${asset}`);
         let slave_assets = await getSlaveAssetBalances(slave.key, slave.secret);
-        for (let i in slave_assets) {
-          let asset_local = slave_assets[i];
+        for (let y in slave_assets) {
+          let asset_local = slave_assets[y];
+          // console.log(`DEBUG: ${asset_local.asset}`);
           if (asset_local.asset == asset) {
+            console.log(
+              `Available quanity for ${data.name}: ${asset_local.availableBalance}`
+            );
             if (asset_local.availableBalance < data.quantity) {
               data.quantity = Math.round(asset_local.availableBalance);
             }
           }
         }
 
+        // Check again
+        if (data.side == "BUY") {
+          if (balances[i].hasOwnProperty(data.symbol)) {
+            balances[i][data.symbol] += data.quantity;
+          } else {
+            balances[i][data.symbol] = data.quantity;
+          }
+        } else if (data.side == "SELL") {
+          if (balances[i].hasOwnProperty(data.symbol)) {
+            // balances[i][data.symbol] += data.quantity;
+
+            if (data.quantity !== balances[i][data.symbol]) {
+              let dif = balances[i][data.symbol] - data.quantity;
+
+              console.log(
+                `The difference between order amount and dict is ${dif}`
+              );
+            }
+            data.quantity = balances[i][data.symbol];
+            balances[i][data.symbol] -= data.quantity;
+
+            // if ()
+          } else {
+            // if (dif < 0) {
+            //   data.quantity = data.quantity + dif;
+            //   // data.quantity
+            //   console.log("Dif changed");
+            // }
+          }
+        }
+        console.log(balances);
+
         try {
           await makeSlaveTrade(slave.key, slave.secret, data); // TODO - Add notifications to telegram and dom via this action
+          // if ()
         } catch (error) {
           console.log("TRADE FAILED");
           console.log(error);
@@ -310,7 +362,7 @@ export async function terminateBinanceSocket() {
     let subs = await binance.futuresSubscriptions();
     console.log(subs);
     for (let i in subs) {
-      binance.futuresTerminate(subs[i]);
+      binance.futuresTerminate(subs[i].endpoint);
     }
   } catch (error) {
     console.log("No sockets");
@@ -427,7 +479,7 @@ export async function makeSlaveTrade(key, secret, data) {
       sendTelegramMaster(
         `New order made: Buy ${data.quantity} of ${data.symbol} for ${data.name}`
       );
-      console.log(debug);
+      // console.log(debug);
 
       if (debug.msg) {
         sendTelegramError(
@@ -449,7 +501,7 @@ export async function makeSlaveTrade(key, secret, data) {
       sendTelegramMaster(
         `New order made: Sell ${data.quantity} of ${data.symbol} for ${data.name} `
       );
-      console.log(debug);
+      // console.log(debug);
 
       if (debug.msg) {
         sendTelegramError(
