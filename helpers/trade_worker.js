@@ -9,7 +9,7 @@
 //   balances,
 // } from "./binance_helpers";
 
-// addEventListener("message", (e) => {
+// addEventListener("message", async (e) => {
 //   let slave = e.data.slave;
 //   let order = e.data.order;
 //   // if (i == "_id") continue;

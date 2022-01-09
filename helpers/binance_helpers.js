@@ -115,6 +115,9 @@ export async function getTrades() {
     balances[i] = {};
   }
 
+  let precision = await fetch("https://api.binance.com/api/v3/exchangeInfo");
+  precision = await precision.json();
+
   function balance_update(data) {
     console.log("BALANCE UPDATE DEBUG START");
     console.log(data);
@@ -188,7 +191,13 @@ export async function getTrades() {
     let order = data.order;
     if (order.orderStatus == "NEW") {
       // New order to be placed
-      let slaves = await getSlaves();
+      // let slaves = await getSlaves();
+      let slaves = slave_length;
+      let ticker = await getTickerPrices();
+      let master_balance = await getMasterUSDBalance(ticker);
+      let copier_status;
+      copier_status = await fetch(`${process.env.ROOT_PATH}api/mongo/status`);
+      copier_status = await copier_status.json();
 
       // console.log(order);
 
@@ -199,7 +208,8 @@ export async function getTrades() {
         let slave = slaves[i];
         if (i == "_id") continue;
 
-        // placeWorkerTradeOrder({slave: slave, order: order}) // TODO - Activate worker
+        // placeWorkerTradeOrder({ slave: slave, order: order }); // TODO - Activate worker
+        // continue;
         // if (i !== "Iengka") continue; // ANCHOR - DEBUG SELECT IENGKA
 
         // let bal = await getSlaveUSDBalance(slave.key, slave.secret, ticker);
@@ -214,13 +224,11 @@ export async function getTrades() {
         // Asset == symbol - USDT
         let asset = order.symbol.slice(0, -4);
 
-        let ticker = await getTickerPrices();
         let slave_balance = await getSlaveUSDBalance(
           slave.key,
           slave.secret,
           ticker
         );
-        let master_balance = await getMasterUSDBalance(ticker);
 
         let rate = slave_balance / master_balance;
 
@@ -233,12 +241,8 @@ export async function getTrades() {
         };
 
         // Dynamically Assign Precision
-        let precision = await fetch(
-          "https://api.binance.com/api/v3/exchangeInfo"
-        );
-        //
 
-        precision = await precision.json();
+        //
 
         // console.log(precision.symbols);
         var results = precision.symbols.filter(function (entry) {
@@ -330,7 +334,7 @@ export async function getTrades() {
         console.log(balances);
 
         try {
-          await makeSlaveTrade(slave.key, slave.secret, data); // TODO - Add notifications to telegram and dom via this action
+          makeSlaveTrade(slave.key, slave.secret, data, copier_status); // TODO - Add notifications to telegram and dom via this action
           // if ()
         } catch (error) {
           console.log("TRADE FAILED");
@@ -450,11 +454,7 @@ let orders = 0;
 
 let trades = {};
 
-export async function makeSlaveTrade(key, secret, data) {
-  let copier_status;
-  copier_status = await fetch(`${process.env.ROOT_PATH}api/mongo/status`);
-  copier_status = await copier_status.json();
-
+export async function makeSlaveTrade(key, secret, data, copier_status) {
   if (copier_status) {
     let slave_binance = new Binance().options({
       APIKEY: key,
