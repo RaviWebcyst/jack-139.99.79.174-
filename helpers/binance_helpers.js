@@ -267,10 +267,10 @@ export async function getTrades() {
 
           data.quantity = data.quantity.toFixed(stepSize.countDecimals()); // TODO - Test
         } catch (error) {
-          // data.quantity = Math.round(data.quantity);
-          data.quantity = data.quantity.toFixed(
-            order.originalQuantity.countDecimals()
-          );
+          data.quantity = Math.round(data.quantity);
+          // data.quantity = data.quantity.toFixed(
+          //   order.originalQuantity.countDecimals()
+          // );
           // sendTelegramError(`${data.symbol} precision data not found`);
         }
 
