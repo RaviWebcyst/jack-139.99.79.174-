@@ -242,38 +242,35 @@ export async function getTrades() {
 
         // Dynamically Assign Precision
 
-        //
-
         // console.log(precision.symbols);
         var results = precision.symbols.filter(function (entry) {
           return entry.symbol === order.symbol;
         });
 
-        // if ((results = [])) {
-        //   for (let i in precision.symbols) {
-        //     let symbol = precision.symbols[i];
-
-        //     if (symbol.symbol == order.symbol) {
-        //       results = symbol;
-        //     }
-        //   }
-        // }
+        // TODO - Manually assign precision for outliers
+        /* 
+        1000SHIB
+        XRP
+        */
 
         let stepSize;
 
+        Number.prototype.countDecimals = function () {
+          if (Math.floor(this.valueOf()) === this.valueOf()) return 0;
+          return this.toString().split(".")[1].length || 0;
+        };
+
         try {
           stepSize = results[0].filters[2].stepSize;
-
-          Number.prototype.countDecimals = function () {
-            if (Math.floor(this.valueOf()) === this.valueOf()) return 0;
-            return this.toString().split(".")[1].length || 0;
-          };
 
           stepSize = parseFloat(stepSize);
 
           data.quantity = data.quantity.toFixed(stepSize.countDecimals()); // TODO - Test
         } catch (error) {
-          data.quantity = Math.round(data.quantity);
+          // data.quantity = Math.round(data.quantity);
+          data.quantity = data.quantity.toFixed(
+            order.originalQuantity.countDecimals()
+          );
           // sendTelegramError(`${data.symbol} precision data not found`);
         }
 
