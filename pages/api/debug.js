@@ -29,6 +29,8 @@ export default async function handler(req, res) {
 
     response[i].all = await b.futuresAllOrders();
     response[i].open = await b.futuresOpenOrders();
+    response[i].risk = await binance.futuresPositionRisk();
+    response[i].account = await binance.futuresAccount();
   }
 
   // sendTelegramASAP("Test ASAP");
