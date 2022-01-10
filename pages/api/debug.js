@@ -3,7 +3,10 @@
 //   sendTelegramMaster,
 //   sendTelegramError,
 // } from "../../helpers/telegram_helper";
-import { getSlaveAssetBalances } from "../../helpers/binance_helpers";
+import {
+  getSlaveAssetBalances,
+  getSlaves,
+} from "../../helpers/binance_helpers";
 import { sendTelegramASAP } from "../../helpers/telegram_helper";
 import { debugWorker } from "../../helpers/worker_helper";
 // // import Binance from "binance-api-node"; // Alt
@@ -11,53 +14,23 @@ import { debugWorker } from "../../helpers/worker_helper";
 const Binance = require("node-binance-api"); // Main
 
 export default async function handler(req, res) {
-  let b = new Binance().options({
-    APIKEY: process.env.APIKEY,
-    APISECRET: process.env.APISECRET,
-  });
+  let slaves = await getSlaves();
 
-  // let qty = 10;
-  // let asset = "USDT";
-  // let response;
-  // let slave_assets = await getSlaveAssetBalances(
-  //   process.env.APIKEY,
-  //   process.env.APISECRET
-  // );
-  // for (let i in slave_assets) {
-  //   let asset_local = slave_assets[i];
-  //   if (asset_local.asset == asset) {
-  //     response = asset_local.availableBalance;
-  //     // if (asset_local.availableBalance > qty) {
-  //     //   // qty = Math.round(asset_local.availableBalance);
+  let response = {};
 
-  //     // }
-  //   }
-  // }
+  for (let i in slaves) {
+    let slave = slaves[i];
+    let b = new Binance().options({
+      APIKEY: slave.key,
+      APISECRET: slave.secret,
+    });
 
-  // qty;
-  // // Dynamically Assign Precision
-  // let precision = await fetch("https://api.binance.com/api/v3/exchangeInfo");
-  // //
+    response[i] = {};
 
-  // precision = await precision.json();
+    response[i].all = await b.futuresAllOrders();
+    response[i].open = await b.futuresOpenOrders();
+  }
 
-  // // console.log(precision.symbols);
-  // var results = precision.symbols.filter(function (entry) {
-  //   return entry.symbol === "ETHUSDT";
-  // });
-
-  // // let stepSize = results;
-
-  // Number.prototype.countDecimals = function () {
-  //   if (Math.floor(this.valueOf()) === this.valueOf()) return 0;
-  //   return this.toString().split(".")[1].length || 0;
-  // };
-
-  // let stepSize = results[0].filters[2].stepSize;
-
-  // stepSize = parseFloat(stepSize);
-
-  let response = await b.futuresPositionRisk();
   // sendTelegramASAP("Test ASAP");
   res.status(200).json(response);
 }
