@@ -11,10 +11,10 @@ import { debugWorker } from "../../helpers/worker_helper";
 const Binance = require("node-binance-api"); // Main
 
 export default async function handler(req, res) {
-  // let b = new Binance().options({
-  //   APIKEY: process.env.APIKEY,
-  //   APISECRET: process.env.APISECRET,
-  // });
+  let b = new Binance().options({
+    APIKEY: process.env.APIKEY,
+    APISECRET: process.env.APISECRET,
+  });
 
   // let qty = 10;
   // let asset = "USDT";
@@ -35,30 +35,31 @@ export default async function handler(req, res) {
   // }
 
   // qty;
-  // Dynamically Assign Precision
-  let precision = await fetch("https://api.binance.com/api/v3/exchangeInfo");
-  //
+  // // Dynamically Assign Precision
+  // let precision = await fetch("https://api.binance.com/api/v3/exchangeInfo");
+  // //
 
-  precision = await precision.json();
+  // precision = await precision.json();
 
-  // console.log(precision.symbols);
-  var results = precision.symbols.filter(function (entry) {
-    return entry.symbol === "ETHUSDT";
-  });
+  // // console.log(precision.symbols);
+  // var results = precision.symbols.filter(function (entry) {
+  //   return entry.symbol === "ETHUSDT";
+  // });
 
-  // let stepSize = results;
+  // // let stepSize = results;
 
-  Number.prototype.countDecimals = function () {
-    if (Math.floor(this.valueOf()) === this.valueOf()) return 0;
-    return this.toString().split(".")[1].length || 0;
-  };
+  // Number.prototype.countDecimals = function () {
+  //   if (Math.floor(this.valueOf()) === this.valueOf()) return 0;
+  //   return this.toString().split(".")[1].length || 0;
+  // };
 
-  let stepSize = results[0].filters[2].stepSize;
+  // let stepSize = results[0].filters[2].stepSize;
 
-  stepSize = parseFloat(stepSize);
+  // stepSize = parseFloat(stepSize);
 
+  let response = await b.futuresPositionRisk();
   // sendTelegramASAP("Test ASAP");
-  res.status(200).json(stepSize.countDecimals());
+  res.status(200).json(response);
 }
 
 // {"symbol":"RAYUSDT","positionAmt":"0.0","entryPrice":"0.0","markPrice":"0.00000000","unRealizedProfit":"0.00000000","liquidationPrice":"0","leverage":"20","maxNotionalValue":"25000","marginType":"cross","isolatedMargin":"0.00000000","isAutoAddMargin":"false","positionSide":"BOTH","notional":"0","isolatedWallet":"0","updateTime":0},
