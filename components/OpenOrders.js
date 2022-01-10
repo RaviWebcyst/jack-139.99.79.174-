@@ -2,18 +2,23 @@ import { useEffect, useState } from "react";
 
 export default function OpenOrders() {
   let [open, setOpen] = useState(<div className="loader"></div>);
+  let [positions, setPositions] = useState(<div className="loader"></div>);
 
   async function refreshOrder() {
     // Set Open Orders
     let res = await fetch("/api/futures-open-orders");
     res = await res.json();
 
+    let res_pos = await fetch("/api/futures-open-positions");
+    res_pos = await res_pos.json();
+
     console.log("Open Orders:");
     console.log(res);
 
     let arr = [];
 
-    // set master
+    // Orders
+    // set master orders
     for (let i in res.master) {
       let order = res.master[i];
 
@@ -37,7 +42,7 @@ export default function OpenOrders() {
       );
     }
 
-    // set slaves
+    // set slaves orders
     for (let i in res.slaves) {
       let a = res.slaves[i];
 
@@ -65,6 +70,52 @@ export default function OpenOrders() {
     }
 
     setOpen(arr);
+
+    // Positions
+
+    let master_positions = [];
+    let slave_positions = {};
+    for (let i in res_pos.master) {
+      let chunk = res_pos.master[i];
+
+      if (chunk.positionAmt > 0) {
+        master_positions.push(chunk);
+      }
+    }
+
+    for (let i in res_pos.slaves) {
+      let slave = res_pos.slaves[i];
+      slave_positions[slave.name] = [];
+
+      for (let x in slave) {
+        let chunk = slave[x];
+        if (chunk.positionAmt > 0) {
+          slave_positions[slave.name].push(chunk);
+        }
+      }
+    }
+
+    let arr2 = [];
+    for (let i in master_positions) {
+      arr2.push(
+        <tr id={i + "_open_position"} key={i + "_open_position"}>
+          <td>Master</td>
+          <td>{order.symbol}</td>
+          <td>{order.unRealizedProfit}</td>
+        </tr>
+      );
+    }
+
+    for (let i in slave_positions) {
+      arr2.push(
+        <tr id={i + "_open_slave_position"} key={i + "_open_slave_position"}>
+          <td>{order.name}</td>
+          <td>{order.symbol}</td>
+          <td>{order.unRealizedProfit}</td>
+        </tr>
+      );
+    }
+    setPositions(arr2);
   }
   useEffect(() => {
     (async () => {
@@ -98,6 +149,19 @@ export default function OpenOrders() {
           </tr>
         </thead>
         <tbody>{open}</tbody>
+      </table>
+
+      <h1 className="w3-center">Open Positions</h1>
+
+      <table className="w3-table w3-hoverable w3-centered w3-border w3-bordered">
+        <thead>
+          <tr>
+            <th>Account</th>
+            <th>Symbol</th>
+            <th>Profit</th>
+          </tr>
+        </thead>
+        <tbody>{positions}</tbody>
       </table>
     </div>
   );

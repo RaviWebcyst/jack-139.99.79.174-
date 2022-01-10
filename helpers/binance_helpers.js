@@ -62,6 +62,49 @@ export async function getOpenFutureOrders() {
   return obj;
 }
 
+export async function getOpenFuturesPositons() {
+  let obj = {};
+
+  // console.log(await binance.futuresOpenOrders());
+  obj.master = await binance.futuresPositionRisk();
+  obj.slaves = [];
+
+  let s = await getSlaves();
+
+  // console.log(s);
+  let x = 0;
+  for (let i in s) {
+    // console.log(s[i]);
+    const s_b = new Binance().options({
+      APIKEY: s[i].key,
+      APISECRET: s[i].secret,
+      useServerTime: true,
+      verbose: true,
+    });
+
+    let order = await s_b.futuresPositionRisk();
+    // order.name = i;
+    console.log(order);
+
+    if (order.code == "-1021") {
+      console.log(order);
+      continue;
+    }
+    for (let x in order) {
+      order[x].name = i;
+    }
+    // console.log(i);
+    obj.slaves.push(order);
+    // console.log(typeof order);
+    // obj.slaves[x].name = i;
+    x++;
+  }
+
+  // console.log(obj);
+
+  return obj;
+}
+
 export async function getMasterUSDBalance(ticker) {
   let balance = await binance.futuresBalance();
 

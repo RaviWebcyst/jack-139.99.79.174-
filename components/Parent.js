@@ -59,7 +59,7 @@ export default function Parent(props) {
       <input type="button" value="Balance" onClick={masterDashButton} />
       <input type="button" value="Slave Balance" onClick={slaveBalanceButton} />
       <input type="button" value="Slave Manager" onClick={slaveManagerButton} />
-      <input type="button" value="Open Orders" onClick={openOrdersButton} />
+      <input type="button" value="Open" onClick={openOrdersButton} />
 
       <div className="app_parent">{app}</div>
 
