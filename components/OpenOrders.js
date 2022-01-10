@@ -90,7 +90,7 @@ export default function OpenOrders() {
       for (let x in slave) {
         let chunk = slave[x];
         if (parseFloat(chunk.positionAmt) > 0) {
-          slave_positions[slave.name].push(chunk);
+          slave_positions[i].push(chunk);
         }
       }
     }
