@@ -41,10 +41,10 @@ export async function getOpenFutureOrders() {
 
     let order = await s_b.futuresOpenOrders();
     // order.name = i;
-    console.log(order);
+    // console.log(order);
 
     if (order.code == "-1021") {
-      console.log(order);
+      // console.log(order);
       continue;
     }
     for (let x in order) {
@@ -84,10 +84,10 @@ export async function getOpenFuturesPositons() {
 
     let order = await s_b.futuresPositionRisk();
     // order.name = i;
-    console.log(order);
+    // console.log(order);
 
     if (order.code == "-1021") {
-      console.log(order);
+      // console.log(order);
       continue;
     }
     for (let x in order) {

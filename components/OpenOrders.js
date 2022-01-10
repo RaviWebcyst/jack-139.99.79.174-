@@ -78,7 +78,7 @@ export default function OpenOrders() {
     for (let i in res_pos.master) {
       let chunk = res_pos.master[i];
 
-      if (chunk.positionAmt > 0) {
+      if (parseFloat(chunk.positionAmt) > 0) {
         master_positions.push(chunk);
       }
     }
@@ -89,7 +89,7 @@ export default function OpenOrders() {
 
       for (let x in slave) {
         let chunk = slave[x];
-        if (chunk.positionAmt > 0) {
+        if (parseFloat(chunk.positionAmt) > 0) {
           slave_positions[slave.name].push(chunk);
         }
       }
@@ -118,6 +118,9 @@ export default function OpenOrders() {
         </tr>
       );
     }
+
+    console.log(master_positions);
+    console.log(slave_positions);
     setPositions(arr2);
   }
   useEffect(() => {
