@@ -19,13 +19,7 @@ export default function OpenOrders() {
 
       async function closeTrade(e) {
         e.preventDefault();
-        await fetch("/api/close-trade", {
-          method: "POST",
-          body: JSON.stringify({
-            symbol: order.symbol,
-            id: order.orderId,
-          }),
-        });
+        masterCloseOrder(order.symbol, order.orderId);
       }
 
       arr.push(
@@ -52,13 +46,7 @@ export default function OpenOrders() {
 
         async function closeTrade(e) {
           e.preventDefault();
-          await fetch("/api/close-trade", {
-            method: "POST",
-            body: JSON.stringify({
-              symbol: order.symbol,
-              id: order.orderId,
-            }),
-          });
+          masterCloseOrder(order.symbol, order.orderId);
         }
         arr.push(
           <tr>
@@ -137,3 +125,17 @@ export default function OpenOrders() {
 // updateTime: 1641185338115
 // workingType: "MARK_PRICE"
 // [[Prototype]]: Object
+
+async function masterCloseOrder(symbol, id) {
+  if (confirm("Are you sure you want to delete the order?")) {
+    await fetch("/api/close-trade", {
+      method: "POST",
+      body: JSON.stringify({
+        symbol: symbol,
+        id: id,
+      }),
+    });
+  } else {
+    console.log("Dont do it!");
+  }
+}

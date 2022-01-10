@@ -18,7 +18,9 @@ export default function SlaveManager(props) {
 
       let slaves = [];
       for (let i in slave_names) {
-        if (i !== "_id") slaves.push({ name: i });
+        if (i !== "_id")
+          slaves.push({ name: i, active: slave_names[i].active });
+        // console.log(slave_names[i]);
       }
 
       // Populate Delete Slave Table Start
@@ -37,12 +39,59 @@ export default function SlaveManager(props) {
 
           window.location.reload();
         }
+
+        let active = [];
+
+        if (slave.active) {
+          active.push(
+            <input
+              type="checkbox"
+              defaultChecked
+              onChange={(e) => {
+                console.log(e.target.parentElement.id);
+                let status = e.target.checked;
+
+                fetch("/api/mongo/change-slave-status", {
+                  method: "POST",
+                  body: JSON.stringify({
+                    name: e.target.parentElement.id,
+                    active: status,
+                  }),
+                });
+              }}
+            />
+          );
+        } else {
+          active.push(
+            <input
+              type="checkbox"
+              onChange={(e) => {
+                console.log(e.target.parentElement.id);
+                let status = e.target.checked;
+
+                fetch("/api/mongo/change-slave-status", {
+                  method: "POST",
+                  body: JSON.stringify({
+                    name: e.target.parentElement.id,
+                    active: status,
+                  }),
+                });
+              }}
+            />
+          );
+        }
+        // console.log(slave);
         arr.push(
-          <tr className="w3-animate-bottom" key={slave.name}>
+          <tr
+            // key={slave.name + "_edit_delete"}
+            className="w3-animate-bottom"
+            key={slave.name}
+          >
             <td>{slave.name}</td>
             <td>
               <input type="button" value="X" onClick={deleteSlave} />
             </td>
+            <td id={slave.name}>{active}</td>
           </tr>
         );
       }
@@ -300,6 +349,7 @@ export default function SlaveManager(props) {
           <tr>
             <th>Name</th>
             <th>Delete</th>
+            <th>Active</th>
           </tr>
         </thead>
         <tbody>{delete_slave_table}</tbody>

@@ -20,12 +20,7 @@ handler.post(async (req, res) => {
 
     // console.log("body");
     // console.log(body);
-    parentContent[body.name] = {
-      key: body.binance_key,
-      secret: body.binance_secret,
-      multiplier: body.binance_multiplier,
-      active: parentContent[body.name].active,
-    };
+    parentContent[body.name].active = body.active;
 
     // console.log("parent content");
     // console.log(parentContent);

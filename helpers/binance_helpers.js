@@ -214,6 +214,8 @@ export async function getTrades() {
         let slave = slaves[i];
         if (i == "_id") continue;
 
+        if (!slave.active) continue;
+
         // placeWorkerTradeOrder({ slave: slave, order: order }); // TODO - Activate worker
         // continue;
         // if (i !== "Iengka") continue; // ANCHOR - DEBUG SELECT IENGKA
