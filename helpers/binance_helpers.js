@@ -83,7 +83,7 @@ export async function getOpenFuturesPositons() {
     });
 
     let order = await s_b.futuresPositionRisk();
-    order.name = i;
+    // order.name = i;
     // console.log(order);
 
     if (order.code == "-1021") {
