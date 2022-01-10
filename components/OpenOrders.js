@@ -85,7 +85,7 @@ export default function OpenOrders() {
 
     for (let i in res_pos.slaves) {
       let slave = res_pos.slaves[i];
-      slave_positions[slave.name] = [];
+      slave_positions[i] = [];
 
       for (let x in slave) {
         let chunk = slave[x];
