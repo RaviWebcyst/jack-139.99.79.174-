@@ -74,7 +74,7 @@ export default function OpenOrders() {
     // Positions
 
     let master_positions = [];
-    let slave_positions = {};
+    let slave_positions = [];
     for (let i in res_pos.master) {
       let chunk = res_pos.master[i];
 
@@ -85,12 +85,12 @@ export default function OpenOrders() {
 
     for (let i in res_pos.slaves) {
       let slave = res_pos.slaves[i];
-      slave_positions[i] = [];
+      // slave_positions[i] = [];
 
       for (let x in slave) {
         let chunk = slave[x];
         if (parseFloat(chunk.positionAmt) > 0) {
-          slave_positions[i].push(chunk);
+          slave_positions.push(chunk);
         }
       }
     }
