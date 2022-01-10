@@ -97,6 +97,7 @@ export default function OpenOrders() {
 
     let arr2 = [];
     for (let i in master_positions) {
+      let order = master_positions[i];
       arr2.push(
         <tr id={i + "_open_position"} key={i + "_open_position"}>
           <td>Master</td>
@@ -107,6 +108,8 @@ export default function OpenOrders() {
     }
 
     for (let i in slave_positions) {
+      let order = slave_positions[i];
+
       arr2.push(
         <tr id={i + "_open_slave_position"} key={i + "_open_slave_position"}>
           <td>{order.name}</td>
