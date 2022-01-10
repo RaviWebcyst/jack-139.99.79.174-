@@ -36,11 +36,17 @@ export async function getOpenFutureOrders() {
       APIKEY: s[i].key,
       APISECRET: s[i].secret,
       useServerTime: true,
+      verbose: true,
     });
 
     let order = await s_b.futuresOpenOrders();
     // order.name = i;
-    // console.log(order);
+    console.log(order);
+
+    if (order.code == "-1021") {
+      console.log(order);
+      continue;
+    }
     for (let x in order) {
       order[x].name = i;
     }
@@ -249,9 +255,11 @@ export async function getTrades() {
 
         // TODO - Manually assign precision for outliers
         /* 
-        1000SHIB
+        ETH
         XRP
         */
+
+        // Manually set precision when needed
 
         let stepSize;
 
@@ -260,23 +268,29 @@ export async function getTrades() {
           return this.toString().split(".")[1].length || 0;
         };
 
-        try {
-          stepSize = results[0].filters[2].stepSize;
+        // https://www.binance.com/en/support/announcement/6925d618ab6b47e2936cc4614eaad64b
+        switch (asset) {
+          case "ETC":
+            data.quantity = data.quantity.toFixed(2);
+            break;
 
-          stepSize = parseFloat(stepSize);
+          case "XRP":
+            data.quantity = data.quantity.toFixed(1);
+            break;
+          default:
+            try {
+              stepSize = results[0].filters[2].stepSize;
 
-          data.quantity = data.quantity.toFixed(stepSize.countDecimals()); // TODO - Test
-        } catch (error) {
-          data.quantity = Math.round(data.quantity);
-          // data.quantity = data.quantity.toFixed(
-          //   order.originalQuantity.countDecimals()
-          // );
-          // sendTelegramError(`${data.symbol} precision data not found`);
+              stepSize = parseFloat(stepSize);
+
+              data.quantity = data.quantity.toFixed(stepSize.countDecimals()); // TODO - Test
+            } catch (error) {
+              data.quantity = Math.round(data.quantity);
+
+              // sendTelegramError(`${data.symbol} precision data not found`);
+            }
+            break;
         }
-
-        // if
-
-        // Execute Order
 
         // Check to make sure balance is valid
 
@@ -450,6 +464,10 @@ export async function getSlaveAssetBalances(key, secret) {
 let orders = 0;
 
 let trades = {};
+
+export async function closeTrade(symbol, id) {
+  await binance.futuresCancel(symbol, { orderId: id });
+}
 
 export async function makeSlaveTrade(key, secret, data, copier_status) {
   if (copier_status) {

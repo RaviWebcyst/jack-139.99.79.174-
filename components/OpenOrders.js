@@ -12,18 +12,33 @@ export default function OpenOrders() {
     console.log(res);
 
     let arr = [];
+
     // set master
     for (let i in res.master) {
       let order = res.master[i];
 
+      async function closeTrade(e) {
+        e.preventDefault();
+        await fetch("/api/close-trade", {
+          method: "POST",
+          body: JSON.stringify({
+            symbol: order.symbol,
+            id: order.orderId,
+          }),
+        });
+      }
+
       arr.push(
-        <tr>
+        <tr id={i + "_open_order"} key={i + "_open_order"}>
           <td>Master</td>
           <td>{order.symbol}</td>
           <td>{order.side}</td>
           <td>{order.stopPrice}</td>
           <td>{order.type}</td>
           <td>{order.origQty}</td>
+          <td>
+            <input type="button" value="Close Trade" onClick={closeTrade} />{" "}
+          </td>
         </tr>
       );
     }
@@ -31,8 +46,20 @@ export default function OpenOrders() {
     // set slaves
     for (let i in res.slaves) {
       let a = res.slaves[i];
+
       for (let x in a) {
         let order = a[x];
+
+        async function closeTrade(e) {
+          e.preventDefault();
+          await fetch("/api/close-trade", {
+            method: "POST",
+            body: JSON.stringify({
+              symbol: order.symbol,
+              id: order.orderId,
+            }),
+          });
+        }
         arr.push(
           <tr>
             <td>{order.name}</td>
@@ -41,6 +68,9 @@ export default function OpenOrders() {
             <td>{order.stopPrice}</td>
             <td>{order.type}</td>
             <td>{order.origQty}</td>
+            <td>
+              <input type="button" value="Close Trade" onClick={closeTrade} />{" "}
+            </td>
           </tr>
         );
       }
@@ -76,6 +106,7 @@ export default function OpenOrders() {
             <th>Price</th>
             <th>Type</th>
             <th>Qty</th>
+            <td>Close</td>
           </tr>
         </thead>
         <tbody>{open}</tbody>

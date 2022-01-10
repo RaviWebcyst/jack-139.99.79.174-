@@ -4,6 +4,7 @@
 //   sendTelegramError,
 // } from "../../helpers/telegram_helper";
 import { getSlaveAssetBalances } from "../../helpers/binance_helpers";
+import { sendTelegramASAP } from "../../helpers/telegram_helper";
 import { debugWorker } from "../../helpers/worker_helper";
 // // import Binance from "binance-api-node"; // Alt
 // getSlaveAssetBalances
@@ -56,6 +57,7 @@ export default async function handler(req, res) {
 
   stepSize = parseFloat(stepSize);
 
+  // sendTelegramASAP("Test ASAP");
   res.status(200).json(stepSize.countDecimals());
 }
 
