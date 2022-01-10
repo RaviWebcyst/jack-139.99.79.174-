@@ -24,7 +24,7 @@ handler.post(async (req, res) => {
       key: body.binance_key,
       secret: body.binance_secret,
       multiplier: body.binance_multiplier,
-      active: parentContent[body.name].active,
+      active: true,
     };
 
     // console.log("parent content");

@@ -30,13 +30,13 @@ export default function SlaveManager(props) {
         let slave = slaves[i];
         async function deleteSlave(e) {
           e.preventDefault();
+          // console.log(e);
           let res = await fetch("/api/mongo/delete-slave", {
             method: "POST",
             body: JSON.stringify({
-              name: slave.name,
+              name: e.target.parentElement.id,
             }),
           });
-
           window.location.reload();
         }
 
@@ -88,7 +88,7 @@ export default function SlaveManager(props) {
             key={slave.name}
           >
             <td>{slave.name}</td>
-            <td>
+            <td id={slave.name}>
               <input type="button" value="X" onClick={deleteSlave} />
             </td>
             <td id={slave.name}>{active}</td>
