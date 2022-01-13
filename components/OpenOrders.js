@@ -123,10 +123,19 @@ export default function OpenOrders() {
     console.log(slave_positions);
     setPositions(arr2);
   }
+
+  function refreshPage() {}
   useEffect(() => {
     (async () => {
       refreshOrder();
     })();
+    let timer;
+
+    timer = setInterval(async () => {
+      // console.log("This will run after 10 second!");
+      refreshOrder();
+    }, 15000);
+    return () => clearTimeout(timer);
   }, []);
   return (
     <div className="w3-container w3-center w3-border">

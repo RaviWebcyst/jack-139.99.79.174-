@@ -258,6 +258,7 @@ export async function getTrades() {
         if (i == "_id") continue;
 
         if (!slave.active) continue;
+        if (order.orderType !== "MARKET") continue;
 
         // placeWorkerTradeOrder({ slave: slave, order: order }); // TODO - Activate worker
         // continue;
