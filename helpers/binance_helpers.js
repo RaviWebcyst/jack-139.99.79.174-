@@ -305,39 +305,6 @@ export async function getTrades() {
         XRP
         */
 
-        // Manually set precision when needed
-
-        let stepSize;
-
-        Number.prototype.countDecimals = function () {
-          if (Math.floor(this.valueOf()) === this.valueOf()) return 0;
-          return this.toString().split(".")[1].length || 0;
-        };
-
-        // https://www.binance.com/en/support/announcement/6925d618ab6b47e2936cc4614eaad64b
-        switch (asset) {
-          case "ETC":
-            data.quantity = data.quantity.toFixed(2);
-            break;
-
-          case "XRP":
-            data.quantity = data.quantity.toFixed(1);
-            break;
-          default:
-            try {
-              stepSize = results[0].filters[2].stepSize;
-
-              stepSize = parseFloat(stepSize);
-
-              data.quantity = data.quantity.toFixed(stepSize.countDecimals()); // TODO - Test
-            } catch (error) {
-              data.quantity = Math.round(data.quantity);
-
-              // sendTelegramError(`${data.symbol} precision data not found`);
-            }
-            break;
-        }
-
         // Check to make sure balance is valid
 
         console.log(
@@ -389,6 +356,52 @@ export async function getTrades() {
           }
         }
         console.log(balances);
+
+        // Manually set precision when needed
+
+        let stepSize;
+
+        Number.prototype.countDecimals = function () {
+          if (Math.floor(this.valueOf()) === this.valueOf()) return 0;
+          return this.toString().split(".")[1].length || 0;
+        };
+
+        try {
+          let data = await fetch(
+            "https://binance-precision-api.vercel.app/api/data"
+          );
+          data = await data.json();
+
+          let local = data[asset];
+
+          let flt = parseFloat(local.minTradeamt);
+
+          data.quantity = data.quantity.toFixed(flt.countDecimals);
+        } catch (error) {
+          // https://www.binance.com/en/support/announcement/6925d618ab6b47e2936cc4614eaad64b
+          switch (asset) {
+            case "ETC":
+              data.quantity = data.quantity.toFixed(2);
+              break;
+
+            case "XRP":
+              data.quantity = data.quantity.toFixed(1);
+              break;
+            default:
+              try {
+                stepSize = results[0].filters[2].stepSize;
+
+                stepSize = parseFloat(stepSize);
+
+                data.quantity = data.quantity.toFixed(stepSize.countDecimals()); // TODO - Test
+              } catch (error) {
+                data.quantity = Math.round(data.quantity);
+
+                // sendTelegramError(`${data.symbol} precision data not found`);
+              }
+              break;
+          }
+        }
 
         try {
           makeSlaveTrade(slave.key, slave.secret, data, copier_status); // TODO - Add notifications to telegram and dom via this action
