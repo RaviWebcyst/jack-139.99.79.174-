@@ -238,7 +238,7 @@ export async function getTrades() {
     // console.log(data);
     // console.log("ORDER UPDATE HANDLER STOP");
     let order = data.order;
-    if (order.orderStatus == "NEW") {
+    if (order.orderStatus == "NEW" || order.orderStatus == "FILLED") {
       // New order to be placed
       // let slaves = await getSlaves();
       let slaves = slave_length;
@@ -258,17 +258,14 @@ export async function getTrades() {
         if (i == "_id") continue;
 
         if (!slave.active) continue;
-        if (order.orderType !== "MARKET") continue;
+        if (order.orderType !== "MARKET" || order.orderType !== "LIMIT")
+          continue;
 
-        // placeWorkerTradeOrder({ slave: slave, order: order }); // TODO - Activate worker
-        // continue;
-        // if (i !== "Iengka") continue; // ANCHOR - DEBUG SELECT IENGKA
+        if (order.orderType == "LIMIT" && order.orderStatus !== "FILLED")
+          continue;
 
-        // let bal = await getSlaveUSDBalance(slave.key, slave.secret, ticker);
-        // let asset_balance = await getSlaveAssetBalances(
-        //   slave.key,
-        //   slave.secret
-        // );
+        if (order.orderType == "MARKET" && order.orderStatus !== "NEW")
+          continue;
 
         const MULTIPLIER = slave.multiplier; // TODO - PULL multiplier from database
 
