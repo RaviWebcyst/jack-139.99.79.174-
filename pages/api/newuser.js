@@ -22,13 +22,13 @@ handler.post(async (req, res) => {
     // console.log(body);
     parentContent[body.username] = {
       username: body.username,
-      password: generatePassword(body.password),
+      password: await generatePassword(body.password),
       slug: body.slug,
     };
 
     // console.log("parent content");
     // console.log(parentContent);
-    req.db.createCollection(`${body.username}_slaves`);
+    req.db.createCollection(`${body.slug}_slaves`);
     let updateDoc = await req.db
       .collection("users")
       .replaceOne({}, parentContent, { upsert: true });
