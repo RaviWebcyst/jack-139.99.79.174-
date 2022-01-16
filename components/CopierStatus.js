@@ -22,7 +22,7 @@ export default function CopierStatus(props) {
             key="closed"
             className="w3-center w3-container w3-animate-bottom"
           >
-            <h1>{props.slug} Copier</h1>
+            <h1>{process.env.NEXT_PUBLIC_DESC}</h1>
             <p>On</p>
             <input
               type="button"
@@ -55,7 +55,7 @@ export default function CopierStatus(props) {
             key="closed"
             className="w3-center w3-container w3-animate-bottom"
           >
-            <h1>{props.slug} Copier</h1>
+            <h1>{process.env.NEXT_PUBLIC_DESC}</h1>
             <p>Off</p>
             <input
               type="button"
