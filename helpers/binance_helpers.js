@@ -258,9 +258,10 @@ export async function getTrades() {
         if (i == "_id") continue;
 
         if (!slave.active) continue;
-        if (order.orderType !== "MARKET" || order.orderType !== "LIMIT")
+        console.log("Slave active");
+        if (order.orderType !== "MARKET" && order.orderType !== "LIMIT")
           continue;
-
+        console.log("Order is not either Market or Limit");
         if (order.orderType == "LIMIT" && order.orderStatus !== "FILLED")
           continue;
 
