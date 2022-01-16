@@ -19,7 +19,7 @@ export default function Parent(props) {
     Settings: Settings,
   };
   let DefaultApp = appWrapper[getCookie("DefaultApp")] || (
-    <CopierStatus status={props.props.copier_status} />
+    <CopierStatus status={props.props.copier_status} slug={props.props.slug} />
   );
 
   //   DefaultApp = <DefaultApp />;
@@ -29,7 +29,12 @@ export default function Parent(props) {
 
   function copierStatusButton(e) {
     e.preventDefault();
-    setApp(<CopierStatus status={props.props.copier_status} />);
+    setApp(
+      <CopierStatus
+        status={props.props.copier_status}
+        slug={props.props.slug}
+      />
+    );
   }
 
   function masterDashButton(e) {

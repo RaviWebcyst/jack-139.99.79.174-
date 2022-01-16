@@ -18,6 +18,7 @@ export async function getServerSideProps({ req, res }) {
     return {
       props: {
         status: true,
+        slug: process.env.DB_SLUG,
       },
     };
   } else {

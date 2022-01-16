@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 
-export default function CopierStatus() {
+export default function CopierStatus(props) {
   // console.log(props);
   // let status = props.status.status;
 
   let [status, setStatus] = useState(<div className="loader"></div>);
 
+  console.log(props);
   useEffect(() => {
     //
     (async () => {
@@ -21,7 +22,7 @@ export default function CopierStatus() {
             key="closed"
             className="w3-center w3-container w3-animate-bottom"
           >
-            <h1>Copier Status Copy One</h1>
+            <h1>{props.slug} Copier</h1>
             <p>On</p>
             <input
               type="button"
@@ -54,7 +55,7 @@ export default function CopierStatus() {
             key="closed"
             className="w3-center w3-container w3-animate-bottom"
           >
-            <h1>Copier Status</h1>
+            <h1>{props.slug} Copier</h1>
             <p>Off</p>
             <input
               type="button"
