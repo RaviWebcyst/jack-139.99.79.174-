@@ -24,7 +24,9 @@ export default function OpenOrders() {
 
       async function closeTrade(e) {
         e.preventDefault();
-        masterCloseOrder(order.symbol, order.orderId);
+        console.log(e.target.id);
+
+        masterCloseOrder(order.symbol, order.orderId, e.target.name);
       }
 
       arr.push(
@@ -36,7 +38,12 @@ export default function OpenOrders() {
           <td>{order.type}</td>
           <td>{order.origQty}</td>
           <td>
-            <input type="button" value="Close Trade" onClick={closeTrade} />{" "}
+            <input
+              name="master"
+              type="button"
+              value="Close Trade"
+              onClick={closeTrade}
+            />{" "}
           </td>
         </tr>
       );
@@ -51,7 +58,8 @@ export default function OpenOrders() {
 
         async function closeTrade(e) {
           e.preventDefault();
-          masterCloseOrder(order.symbol, order.orderId);
+          console.log(e.target.name);
+          masterCloseOrder(order.symbol, order.orderId, e.target.name);
         }
         arr.push(
           <tr>
@@ -62,7 +70,12 @@ export default function OpenOrders() {
             <td>{order.type}</td>
             <td>{order.origQty}</td>
             <td>
-              <input type="button" value="Close Trade" onClick={closeTrade} />{" "}
+              <input
+                name={order.name}
+                type="button"
+                value="Close Trade"
+                onClick={closeTrade}
+              />{" "}
             </td>
           </tr>
         );
@@ -98,11 +111,21 @@ export default function OpenOrders() {
     let arr2 = [];
     for (let i in master_positions) {
       let order = master_positions[i];
+      // let
       arr2.push(
         <tr id={i + "_open_position"} key={i + "_open_position"}>
           <td>Master</td>
           <td>{order.symbol}</td>
           <td>{order.unRealizedProfit}</td>
+          <td>
+            <input
+              value={"Close Position"}
+              type={"button"}
+              onClick={() => {
+                masterClosePosition(order.symbol, "master");
+              }}
+            ></input>
+          </td>
         </tr>
       );
     }
@@ -115,6 +138,15 @@ export default function OpenOrders() {
           <td>{order.name}</td>
           <td>{order.symbol}</td>
           <td>{order.unRealizedProfit}</td>
+          <td>
+            <input
+              value={"Close Position"}
+              type={"button"}
+              onClick={() => {
+                masterClosePosition(order.symbol, order.name);
+              }}
+            ></input>
+          </td>
         </tr>
       );
     }
@@ -160,7 +192,7 @@ export default function OpenOrders() {
             <th>Price</th>
             <th>Type</th>
             <th>Qty</th>
-            <td>Close</td>
+            <th>Close</th>
           </tr>
         </thead>
         <tbody>{open}</tbody>
@@ -174,6 +206,7 @@ export default function OpenOrders() {
             <th>Account</th>
             <th>Symbol</th>
             <th>Profit</th>
+            <th>Close</th>
           </tr>
         </thead>
         <tbody>{positions}</tbody>
@@ -212,6 +245,20 @@ async function masterCloseOrder(symbol, id) {
       body: JSON.stringify({
         symbol: symbol,
         id: id,
+      }),
+    });
+  } else {
+    console.log("Dont do it!");
+  }
+}
+
+async function masterClosePosition(symbol, name) {
+  if (confirm("Are you sure you want to delete the order?")) {
+    await fetch("/api/close-position", {
+      method: "POST",
+      body: JSON.stringify({
+        symbol: symbol,
+        name: name,
       }),
     });
   } else {

@@ -526,8 +526,18 @@ let orders = 0;
 
 let trades = {};
 
-export async function closeTrade(symbol, id) {
-  await binance.futuresCancel(symbol, { orderId: id });
+export async function closeTrade(symbol, id, name) {
+  if (name == "master") {
+    await binance.futuresCancel(symbol, { orderId: id }); // TODO - We need to be importing the correct slave based on name
+  } else {
+    let slave = getSlaveAPICredentials(name);
+    let slave_binance = new Binance().options({
+      APIKEY: slave.key,
+      APISECRET: slave.secret,
+      useServerTime: true,
+    });
+    await slave_binance.futuresCancel(symbol, { orderId: id });
+  }
 }
 
 export async function makeSlaveTrade(key, secret, data, copier_status) {
@@ -596,6 +606,25 @@ export async function makeSlaveTrade(key, secret, data, copier_status) {
   }
 }
 
+export async function getSlaveAPICredentials(name) {
+  let slaves = await getSlaves();
+
+  return slaves[name];
+}
+
+export async function closeSlavePosition(name, symbol) {
+  if (name == "master") {
+    await master.futuresCancelAll(symbol);
+  } else {
+    let slave = getSlaveAPICredentials(name);
+    let slave_binance = new Binance().options({
+      APIKEY: slave.key,
+      APISECRET: slave.secret,
+      useServerTime: true,
+    });
+    await slave_binance.futuresCancelAll(symbol);
+  }
+}
 // Debug helpers
 export async function debugBinance() {
   // let data = await binance.futuresBalance();
