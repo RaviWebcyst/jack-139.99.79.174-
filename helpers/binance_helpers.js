@@ -282,6 +282,10 @@ export async function getTrades() {
 
         let rate = slave_balance / master_balance;
 
+        if (slave_balance == 0) rate = 1;
+        if (master_balance == 0) rate = 1;
+        if (rate == 0) rate = 1;
+
         let qty = rate * order.originalQuantity;
         let data = {
           side: order.side,
