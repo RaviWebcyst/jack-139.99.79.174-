@@ -13,7 +13,9 @@ handler.post(async (req, res) => {
   let body = JSON.parse(req.body);
 
   // Get content collection
-  parentContent = await req.db.collection("slaves").findOne();
+  parentContent = await req.db
+    .collection(`${process.env.DB_SLUG}_slaves`)
+    .findOne();
 
   if (req.method === "POST") {
     // Process a POST request
@@ -25,7 +27,7 @@ handler.post(async (req, res) => {
     // console.log("parent content");
     // console.log(parentContent);
     let updateDoc = await req.db
-      .collection("slaves")
+      .collection(`${process.env.DB_SLUG}_slaves`)
       .replaceOne({}, parentContent, { upsert: true });
 
     res.status(200).json({ status: "Deleted" });

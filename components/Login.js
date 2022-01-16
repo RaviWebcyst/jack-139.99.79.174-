@@ -19,6 +19,7 @@ export default function Login() {
           onClick={async (e) => {
             e.preventDefault();
             console.log(e.target.form);
+            let username = document.getElementById("username").value;
             let res = await fetch("/api/login", {
               method: "POST",
               body: JSON.stringify({
