@@ -255,6 +255,21 @@ export async function getTrades() {
       console.log(
         `Master Trade: ${order.side} ${order.originalQuantity} of ${order.symbol} `
       );
+
+      // Get precision data
+      let data_new = await fetch(
+        "https://binance-precision-api.vercel.app/api/data",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            order: order,
+            slug: process.env.DB_SLUG,
+            use: "live",
+          }),
+        }
+      );
+      data_new = await data_new.json();
+
       for (let i in slaves) {
         let slave = slaves[i];
         if (i == "_id") continue;
@@ -371,19 +386,6 @@ export async function getTrades() {
         };
 
         try {
-          let data_new = await fetch(
-            "https://binance-precision-api.vercel.app/api/data",
-            {
-              method: "POST",
-              body: JSON.stringify({
-                order: order,
-                slug: process.env.DB_SLUG,
-                use: "live",
-              }),
-            }
-          );
-          data_new = await data_new.json();
-
           let local = data_new[asset];
 
           let flt = parseFloat(local.minTradeAmt);

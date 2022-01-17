@@ -27,6 +27,19 @@ export default async function handler(req, res) {
 
   performance.populate_slaves = end_time - start_time;
 
+  let data_new = await fetch(
+    "https://binance-precision-api.vercel.app/api/data",
+    {
+      method: "POST",
+      body: JSON.stringify({
+        order: order,
+        slug: process.env.DB_SLUG,
+        use: "test",
+      }),
+    }
+  );
+  data_new = await data_new.json();
+
   // Test precision
 
   start_time = new Date().getTime();
@@ -212,19 +225,6 @@ export default async function handler(req, res) {
       };
 
       try {
-        let data_new = await fetch(
-          "https://binance-precision-api.vercel.app/api/data",
-          {
-            method: "POST",
-            body: JSON.stringify({
-              order: order,
-              slug: process.env.DB_SLUG,
-              use: "test",
-            }),
-          }
-        );
-        data_new = await data_new.json();
-
         let local = data_new[asset];
 
         let flt = parseFloat(local.minTradeAmt);
