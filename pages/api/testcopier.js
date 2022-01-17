@@ -37,12 +37,12 @@ export default async function handler(req, res) {
 
   // Test Copier
   let order = {
-    symbol: "CHRUSDT",
+    symbol: "DOTUSDT",
     clientOrderId: "web_pYcrrSe1cNPyEMMzhnVk",
     side: "BUY",
     orderType: "MARKET",
     timeInForce: "GTC",
-    originalQuantity: "28",
+    originalQuantity: "13.2",
     originalPrice: "0",
     averagePrice: "0",
     stopPrice: "0",
@@ -159,6 +159,8 @@ export default async function handler(req, res) {
           }
         }
       }
+
+      if (data.quantity == 0) data.quantity = order.quantity;
 
       console.log(`Data 2:`);
       console.log(data);
