@@ -235,6 +235,8 @@ export async function getTrades() {
 
   async function orderUpdateHandler(data) {
     // console.log("ORDER UPDATE HANDLER START");
+    slave_length = await getSlaves();
+
     // console.log(data);
     // console.log("ORDER UPDATE HANDLER STOP");
     let order = data.order;
