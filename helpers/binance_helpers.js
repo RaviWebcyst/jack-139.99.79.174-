@@ -375,7 +375,11 @@ export async function getTrades() {
             "https://binance-precision-api.vercel.app/api/data",
             {
               method: "POST",
-              body: JSON.stringify(order),
+              body: JSON.stringify({
+                order: order,
+                slug: process.env.DB_SLUG,
+                use: "live",
+              }),
             }
           );
           data_new = await data_new.json();
