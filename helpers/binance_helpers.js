@@ -371,18 +371,24 @@ export async function getTrades() {
         };
 
         try {
-          let data = await fetch(
-            "https://binance-precision-api.vercel.app/api/data"
+          let data_new = await fetch(
+            "https://binance-precision-api.vercel.app/api/data",
+            {
+              method: "POST",
+              body: JSON.stringify(order),
+            }
           );
-          data = await data.json();
+          data_new = await data_new.json();
 
-          let local = data[asset];
+          let local = data_new[asset];
 
-          let flt = parseFloat(local.minTradeamt);
+          let flt = parseFloat(local.minTradeAmt);
 
-          data.quantity = data.quantity.toFixed(flt.countDecimals);
+          data.quantity = data.quantity.toFixed(flt.countDecimals());
+          // console.log("parsed api");
         } catch (error) {
           // https://www.binance.com/en/support/announcement/6925d618ab6b47e2936cc4614eaad64b
+          // sendTelegramError(JSON.stringify(error));
           switch (asset) {
             case "ETC":
               data.quantity = data.quantity.toFixed(2);

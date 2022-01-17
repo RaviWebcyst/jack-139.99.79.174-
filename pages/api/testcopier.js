@@ -37,7 +37,7 @@ export default async function handler(req, res) {
 
   // Test Copier
   let order = {
-    symbol: "DOTUSDT",
+    symbol: "ADAUSDT",
     clientOrderId: "web_pYcrrSe1cNPyEMMzhnVk",
     side: "BUY",
     orderType: "MARKET",
@@ -146,19 +146,19 @@ export default async function handler(req, res) {
 
       console.log(`Master qty ${data.side} for ${data.name}: ${data.quantity}`);
       console.log(`Master asset: ${asset}`);
-      let slave_assets = await getSlaveAssetBalances(slave.key, slave.secret);
-      for (let y in slave_assets) {
-        let asset_local = slave_assets[y];
-        // console.log(`DEBUG: ${asset_local.asset}`);
-        if (asset_local.asset == asset) {
-          console.log(
-            `Available quanity for ${data.name}: ${asset_local.availableBalance}`
-          );
-          if (asset_local.availableBalance < data.quantity) {
-            data.quantity = Math.round(asset_local.availableBalance);
-          }
-        }
-      }
+      // let slave_assets = await getSlaveAssetBalances(slave.key, slave.secret);
+      // for (let y in slave_assets) {
+      //   let asset_local = slave_assets[y];
+      //   // console.log(`DEBUG: ${asset_local.asset}`);
+      //   if (asset_local.asset == asset) {
+      //     console.log(
+      //       `Available quanity for ${data.name}: ${asset_local.availableBalance}`
+      //     );
+      //     if (asset_local.availableBalance < data.quantity) {
+      //       data.quantity = Math.round(asset_local.availableBalance);
+      //     }
+      //   }
+      // }
 
       if (data.quantity == 0) data.quantity = order.quantity;
 
@@ -212,17 +212,23 @@ export default async function handler(req, res) {
       };
 
       try {
-        let data = await fetch(
-          "https://binance-precision-api.vercel.app/api/data"
+        let data_new = await fetch(
+          "https://binance-precision-api.vercel.app/api/data",
+          {
+            method: "POST",
+            body: JSON.stringify(order),
+          }
         );
-        data = await data.json();
+        data_new = await data_new.json();
 
-        let local = data[asset];
+        let local = data_new[asset];
 
-        let flt = parseFloat(local.minTradeamt);
+        let flt = parseFloat(local.minTradeAmt);
 
-        data.quantity = data.quantity.toFixed(flt.countDecimals);
+        data.quantity = data.quantity.toFixed(flt.countDecimals());
+        console.log("parsed api");
       } catch (error) {
+        console.log(error);
         // https://www.binance.com/en/support/announcement/6925d618ab6b47e2936cc4614eaad64b
         switch (asset) {
           case "ETC":
