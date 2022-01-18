@@ -4,6 +4,7 @@
 //   sendTelegramError,
 // } from "../../helpers/telegram_helper";
 import {
+  getMasterAsset,
   getSlaveAssetBalances,
   getSlaves,
   getSlaveUSDBalance,
@@ -20,28 +21,30 @@ export default async function handler(req, res) {
   let ticker = await getTickerPrices();
   let response = {};
 
-  for (let i in slaves) {
-    let slave = slaves[i];
-    let b = new Binance().options({
-      APIKEY: slave.key,
-      APISECRET: slave.secret,
-    });
+  // for (let i in slaves) {
+  //   let slave = slaves[i];
+  //   let b = new Binance().options({
+  //     APIKEY: slave.key,
+  //     APISECRET: slave.secret,
+  //   });
 
-    response[i] = {};
+  //   response[i] = {};
 
-    // response[i].all = await b.futuresAllOrders();
-    // response[i].open = await b.futuresOpenOrders();
-    // response[i].risk = await b.futuresPositionRisk();
-    // response[i].account = await b.futuresAccount();
-    response[i].balance = await getSlaveUSDBalance(
-      slave.key,
-      slave.secret,
-      ticker
-    );
-  }
+  //   // response[i].all = await b.futuresAllOrders();
+  //   // response[i].open = await b.futuresOpenOrders();
+  //   // response[i].risk = await b.futuresPositionRisk();
+  //   // response[i].account = await b.futuresAccount();
+  //   response[i].balance = await getSlaveUSDBalance(
+  //     slave.key,
+  //     slave.secret,
+  //     ticker
+  //   );
+  // }
+
+  response.balance = await getMasterAsset("USDT");
 
   // sendTelegramASAP("Test ASAP");
-  res.status(200).json(response);
+  res.status(200).json(response.balance);
 }
 
 // {"symbol":"RAYUSDT","positionAmt":"0.0","entryPrice":"0.0","markPrice":"0.00000000","unRealizedProfit":"0.00000000","liquidationPrice":"0","leverage":"20","maxNotionalValue":"25000","marginType":"cross","isolatedMargin":"0.00000000","isAutoAddMargin":"false","positionSide":"BOTH","notional":"0","isolatedWallet":"0","updateTime":0},

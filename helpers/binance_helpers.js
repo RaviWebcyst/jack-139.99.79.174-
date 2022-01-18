@@ -105,6 +105,20 @@ export async function getOpenFuturesPositons() {
   return obj;
 }
 
+export async function getMasterAsset(asset_pass) {
+  let list = await binance.futuresBalance();
+  let asset;
+
+  for (let i in list) {
+    let ass = list[i];
+    if (ass.asset == asset_pass) {
+      asset = ass;
+    }
+  }
+
+  return asset;
+}
+
 export async function getMasterUSDBalance(ticker) {
   let balance = await binance.futuresBalance();
 
@@ -256,6 +270,17 @@ export async function getTrades() {
         `Master Trade: ${order.side} ${order.originalQuantity} of ${order.symbol} `
       );
 
+      let asset2 = order.symbol.slice(0, -4);
+      let master_usdt = await getMasterAsset("USDT");
+      let master_asset = asset2;
+
+      if (order.side == "BUY") {
+        let change = order.originalQuantity * order.originalPrice;
+        master_usdt += change;
+      } else {
+        master_asset += order.originalQuantity;
+      }
+
       // Get precision data
       let data_new = await fetch(
         "https://binance-precision-api.vercel.app/api/data",
@@ -265,7 +290,9 @@ export async function getTrades() {
             order: order,
             slug: process.env.DB_SLUG,
             use: "live",
-            master: master_balance,
+            usdt: master_usdt, // TODO - ADD USDT BAL
+            asset: master_asset,
+            asset_name: asset2,
           }),
         }
       );
