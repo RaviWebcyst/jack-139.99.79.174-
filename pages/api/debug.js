@@ -6,6 +6,8 @@
 import {
   getSlaveAssetBalances,
   getSlaves,
+  getSlaveUSDBalance,
+  getTickerPrices,
 } from "../../helpers/binance_helpers";
 import { sendTelegramASAP } from "../../helpers/telegram_helper";
 import { debugWorker } from "../../helpers/worker_helper";
@@ -15,7 +17,7 @@ const Binance = require("node-binance-api"); // Main
 
 export default async function handler(req, res) {
   let slaves = await getSlaves();
-
+  let ticker = await getTickerPrices();
   let response = {};
 
   for (let i in slaves) {
@@ -31,7 +33,11 @@ export default async function handler(req, res) {
     // response[i].open = await b.futuresOpenOrders();
     // response[i].risk = await b.futuresPositionRisk();
     // response[i].account = await b.futuresAccount();
-    response[i].test = getSla;
+    response[i].balance = await getSlaveUSDBalance(
+      slave.key,
+      slave.secret,
+      ticker
+    );
   }
 
   // sendTelegramASAP("Test ASAP");

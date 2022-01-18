@@ -507,10 +507,13 @@ export async function getSlaveUSDBalance(key, secret, ticker) {
     APIKEY: key,
     APISECRET: secret,
     useServerTime: true,
+    recvWindow: 60000,
+    // verbose: true,
   });
 
-  let balance = slave_binance.futuresBalance();
+  let balance = await slave_binance.futuresBalance();
 
+  // console.log(balance);
   let total = 0;
 
   for (let i in balance) {
@@ -556,10 +559,13 @@ export async function getSlaveAssetBalances(key, secret) {
     APIKEY: key,
     APISECRET: secret,
     useServerTime: true,
+    recvWindow: 60000,
+    verbose: true,
   });
 
   let balance = await slave_binance.futuresBalance();
 
+  console.log(balance);
   return balance;
 }
 
