@@ -27,10 +27,11 @@ export default async function handler(req, res) {
 
     response[i] = {};
 
-    response[i].all = await b.futuresAllOrders();
-    response[i].open = await b.futuresOpenOrders();
-    response[i].risk = await b.futuresPositionRisk();
-    response[i].account = await b.futuresAccount();
+    // response[i].all = await b.futuresAllOrders();
+    // response[i].open = await b.futuresOpenOrders();
+    // response[i].risk = await b.futuresPositionRisk();
+    // response[i].account = await b.futuresAccount();
+    response[i].test = getSla;
   }
 
   // sendTelegramASAP("Test ASAP");

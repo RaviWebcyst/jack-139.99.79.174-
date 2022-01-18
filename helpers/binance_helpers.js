@@ -270,10 +270,13 @@ export async function getTrades() {
       );
       data_new = await data_new.json();
 
+      let precision = {};
       for (let i in slaves) {
         let slave = slaves[i];
+        //   let slave_performance = {};
         if (i == "_id") continue;
 
+        let slave_start_time = new Date().getTime();
         if (!slave.active) continue;
         console.log("Slave active");
         if (order.orderType !== "MARKET" && order.orderType !== "LIMIT")
@@ -299,9 +302,10 @@ export async function getTrades() {
 
         let rate = slave_balance / master_balance;
 
+        console.log(`Slave Balance: ` + slave_balance);
+        console.log(`Master Balance: ` + master_balance);
+
         if (slave_balance == 0) rate = 1;
-        if (master_balance == 0) rate = 1;
-        if (rate == 0) rate = 1;
 
         let qty = rate * order.originalQuantity;
         let data = {
@@ -311,6 +315,9 @@ export async function getTrades() {
           name: i,
         };
 
+        console.log(`Data 1:`);
+        console.log(data);
+
         // Dynamically Assign Precision
 
         // console.log(precision.symbols);
@@ -319,10 +326,10 @@ export async function getTrades() {
         });
 
         // TODO - Manually assign precision for outliers
-        /* 
-        ETH
-        XRP
-        */
+        /*
+           ETH
+           XRP
+           */
 
         // Check to make sure balance is valid
 
@@ -330,19 +337,24 @@ export async function getTrades() {
           `Master qty ${data.side} for ${data.name}: ${data.quantity}`
         );
         console.log(`Master asset: ${asset}`);
-        let slave_assets = await getSlaveAssetBalances(slave.key, slave.secret);
-        for (let y in slave_assets) {
-          let asset_local = slave_assets[y];
-          // console.log(`DEBUG: ${asset_local.asset}`);
-          if (asset_local.asset == asset) {
-            console.log(
-              `Available quanity for ${data.name}: ${asset_local.availableBalance}`
-            );
-            if (asset_local.availableBalance < data.quantity) {
-              data.quantity = Math.round(asset_local.availableBalance);
-            }
-          }
-        }
+        // let slave_assets = await getSlaveAssetBalances(slave.key, slave.secret);
+        // for (let y in slave_assets) {
+        //   let asset_local = slave_assets[y];
+        //   // console.log(`DEBUG: ${asset_local.asset}`);
+        //   if (asset_local.asset == asset) {
+        //     console.log(
+        //       `Available quanity for ${data.name}: ${asset_local.availableBalance}`
+        //     );
+        //     if (asset_local.availableBalance < data.quantity) {
+        //       data.quantity = Math.round(asset_local.availableBalance);
+        //     }
+        //   }
+        // }
+
+        if (data.quantity == 0) data.quantity = order.quantity;
+
+        console.log(`Data 2:`);
+        console.log(data);
 
         // Check again
         if (data.side == "BUY") {
@@ -374,7 +386,12 @@ export async function getTrades() {
             // }
           }
         }
+
+        console.log("Balances: ");
         console.log(balances);
+
+        console.log(`Data 2:`);
+        console.log(data);
 
         // Manually set precision when needed
 
@@ -391,10 +408,10 @@ export async function getTrades() {
           let flt = parseFloat(local.minTradeAmt);
 
           data.quantity = data.quantity.toFixed(flt.countDecimals());
-          // console.log("parsed api");
+          console.log("parsed api");
         } catch (error) {
+          console.log(error);
           // https://www.binance.com/en/support/announcement/6925d618ab6b47e2936cc4614eaad64b
-          // sendTelegramError(JSON.stringify(error));
           switch (asset) {
             case "ETC":
               data.quantity = data.quantity.toFixed(2);
@@ -418,6 +435,9 @@ export async function getTrades() {
               break;
           }
         }
+
+        console.log(`Data 3:`);
+        console.log(data);
 
         try {
           makeSlaveTrade(slave.key, slave.secret, data, copier_status); // TODO - Add notifications to telegram and dom via this action
@@ -482,7 +502,7 @@ export async function getSlaveUSDBalance(key, secret, ticker) {
     useServerTime: true,
   });
 
-  let balance = await slave_binance.futuresBalance();
+  let balance = slave_binance.futuresBalance();
 
   let total = 0;
 
