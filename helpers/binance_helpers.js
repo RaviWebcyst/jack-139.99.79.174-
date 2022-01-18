@@ -275,6 +275,8 @@ export async function getTrades() {
         let asset2 = order.symbol.slice(0, -4);
         let master_usdt = await getMasterAsset("USDT");
         let master_asset = await getMasterAsset(asset2);
+        master_usdt = master_usdt.availableBalance;
+        master_asset = master_asset.availableBalance;
 
         if (order.side == "BUY") {
           let change = order.originalQuantity * order.originalPrice;
