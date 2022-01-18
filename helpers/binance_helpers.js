@@ -270,32 +270,40 @@ export async function getTrades() {
         `Master Trade: ${order.side} ${order.originalQuantity} of ${order.symbol} `
       );
 
-      let asset2 = order.symbol.slice(0, -4);
-      let master_usdt = await getMasterAsset("USDT");
-      let master_asset = asset2;
+      let data_new;
+      try {
+        let asset2 = order.symbol.slice(0, -4);
+        let master_usdt = await getMasterAsset("USDT");
+        let master_asset = await getMasterAsset(asset2);
 
-      if (order.side == "BUY") {
-        let change = order.originalQuantity * order.originalPrice;
-        master_usdt += change;
-      } else {
-        master_asset += order.originalQuantity;
+        if (order.side == "BUY") {
+          let change = order.originalQuantity * order.originalPrice;
+          master_usdt += change;
+        } else {
+          master_asset += order.originalQuantity;
+        }
+
+        // Get precision data
+        data_new = await fetch(
+          "https://binance-precision-api.vercel.app/api/data",
+          {
+            method: "POST",
+            body: JSON.stringify({
+              order: order,
+              slug: process.env.DB_SLUG,
+              use: "live",
+              usdt: master_usdt, // TODO - ADD USDT BAL
+              asset: master_asset,
+              asset_name: asset2,
+            }),
+          }
+        );
+      } catch (error) {
+        data_new = await fetch(
+          "https://binance-precision-api.vercel.app/api/data"
+        );
       }
 
-      // Get precision data
-      let data_new = await fetch(
-        "https://binance-precision-api.vercel.app/api/data",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            order: order,
-            slug: process.env.DB_SLUG,
-            use: "live",
-            usdt: master_usdt, // TODO - ADD USDT BAL
-            asset: master_asset,
-            asset_name: asset2,
-          }),
-        }
-      );
       data_new = await data_new.json();
 
       let precision = {};
