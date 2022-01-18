@@ -265,6 +265,7 @@ export async function getTrades() {
             order: order,
             slug: process.env.DB_SLUG,
             use: "live",
+            master: master_balance,
           }),
         }
       );
