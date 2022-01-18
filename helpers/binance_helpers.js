@@ -441,6 +441,11 @@ export async function getTrades() {
         console.log(`Data 3:`);
         console.log(data);
 
+        data.quantity = data.quantity.toString();
+        data.quantity = parseFloat(data.quantity);
+        console.log(`Data 4:`);
+        console.log(data);
+
         try {
           makeSlaveTrade(slave.key, slave.secret, data, copier_status); // TODO - Add notifications to telegram and dom via this action
           // if ()
