@@ -290,6 +290,7 @@ export async function getTrades() {
 
         const MULTIPLIER = slave.multiplier; // TODO - PULL multiplier from database
 
+        order.originalQuantity = parseFloat(order.originalQuantity);
         // Calculate order quantity
         // Asset == symbol - USDT
         let asset = order.symbol.slice(0, -4);
