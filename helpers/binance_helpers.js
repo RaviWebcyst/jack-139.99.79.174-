@@ -320,10 +320,12 @@ export async function getTrades() {
 
         // Dynamically Assign Precision
 
-        // console.log(precision.symbols);
-        var results = precision.symbols.filter(function (entry) {
-          return entry.symbol === order.symbol;
-        });
+        try {
+          // console.log(precision.symbols);
+          var results = precision.symbols.filter(function (entry) {
+            return entry.symbol === order.symbol;
+          });
+        } catch (error) {}
 
         // TODO - Manually assign precision for outliers
         /*
