@@ -301,8 +301,22 @@ export async function getTrades() {
           }
         );
       } catch (error) {
+        console.log(error);
+        let asset2 = order.symbol.slice(0, -4);
+
         data_new = await fetch(
-          "https://binance-precision-api.vercel.app/api/data"
+          "https://binance-precision-api.vercel.app/api/data",
+          {
+            method: "POST",
+            body: JSON.stringify({
+              order: order,
+              slug: process.env.DB_SLUG,
+              use: "live",
+              usdt: master_balance,
+              asset: "1000",
+              asset_name: asset2,
+            }),
+          }
         );
       }
 
@@ -313,6 +327,9 @@ export async function getTrades() {
         let slave = slaves[i];
         //   let slave_performance = {};
         if (i == "_id") continue;
+
+        // ANCHOR // TODO - AUTOMATE BLOCKS
+        if (order.symbol == "LTCUSDT" || order.symbol == "VETUSDT") continue;
 
         let slave_start_time = new Date().getTime();
         if (!slave.active) continue;
