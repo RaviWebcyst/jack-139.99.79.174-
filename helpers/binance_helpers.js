@@ -338,8 +338,9 @@ export async function getTrades() {
         //   let slave_performance = {};
         if (i == "_id") continue;
 
-        // ANCHOR // TODO - AUTOMATE BLOCKS
+        // ANCHOR // TODO - AUTOMATE BLOCKS -- FILTER OUT BAD BOIS
         if (order.symbol == "LTCUSDT" || order.symbol == "VETUSDT") continue;
+        if (order.symbol == "KAVAUSDT" && slave.name == "Ron") continue;
 
         let slave_start_time = new Date().getTime();
         if (!slave.active) continue;
