@@ -128,7 +128,7 @@ export default function SlaveManager(props) {
               }}
             />
             <br />
-            <label htmlFor="binance_key">Binance API Key</label>
+            <label htmlFor="binance_key">Bybit API Key</label>
             <br />
             <input
               id={slave.name + "_binance_key"}
@@ -143,7 +143,7 @@ export default function SlaveManager(props) {
               required={true}
             />
             <br />
-            <label htmlFor="binance_secret">Binance API Secret</label>
+            <label htmlFor="binance_secret">Bybit API Secret</label>
             <br />
             <input
               id={slave.name + "_binance_secret"}
@@ -296,7 +296,7 @@ export default function SlaveManager(props) {
           style={{ width: "50%", textAlign: "center", display: "inline-block" }}
         />
         <br />
-        <label htmlFor="binance_key">Binance API Key</label>
+        <label htmlFor="binance_key">Bybit API Key</label>
         <br />
         <input
           required={true}
@@ -307,7 +307,7 @@ export default function SlaveManager(props) {
           style={{ width: "50%", textAlign: "center", display: "inline-block" }}
         />
         <br />
-        <label htmlFor="binance_secret">Binance API Secret</label>
+        <label htmlFor="binance_secret">Bybit API Secret</label>
         <br />
         <input
           required={true}

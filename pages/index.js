@@ -2,6 +2,7 @@ import { getServerSideCookie } from "../helpers/cookieHandler";
 import Login from "../components/Login";
 import Parent from "../components/Parent";
 import { debugWorker } from "../helpers/worker_helper";
+
 export async function getServerSideProps({ req, res }) {
   let logged;
 
@@ -28,6 +29,7 @@ export async function getServerSideProps({ req, res }) {
 
 // Main Deployment
 export default function Home(props) {
+
   // debugWorker();
   if (!props.status) {
     return <Login />;
@@ -40,3 +42,6 @@ export default function Home(props) {
     </div>
   );
 }
+
+
+

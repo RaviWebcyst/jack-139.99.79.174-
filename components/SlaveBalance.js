@@ -12,9 +12,9 @@ export default function SlaveBalance() {
 
       let arr = [];
       for (let i in res.slave_assets) {
-        let a = res.slave_assets[i];
+        let a = res.slave_assets[i].balance;
         arr.push(
-          <Balance key={i + "slave"} balance={a} name={res.slaves[i].name} />
+          <Balance key={i + "slave"} balance={a} name={res.slave_assets[i].name} />
         );
       }
 

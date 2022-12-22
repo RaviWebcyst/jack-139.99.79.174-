@@ -10,19 +10,26 @@
   "dependencies": {
     "argon2": "^0.28.3",
     "binance-api-node": "^0.11.28",
+    "bybit-api": "^2.1.10",
     "cookie-cutter": "^0.2.0",
     "cookies": "^0.8.0",
+    "cron-schedule": "^3.0.6",
+    "ip": "^1.1.5",
+    "jquery": "^3.6.0",
     "mongodb": "^4.2.2",
     "next": "12.0.7",
     "next-connect": "^0.11.0",
+    "next-session": "^4.0.4",
     "node-binance-api": "^0.13.1",
+    "node-cron": "^3.0.0",
+    "node-session": "^1.2.1",
     "node-telegram-bot-api": "^0.56.0",
     "perf_hooks": "0.0.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "web-worker": "^1.2.0",
     "websocket": "^1.0.34",
-    "ws": "^8.4.0"
+    "ws": "^8.6.0"
   },
   "devDependencies": {
     "eslint": "8.5.0",

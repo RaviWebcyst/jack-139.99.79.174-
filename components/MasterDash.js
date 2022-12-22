@@ -1,7 +1,7 @@
 import Balance from "./Balance";
 import { useEffect, useState } from "react";
 
-export default function MasterDash(props) {
+export  default function MasterDash(props) {
   let [balance, setBalance] = useState(<div className="loader"></div>);
 
   function set(res) {
@@ -12,6 +12,8 @@ export default function MasterDash(props) {
     (async () => {
       let res = await fetch("/api/master-balance");
       res = await res.json();
+      console.log("resultdfsdf");
+      console.log(res);
 
       // console.log(res);
 

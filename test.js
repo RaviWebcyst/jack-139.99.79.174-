@@ -8,6 +8,7 @@
 //     symbol: "ETHBTC", // Optional
 //   })
 // );
+
 (async () => {
   // Dynamically Assign Precision
   let precision = await fetch("https://api.binance.com/api/v3/exchangeInfo");
